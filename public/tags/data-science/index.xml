@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data Science on Musa R. Nyakerabachi</title>
+    <link>/tags/data-science/</link>
+    <description>Recent content in Data Science on Musa R. Nyakerabachi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Musa R. Nyakerabachi&amp;copy; 2020. All rights reserved.</copyright>
+    <lastBuildDate>Tue, 28 Jul 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/data-science/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Titanic Project.</title>
+      <link>/2020/07/28/titanic-project./</link>
+      <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/07/28/titanic-project./</guid>
+      <description>Titanic: Machine Learning from Disaster ProjectPart 1:Exploratory Data Analysis.1. BUSINESS UNDERSTANDING.Source:Machine Learning Titanic Competition
+Data: Titanic Data Set from Kaggle
+Context:Source: Discussion
+Problem statement :Using machine learning to create a model that predicts which passengers survived the Titanic shipwreck.
+2.1 Data Description :Column NameDescriptionKeysurvivalSurvival0 = No, 1 = YespclassTicket class1 = 1st, 2 = 2nd, 3 = 3rdsexSexC = Cherbourg, Q = Queenstown, S = SouthamptonAgeAge in yearssibspNumber of siblings / spouses aboard the TitanicparchNumber of parents / children aboard the TitanicticketTicket numberfarePassenger farecabinCabin numberembarkedPort of EmbarkationFirst I’ll load the data file using user input option file.</description>
+    </item>
+    
+    <item>
+      <title>Titanic project.</title>
+      <link>/2020/07/27/titanic-project./</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/07/27/titanic-project./</guid>
+      <description>Titanic: Machine Learning from Disaster Project 1. BUSINESS UNDERSTANDING. Source:Machine Learning Titanic Competition
+Data: Titanic Data Set from Kaggle
+Context: Source: Discussion
+Problem statement : Using machine learning to create a model that predicts which passengers survived the Titanic shipwreck.
+2.1 Data Description :    Column Name Description Key     survival Survival 0 = No, 1 = Yes   pclass Ticket class 1 = 1st, 2 = 2nd, 3 = 3rd   sex Sex C = Cherbourg, Q = Queenstown, S = Southampton   Age Age in years    sibsp Number of siblings / spouses aboard the Titanic    parch Number of parents / children aboard the Titanic    ticket Ticket number    fare Passenger fare    cabin Cabin number    embarked Port of Embarkation     2.</description>
+    </item>
+    
+  </channel>
+</rss>
