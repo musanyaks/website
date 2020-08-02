@@ -17,7 +17,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   # Shown in the home page
   subtitle = "DATA SCIENTIST"
   brand = "Musa<br>Nyakerabachi"
-  googleAnalytics = ""
+  googleAnalytics = "UA-174066040-1"
   disqus = "Your Disqus shortname"
   # CSS name for highlight.js
   highlightjs = "androidstudio"
