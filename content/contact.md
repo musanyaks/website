@@ -7,4 +7,8 @@ date: '2020-07-28'
 
 ---
 
-I am an
+You can contact me through my:
+ 
+				-[Email Address]()
+				-[Twitter]()
+				-[LinkedIn]()

@@ -18,7 +18,8 @@
       <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
       
       <guid>/contact/</guid>
-      <description>I am an</description>
+      <description>You can contact me through my:
+ -[Email Address]()-[Twitter]()-[LinkedIn]() </description>
     </item>
     
     <item>
@@ -50,14 +51,12 @@ Problem statement : Using machine learning to create a model that predicts which
     <item>
       <title>About</title>
       <link>/about/</link>
-      <pubDate>Wed, 09 Apr 2014 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 24 Jul 2020 00:00:00 +0000</pubDate>
       
       <guid>/about/</guid>
-      <description>Hugo is a static site engine written in Go.
-It makes use of a variety of open source projects including:
- Cobra Viper J Walter Weatherman Cast  Learn more and contribute on GitHub.
-Setup Some fun facts about Hugo:
- Built in Go Loosely inspired by Jekyll Primarily developed by spf13 on the train while commuting to and from Manhattan. Coded in Vim using spf13-vim  Have questions or suggestions?</description>
+      <description>I started this blog on month of July I wanted to have a place where I could air out my ideas and share with other datascientists worldwide.
+I am an Actuarial Science graduate with knowledge in Python and R program.
+Have questions or suggestions? Feel free to ask me on Twitter.</description>
     </item>
     
   </channel>
