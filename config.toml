@@ -66,7 +66,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   # by entering your username or ID.
   twitter = "musarioba"
   github = "musanyaks"
-  linkedin = "musa"
+  linkedin = "musa-nyakerabachi"
   
 [permalinks]
   post = "/:year/:month/:day/:slug/"
