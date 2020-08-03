@@ -1,4 +1,4 @@
-baseurl = "https://254machinelearning.ml/"
+baseurl = "http://254machinelearning.ml/"
 languageCode = "en-us"
 title = "Musa R. Nyakerabachi"
 theme = "blackburn"
@@ -8,8 +8,9 @@ canonifyurls = true
 paginate = 10
 enableEmoji = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
-plugins = "jekyll-seo-tag" 
-rssLimit = 10
+plugins = "jekyll-seo-tag"
+
+disablekinds=["RSS"]
 
 
 [indexes]
