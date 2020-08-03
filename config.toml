@@ -9,8 +9,9 @@ paginate = 10
 enableEmoji = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 plugins = "jekyll-seo-tag"
+publishDir = "../254machinelearning.ml"
+rssLimit = 10
 
-disablekinds=["RSS"]
 
 
 [indexes]
