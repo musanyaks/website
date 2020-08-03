@@ -9,7 +9,7 @@ paginate = 10
 enableEmoji = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 plugins = "jekyll-seo-tag"
-rssLimit = 10
+
 
 
 
