@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://254machinelearning.ml/"
 languageCode = "en-us"
 title = "Musa R. Nyakerabachi"
 theme = "blackburn"
@@ -7,7 +7,10 @@ copyright = "Musa R. Nyakerabachi&copy; 2020. All rights reserved."
 canonifyurls = true
 paginate = 10
 enableEmoji = true
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"] 
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+plugins = "jekyll-seo-tag" 
+rssLimit = 10
+
 
 [indexes]
   tag = "tags"
@@ -66,7 +69,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   # by entering your username or ID.
   twitter = "musarioba"
   github = "musanyaks"
-  linkedin = "https://www.linkedin.com/in/musa-nyakerabachi-839901146"
+  linkedin = "musa-nyakerabachi-839901146/"
   
 [permalinks]
   post = "/:year/:month/:day/:slug/"
