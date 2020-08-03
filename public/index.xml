@@ -1,49 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-  <title>Musa R. Nyakerabachi</title>
-  <link>/</link>
-  <description>Recent content on Musa R. Nyakerabachi</description>
-  <generator>Hugo -- gohugo.io</generator>
-<language>en-us</language>
-<copyright>Musa R. Nyakerabachi&amp;copy; 2020. All rights reserved.</copyright>
-<lastBuildDate>Tue, 28 Jul 2020 00:00:00 +0000</lastBuildDate>
-
-<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-
-
-<item>
-  <title>Contact</title>
-  <link>/contact/</link>
-  <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
-  
-<guid>/contact/</guid>
-  <description>&lt;p&gt;You can contact me through my:&lt;/p&gt;
-&lt;p&gt;-&lt;a href=&#34;https://twitter.com/musarioba&#34;&gt;Twitter&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;-&lt;a href=&#34;https://linkedin.com/in/musa-nyakerabachi&#34;&gt;LinkedIn&lt;/a&gt;&lt;/p&gt;
-</description>
-  </item>
-  
-<item>
-  <title>Posts</title>
-  <link>/post/</link>
-  <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
-  
-<guid>/post/</guid>
-  <description></description>
-  </item>
-  
-<item>
-  <title>About</title>
-  <link>/about/</link>
-  <pubDate>Fri, 24 Jul 2020 00:00:00 +0000</pubDate>
-  
-<guid>/about/</guid>
-  <description>&lt;p&gt;I started this blog on month of July I wanted to have a place where I could air out my ideas and share with other datascientists
-worldwide.&lt;/p&gt;
-&lt;p&gt;I am an Actuarial Science graduate with knowledge in Python and R program.&lt;/p&gt;
-&lt;p&gt;Have questions or suggestions? Feel free to  &lt;a href=&#34;https://twitter.com/musarioba&#34;&gt;ask me on Twitter&lt;/a&gt;.&lt;/p&gt;
-</description>
-  </item>
-  
-</channel>
-  </rss>
+    <title>Musa R. Nyakerabachi</title>
+    <link>/</link>
+    <description>Recent content on Musa R. Nyakerabachi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Musa R. Nyakerabachi&amp;copy; 2020. All rights reserved.</copyright>
+    <lastBuildDate>Tue, 28 Jul 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Contact</title>
+      <link>/contact/</link>
+      <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/contact/</guid>
+      <description>You can contact me through my:
+-Twitter
+-LinkedIn</description>
+    </item>
+    
+    <item>
+      <title>Titanic Project.</title>
+      <link>/2020/07/28/titanic-project./</link>
+      <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/07/28/titanic-project./</guid>
+      <description>Titanic: Machine Learning from Disaster ProjectPart 1:Exploratory Data Analysis.1. BUSINESS UNDERSTANDING.Source:Machine Learning Titanic Competition
+Data: Titanic Data Set from Kaggle
+Context:Source: Discussion
+Problem statement :Using machine learning to create a model that predicts which passengers survived the Titanic shipwreck.
+2.1 Data Description :Column NameDescriptionKeysurvivalSurvival0 = No, 1 = YespclassTicket class1 = 1st, 2 = 2nd, 3 = 3rdsexSexC = Cherbourg, Q = Queenstown, S = SouthamptonAgeAge in yearssibspNumber of siblings / spouses aboard the TitanicparchNumber of parents / children aboard the TitanicticketTicket numberfarePassenger farecabinCabin numberembarkedPort of EmbarkationFirst I’ll load the data file using user input option file.</description>
+    </item>
+    
+    <item>
+      <title>Titanic project.</title>
+      <link>/2020/07/27/titanic-project./</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/07/27/titanic-project./</guid>
+      <description>Titanic: Machine Learning from Disaster Project 1. BUSINESS UNDERSTANDING. Source:Machine Learning Titanic Competition
+Data: Titanic Data Set from Kaggle
+Context: Source: Discussion
+Problem statement : Using machine learning to create a model that predicts which passengers survived the Titanic shipwreck.
+2.1 Data Description :    Column Name Description Key     survival Survival 0 = No, 1 = Yes   pclass Ticket class 1 = 1st, 2 = 2nd, 3 = 3rd   sex Sex C = Cherbourg, Q = Queenstown, S = Southampton   Age Age in years    sibsp Number of siblings / spouses aboard the Titanic    parch Number of parents / children aboard the Titanic    ticket Ticket number    fare Passenger fare    cabin Cabin number    embarked Port of Embarkation     2.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Fri, 24 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>I started this blog on month of July I wanted to have a place where I could air out my ideas and share with other datascientists worldwide.
+I am an Actuarial Science graduate with knowledge in Python and R program.
+Have questions or suggestions? Feel free to ask me on Twitter.</description>
+    </item>
+    
+  </channel>
+</rss>
