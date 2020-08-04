@@ -8,10 +8,12 @@ canonifyurls = true
 paginate = 10
 enableEmoji = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+plugins = "jekyll-seo-tag"
+rssLimit = 10
 
-
-
-
+[permalinks]
+  post = "/:year/:month/:day/:slug/"
+  
 [indexes]
   tag = "tags"
   category = "categories"
@@ -23,6 +25,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   googleAnalytics = "UA-174066040-1"
   disqus = "254machinelearning"
   # CSS name for highlight.js
+  highlightjs_extra_languages = ["r", "yaml"]
   highlightjs = "androidstudio"
   dateFormat = "02 Jan 2006"
 
@@ -71,7 +74,6 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   github = "musanyaks"
   linkedin = "musa-nyakerabachi-839901146/"
   
-[permalinks]
-  post = "/:year/:month/:day/:slug/"
+
     
 
