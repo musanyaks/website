@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://254machinelearning.ml/"
 languageCode = "en-us"
 title = "Musa R. Nyakerabachi"
 theme = "blackburn"
@@ -28,6 +28,13 @@ rssLimit = 10
   highlightjs_extra_languages = ["r", "yaml"]
   highlightjs = "androidstudio"
   dateFormat = "02 Jan 2006"
+  
+[Params.social.share]
+  facebook = true
+  linkedin = true
+  twitter = true
+  whatsapp = true
+  email = true
 
 [menu]
   # Shown in the side menu.
@@ -73,7 +80,5 @@ rssLimit = 10
   twitter = "musarioba"
   github = "musanyaks"
   linkedin = "musa-nyakerabachi-839901146/"
-  
 
-    
-
+ 
