@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Musa R. Nyakerabachi&amp;copy; 2020. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 28 Jul 2020 </lastBuildDate>
+    <lastBuildDate>Tue, 28 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Titanic Project.</title>
       <link>/2020/07/28/titanic-project./</link>
-      <pubDate>Tue, 28 Jul 2020 </pubDate>
+      <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
       
       <guid>/2020/07/28/titanic-project./</guid>
       <description>Titanic: Machine Learning from Disaster ProjectPart 1:Exploratory Data Analysis.1. BUSINESS UNDERSTANDING.Source:Machine Learning Titanic Competition
@@ -28,7 +28,7 @@ Context:Source: Discussion
     <item>
       <title>Titanic project.</title>
       <link>/2020/07/27/titanic-project./</link>
-      <pubDate>Mon, 27 Jul 2020 </pubDate>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
       
       <guid>/2020/07/27/titanic-project./</guid>
       <description>Titanic: Machine Learning from Disaster Project 1. BUSINESS UNDERSTANDING. Source:Machine Learning Titanic Competition

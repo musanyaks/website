@@ -8,12 +8,6 @@ tags:
   - Data Science
 topics:
   - R
-description:
-  - ''
-draft:
-  - no
-output:
-  - html_document
 ---
 
 # Titanic: Machine Learning from Disaster Project
