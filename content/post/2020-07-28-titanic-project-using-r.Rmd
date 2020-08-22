@@ -1,17 +1,43 @@
 ---
-title: Titanic Project.
+title: Titanic Machine Learning from Disaster Project.
 author: Musa R. Nyakerabachi
 date: '2020-07-28'
 categories:
   - R
 tags:
   - Data Science
+subtitle: Part 1:Exploratory Data Analysis.
 topics:
   - R
+output:
+  html_document:
+    theme: readable
+    highlight: pygments
+    number_sections: no
+    fig.align: centre
+    toc: yes
+    toc_float: yes
+    toc_depth: 4
+    font-family: Roboto
+    code_folding: none
+    keep_md: no
+    dpi: 300
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  eval = TRUE,      # TRUE to evaluate every single chunck
+  warning = FALSE,  # FALSE to suppress warnings from being shown
+  message = FALSE,  # FALSE to avoid package loading messages
+  cache = FALSE,    # TRUE to save every single chunck to a folder
+  echo = TRUE,      # TRUE for display code in output document
+  out.width = "80%",
+  out.height = "100%",
+  fig.align = "center"
+)
+```
 
-# Titanic: Machine Learning from Disaster Project
-## Part 1:Exploratory Data Analysis.
+
+
 ## 1. BUSINESS UNDERSTANDING.
 
 Source:[Machine Learning Titanic Competition](https://www.kaggle.com/c/titanic/)
@@ -41,12 +67,10 @@ Data: [Titanic Data Set from Kaggle](https://www.kaggle.com/c/titanic/data)
 |**fare**       | Passenger fare                                  |                                                            |
 |**cabin**      | Cabin number	                                  |                                                            |
 |**embarked**   | Port of Embarkation                             |                                                            |        
-                           
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 **First I'll load the data file using user input option `file.choose()`.The data is given in two set both training and test set.**
 
+## 2.2 Set Up.
 ```{r echo=TRUE}
 df_train <- read.csv (file.choose(), stringsAsFactors = F,na.strings=c("","NA"," "))
 df_test <- read.csv (file.choose(), stringsAsFactors = F,na.strings=c("","NA"," "))
@@ -58,7 +82,7 @@ df_test <- read.csv (file.choose(), stringsAsFactors = F,na.strings=c("","NA"," 
 
 ```{r message=FALSE, warning=FALSE,paged.print=TRUE}
 library(tidyverse)
-
+library(ggplot2)
 DT::datatable(df_train[,1:8])
 
 DT::datatable(df_test[,1:8])
@@ -105,7 +129,8 @@ df_test$Survived [df_test$Sex == "female"] <- 1
 
 df_new <- data.frame(PassengerId = df_test$PassengerId, Survived = df_test$Survived)
 ```
- 
+
+## 3 Data Analysis. 
 ```{r echo=TRUE}
 nrow(df_new)
 ```
@@ -225,11 +250,6 @@ df.train.cleaned <- df_concat[1:891,]
 df.test.cleaned <- df_concat[892:1309,]
 ```
 
-**Next I'll call `ggplot2` package which plays a crucial part in data visualization as shown below.**
-```{r echo=TRUE}
-library(ggplot2)
-```
-
 **Next I'll be using both trainig and test set in visualization I'll begin by creating a table of people who survived and died in my traing set as below.**
 ```{r echo=TRUE}
 xtabs(~Survived, df.train.cleaned)
@@ -237,6 +257,10 @@ xtabs(~Survived, df.train.cleaned)
 
 **From the table above 549 people died and 342 survived in the training set.**
 **I'll represent the above table using bar plot as shown below.**
+
+
+## 4. Visualization Part.
+**Next I'll call `ggplot2` package which plays a crucial part in data visualization as shown below.**
 ```{r echo=TRUE}
 ggplot(df.train.cleaned) + geom_bar(aes(x=Survived))
 ```

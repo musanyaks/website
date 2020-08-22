@@ -529,16 +529,9 @@ df_new &lt;- data.frame(PassengerId = df_test$PassengerId, Survived = df_test$Su
 ##        SibSp        Parch       Ticket         Fare        Cabin     Embarked 
 ## 0.0000000000 0.0000000000 0.0000000000 0.0007639419 0.7746371276 0.0015278839</code></pre>
 <p><strong>From above function <code>Age</code>, <code>Fare</code>,<code>Cabin</code> and <code>Embarked</code> columns have missing values.I’ll also use <code>Amelia</code> package from Amelia who is my favorite female follower in twitter to see how missing data is distributed.</strong></p>
-<pre class="r"><code>library(&quot;Amelia&quot;)</code></pre>
-<pre><code>## Loading required package: Rcpp</code></pre>
-<pre><code>## ## 
-## ## Amelia II: Multiple Imputation
-## ## (Version 1.7.6, built: 2019-11-24)
-## ## Copyright (C) 2005-2020 James Honaker, Gary King and Matthew Blackwell
-## ## Refer to http://gking.harvard.edu/amelia/ for more information
-## ##</code></pre>
-<pre class="r"><code>missmap(df_concat, main = &quot;Missing Map&quot;)</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="r"><code>library(&quot;Amelia&quot;)
+missmap(df_concat, main = &quot;Missing Map&quot;)</code></pre>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-19-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>From above <code>Amelia</code> package it shows that missing data composes of 8% of the total data set.</strong>
 <strong>Next is to impute missing data in <code>Age</code> column using mean of the total age as shown below.</strong></p>
 <pre class="r"><code>df_concat$Age[is.na(df_concat$Age)] &lt;- mean(df_concat$Age,na.rm=T)
@@ -575,7 +568,7 @@ sum(is.na(df_concat$Fare))</code></pre>
 <p><strong>Let me countercheck if the data is now clean and has no missing value by visual representation using <code>Amelia</code> package.</strong></p>
 <pre class="r"><code>library(&quot;Amelia&quot;)
 missmap(df_concat, main = &quot;Missing Map&quot;)</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-26-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Bingo!! now all the missing values have been cleaned now I’ll split my data into training and test set then use them in visual analysis of the two data set before actual machine learning is done on them as shown below.</strong></p>
 <pre class="r"><code>df.train.cleaned &lt;- df_concat[1:891,]
 df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
@@ -589,32 +582,30 @@ df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
 <p><strong>From the table above 549 people died and 342 survived in the training set.</strong>
 <strong>I’ll represent the above table using bar plot as shown below.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Survived))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-30-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Next I’ll visualize <code>Sex</code> column in the traing set to see the gender that were many in the titanic as shown below.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Sex))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-31-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>From above table it is evident that more males were in the titanic compared to females.</strong>
 <strong>Next I’ll draw a bar plot to see how people were distributed in three classes using the below code.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Pclass))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-32-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>From above table there were more people in the third class compared to other classes while second class being least.</strong>
 <strong>Next I’ll use a histogram to show if <code>Fare</code> is normaally distributed and also see its skewness.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_histogram(aes(x=Fare),fill = &quot;white&quot;, colour = &quot;black&quot;)</code></pre>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-33-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>From the table above it is evident that <code>Fare</code> is right skewed hence the price is not normal distributed.</strong>
 <strong>Next is to draw a boxplot to see how price is distributed and also capture the outliers.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_boxplot(aes(x=factor(0),y=Fare)) + coord_flip()</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-34-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>From above boxplot it can be seen that <code>Fare</code> is right skewed with even a person paying more than 500.</strong>
 <strong>Next I’ll draw a histogram to show how <code>Age</code> is distributed.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_histogram(aes(x=Age),fill = &quot;white&quot;, colour = &quot;black&quot;)</code></pre>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-35-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>From above it is evident that <code>Age</code> is normally distributed with a mean of roughly 30.</strong>
 <strong>Next I’ll draw a boxplot for further inference on the <code>Age</code>.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_boxplot(aes(x=factor(0),y=Age)) + coord_flip()</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-36-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>From above boxplot it can be seen that <code>Age</code> is normally distributed.</strong>
 <strong>Next I’ll make a table to show how survival count in the <code>Sex</code> is distributed.</strong></p>
 <pre class="r"><code>xtabs(~Survived+Sex,df.train.cleaned)</code></pre>
@@ -625,7 +616,7 @@ df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
 <p><strong>From above table it is evident that more males died compared to females while more females survived compared to males.</strong>
 <strong>Next I’ll draw a bar plot to visualize above table.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Sex, fill=factor(Survived)))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-38-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Next I’ll make a table to show the survival rate in the three classes as shown below.</strong></p>
 <pre class="r"><code>xtabs(~Survived+Pclass,df.train.cleaned)</code></pre>
 <pre><code>##         Pclass
@@ -635,7 +626,7 @@ df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
 <p><strong>From above table more people died in the third class as compared to rest of classes while people who were in the first class survived to compared to the rest of the classes.</strong>
 <strong>Next I’ll visualize above table using bar plot for visual inference.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Pclass, fill=factor(Survived)) )</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-40-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Next I’ll make a table to see survival rate from three stations as below.</strong></p>
 <pre class="r"><code>xtabs(~Survived+Embarked,df.train.cleaned)</code></pre>
 <pre><code>##         Embarked
@@ -645,23 +636,21 @@ df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
 <p><strong>From the table above it is evident that more people from <code>Southampton</code> boarded the titanic and also it is them that died in large number than the rest and also it is them that died most while least death and survival registered by <code>Queenstown</code>.</strong>
 <strong>I’ll visualize the above table using a bar plot for further visual inference.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Embarked, fill=factor(Survived)) )</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-42-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Next I’ll draw a boxplot to show how suvival rate for <code>Age</code> column .</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_boxplot(aes(x = factor(Survived), y = Age))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-43-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>From above box plot it is evident that a maximum <code>Age</code> of about 40 survived and died while the least <code>Age</code> being 24 for for those who died while 22 being who survived.</strong>
 <strong>Next I’ll visualize above scenario using a histogram as below.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_histogram(aes(x = Age),fill = &quot;white&quot;, colour = &quot;black&quot;) + facet_grid(factor(Survived) ~ .)</code></pre>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-44-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Next I’ll draw a boxplot of <code>Fare</code> against <code>Survived</code> to see if <code>Fare</code> played a major role in survival rate.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_boxplot(aes(x = factor(Survived), y = Fare))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-45-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>From above table it is evident that those who paid high <code>Fare</code> survived as compared to those who paid least.</strong>
 <strong>Next I’ll draw a histogram from above boxplot for further visual representation.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_histogram(aes(x = Fare),fill = &quot;white&quot;, colour = &quot;black&quot;) + facet_grid(factor(Survived) ~ .)</code></pre>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-46-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Next I’ll draw a table of both males and females to show their survival count in three classes as shown below.</strong></p>
 <pre class="r"><code>xtabs(~factor(Survived)+Pclass+Sex,df.train.cleaned)</code></pre>
 <pre><code>## , , Sex = female
@@ -680,7 +669,7 @@ df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
 <p><strong>From above table it is evident that more males died compared to females while more females survived compared to males.</strong>
 <strong>Next I’ll draw a bar plot using <code>facet_grid</code> option to visualise above table.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Sex, fill=factor(Survived))) + facet_grid(Pclass ~ .)</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-48-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Next I’ll draw a table of males and females differently in three classes to compare survival rates in three classes of the two genders.</strong></p>
 <pre class="r"><code>xtabs(~Survived+Embarked+Sex,df.train.cleaned)</code></pre>
 <pre><code>## , , Sex = female
@@ -699,7 +688,7 @@ df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
 <p><strong>From above table it is evident that more males died in <code>Cherbourg</code> and <code>Southamptton</code> as comparedto males with only <code>Queenstown</code> females died more than males, while survival rate also for females in two stations was high compared to males only <code>Queenstown</code> was vicevasa.</strong>
 <strong>I’ll represent the above table using bar plot using <code>facet_grid</code> option for visualisation purposes.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Sex, fill=factor(Survived))) + facet_grid(Embarked ~ .)</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-50-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Next I’ll create a child column giving an age an range of 18 a child and rest adult after that I’ll draw a bar plot to represent survival rate for a child.</strong></p>
 <pre class="r"><code>df_concat$Child &lt;- NA
 df_concat$Child[df_concat$Age &lt; 18] &lt;- 1
@@ -707,7 +696,7 @@ df_concat$Child[df_concat$Age &gt;= 18] &lt;- 0
 str(df_concat$Child)</code></pre>
 <pre><code>##  num [1:1309] 0 0 0 0 0 0 0 1 0 1 ...</code></pre>
 <pre class="r"><code>ggplot(df_concat) + geom_bar(aes(x=Child))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-51-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>From above table it evident that more childrens died than those who survived.</strong>
 <strong>Next is to make some inferetial analysis from <code>Name</code> column by using regex expression which will help get initials from the name and see people’s initials survival rate both visually ad using table.</strong></p>
 <pre class="r"><code>df_concat$Title &lt;- sapply(df_concat$Name, FUN=function(x) {strsplit(x, split=&#39;[,.]&#39;)[[1]][2]})
@@ -723,7 +712,7 @@ table(df_concat$Title)</code></pre>
 <p><strong>From above table it is like most people who were in the titanic were Mr.</strong>
 <strong>Next I’ll represent above table using bar plot.</strong></p>
 <pre class="r"><code>ggplot(df_concat) + geom_bar(aes(x=Title))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-53-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Next I’ll reduce the above initails into manageable size using below snippet of code.</strong></p>
 <pre class="r"><code>df_concat$Title[df_concat$Title %in% c(&#39;Mme&#39;, &#39;Mlle&#39;)] &lt;- &#39;Mlle&#39;
 df_concat$Title[df_concat$Title %in% c(&#39;Capt&#39;, &#39;Don&#39;, &#39;Major&#39;, &#39;Sir&#39;)] &lt;- &#39;Sir&#39;
@@ -735,7 +724,7 @@ table(df_concat$Title)</code></pre>
 ##      4      8      4     61    260      3    757    197      2      8      5</code></pre>
 <p><strong>After reducing the initials I’ll draw the same bar plot to see the difference.</strong></p>
 <pre class="r"><code>ggplot(df_concat) + geom_bar(aes(x=Title))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-55-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 <p><strong>Next I’ll create aa table to make some inference on how the family size were distributed in the ship.</strong></p>
 <pre class="r"><code>df_concat$FamilySize &lt;- df_concat$SibSp + df_concat$Parch + 1
 table(df_concat$FamilySize)</code></pre>
@@ -744,7 +733,7 @@ table(df_concat$FamilySize)</code></pre>
 ## 790 235 159  43  22  25  16   8  11</code></pre>
 <p><strong>From above it’s like a <code>Familysize</code> of 1 person were many than others.Lastly I’ll draw a bar plot to visualize the result.</strong></p>
 <pre class="r"><code>ggplot(df_concat) + geom_bar(aes(x=FamilySize))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-57-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 

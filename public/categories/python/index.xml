@@ -13,12 +13,12 @@
     
     
     <item>
-      <title>Titanic project.</title>
-      <link>/2020/07/27/titanic-project./</link>
+      <title>Titanic Machine Learning from Disaster Project.</title>
+      <link>/2020/07/27/titanic-machine-learning-from-disaster-project./</link>
       <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/07/27/titanic-project./</guid>
-      <description>Titanic: Machine Learning from Disaster Project 1. BUSINESS UNDERSTANDING. Source:Machine Learning Titanic Competition
+      <guid>/2020/07/27/titanic-machine-learning-from-disaster-project./</guid>
+      <description>1. BUSINESS UNDERSTANDING. Source:Machine Learning Titanic Competition
 Data: Titanic Data Set from Kaggle
 Context: Source: Discussion
 Problem statement : Using machine learning to create a model that predicts which passengers survived the Titanic shipwreck.

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+  <head>
+    {{ partial "head.html" . }}
+    
+    {{ with .OutputFormats.Get "rss" -}}
+      
+      {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+    
+    {{ end -}}
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        {{ partial "nav.html" . }}
+      </header>

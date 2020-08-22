@@ -17,9 +17,11 @@
   <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
   
 <guid>/contact/</guid>
-  <description>&lt;p&gt;You can contact me through my:&lt;/p&gt;
-&lt;p&gt;-&lt;a href=&#34;https://twitter.com/musarioba&#34;&gt;Twitter&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;-&lt;a href=&#34;https://linkedin.com/in/musa-nyakerabachi&#34;&gt;LinkedIn&lt;/a&gt;&lt;/p&gt;
+<description><![CDATA[
+  <p>You can contact me through my:</p>
+<p>-<a href="https://twitter.com/musarioba">Twitter</a></p>
+<p>-<a href="https://linkedin.com/in/musa-nyakerabachi">LinkedIn</a></p>
+]]>
 </description>
   </item>
   
@@ -29,7 +31,9 @@
   <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
   
 <guid>/post/</guid>
-  <description></description>
+<description><![CDATA[
+  ]]>
+</description>
   </item>
   
 <item>
@@ -38,10 +42,12 @@
   <pubDate>Fri, 24 Jul 2020 00:00:00 +0000</pubDate>
   
 <guid>/about/</guid>
-  <description>&lt;p&gt;I started this blog on month of July I wanted to have a place where I could air out my ideas and share with other datascientists
-worldwide.&lt;/p&gt;
-&lt;p&gt;I am an Actuarial Science graduate with knowledge in Python and R program.&lt;/p&gt;
-&lt;p&gt;Have questions or suggestions? Feel free to  &lt;a href=&#34;https://twitter.com/musarioba&#34;&gt;ask me on Twitter&lt;/a&gt;.&lt;/p&gt;
+<description><![CDATA[
+  <p>I started this blog on month of July I wanted to have a place where I could air out my ideas and share with other datascientists
+worldwide.</p>
+<p>I am an Actuarial Science graduate with knowledge in Python and R program.</p>
+<p>Have questions or suggestions? Feel free to  <a href="https://twitter.com/musarioba">ask me on Twitter</a>.</p>
+]]>
 </description>
   </item>
   
