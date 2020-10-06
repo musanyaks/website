@@ -3,3 +3,17 @@
 .RData
 .Ruserdata
 .csv
+Gender_Model.csv
+final_model.rds
+fit_cart.rds
+fit_nnet.rds
+inal_model_rf.rds
+logistic.model.rds
+plot_utils.R
+Predictor.csv
+randfor_tuned.rds
+randForest_model.rds
+randForest_model_tuned.rds
+titan_gbm_train.rds
+tuned_rf_model.rds
+tuning.results.rds

@@ -1,4 +1,678 @@
 ---
+title: Titanic Project.
+author: Musa R. Nyakerabachi
+date: '2020-07-28'
+categories:
+  - R
+tags:
+  - Data Science
+topics:
+  - R
+description:
+  - ''
+draft:
+  - no
+output:
+  - html_document
+---
+
+# Titanic: Machine Learning from Disaster Project
+## Part 1:Exploratory Data Analysis.
+## 1. BUSINESS UNDERSTANDING.
+
+Source:[Machine Learning Titanic Competition](https://www.kaggle.com/c/titanic/)
+
+Data: [Titanic Data Set from Kaggle](https://www.kaggle.com/c/titanic/data) 
+                        
+
+### Context:
+ Source: [Discussion](https://www.kaggle.com/c/titanic/discussion)
+
+### Problem statement : 
+ Using machine learning to create a model that predicts which passengers survived the Titanic shipwreck. 
+
+
+## 2.1 Data Description :
+      
+      
+|Column Name    |Description                                      |         Key                                                |
+|:--------------|:-----------------------------------------------:|-----------------------------------------------------------:|
+|**survival**   |              Survival                           |   **0** = No, **1** = Yes                                  |
+|**pclass**     | Ticket class                                    |   **1** = 1st, **2** = 2nd, **3** = 3rd                    |
+|**sex**        | Sex                                             | **C** = Cherbourg, **Q** = Queenstown, **S** = Southampton |
+|**Age**        | Age in years	                                  |                                                            |
+|**sibsp**      | Number of siblings / spouses aboard the Titanic |                                                            |
+|**parch**	    | Number of parents / children aboard the Titanic |	                                                           |
+|**ticket**	    | Ticket number                                   |                                                            |
+|**fare**       | Passenger fare                                  |                                                            |
+|**cabin**      | Cabin number	                                  |                                                            |
+|**embarked**   | Port of Embarkation                             |                                                            |        
+                           
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+**First I'll load the data file using user input option `file.choose()`.The data is given in two set both training and test set.**
+
+```{r echo=TRUE}
+df_train <- read.csv (file.choose(), stringsAsFactors = F,na.strings=c("","NA"," "))
+df_test <- read.csv (file.choose(), stringsAsFactors = F,na.strings=c("","NA"," "))
+
+```
+
+
+**Next I'll load the training set and test set data using `DT` package as shown below.I'll view only the first eight columns for easy page view but if you need whole columns for the two data sets remove `[,1:8]` from the code snippet below**
+
+```{r message=FALSE, warning=FALSE,paged.print=TRUE}
+library(tidyverse)
+
+DT::datatable(df_train[,1:8])
+
+DT::datatable(df_test[,1:8])
+
+```
+
+
+**From above it is vividly true that training set has 891 entries white test set data has 418 entries.** 
+**Next is a code snippet checking the summary of both train and test data given from `kaggle`.**
+
+```{r , echo=TRUE}
+summary(df_train)
+
+```
+
+**From above summary it is evident that training set data average age that was in titanic was 30 while the average fare that was being paid was 32 U.S Dollar.**
+```{r, echo=TRUE}
+summary(df_test)
+```
+
+**From above summary it is evident that test set data average age that was in titanic was 30 while the average fare that was being paid was 36 U.S Dollar.**
+**Next I'll create a table that I'll use in presenting my result in the Kaggle competion with only two columns `Survived` and `PassengersId`**. 
+```{r echo=TRUE}
+df_test$Survived <- 0
+df_new <- data.frame(PassengerId = df_test$PassengerId, Survived = df_test$Survived)
+
+```
+
+**Next is to see if the number of rows of the table created corresponds with the test data rows given from `Kaggle`**.
+
+```{r echo=TRUE}
+nrow(df_new)
+```
+
+**From the function `nrow` 418 rows have been seen which corresponds with what the `Kaggle` test set entries shows.**
+**Next I'll store the table created above in a csv file using `write.csv` function but it has only 0 entries in the Survived columns which I'll fix in the coming code snippet**.
+```{r echo=TRUE}
+write.csv(df_new, file = "Predictor.csv", row.names = FALSE)
+```
+
+**The code shown below is to create a table where 1 represent female and 0 represent male and have two columns with `PassengerId` column and `Survived` column with `Survived` column  showing 1 for female and 0 for male survival rate for two genders.**
+```{r echo=TRUE}
+df_test$Survived [df_test$Sex == "female"] <- 1
+
+df_new <- data.frame(PassengerId = df_test$PassengerId, Survived = df_test$Survived)
+```
+ 
+```{r echo=TRUE}
+nrow(df_new)
+```
+
+**From above `nrow` function it evident that the number of rows corresponds with what is given in `Kaggle` test set data.**
+**Next I'll store the result the same as what `Kaggle` competition expect the result to be presented in their titanic competition portal.**
+```{r echo=TRUE}
+write.csv(df_new, file = "Gender_Model.csv", row.names = FALSE)
+```
+
+**Now that I have presented my prediction to the `Kaggle` competion it's time to combine both data set for full analysis purposes using `rbind` function shown below.**
+```{r echo=TRUE}
+df_concat <- rbind(df_train,df_test)
+```
+
+**I'll quickly check the summary of my combined data set using `summary` function shown below and remove some judgement from it.**
+```{r echo=TRUE}
+summary(df_concat)
+```
+
+**From above it is like the fare did not change from above two data set and also fare.**
+**Next I'll create a table to see the number of people who died and who survived.**
+```{r echo=TRUE}
+table(df_concat$Survived)
+```
+
+**From the table above it is like the number of people who died are more than who survived but the proportion is not yet realised I'll used `prop.table` function to find proportionality of the death and survival rate.**
+```{r echo=TRUE}
+prop.table(table(df_concat$Survived))
+```
+
+**From above table is evident that 62% of the people in the titanic died while 38% survived.**
+**Next I'll see the structure of the data using `str` function as shown below.**
+```{r echo=TRUE}
+str(df_concat)
+```
+
+**From above `Pclass` column is treated as an `int` which is not the case I'll have to convert it into a factor of the three classes as shown below.** 
+```{r echo=TRUE}
+df_concat$Pclass = as.factor(df_concat$Pclass)
+```
+
+**Next I'll make some inference to see if it has changes using the same `str` function as shown below.**
+```{r echo=TRUE}
+str(df_concat)
+```
+
+**Bingo!! `Pclass` has changed to factor with three levels i.e first class, second class and third class.**
+**Next is to see the columns that have missing data and do some imputation to them using `sapply` function.**
+```{r echo=TRUE}
+sapply(df_concat, function(df)
+{
+  sum(is.na(df)==T)/length(df)
+})
+```
+
+**From above function `Age`, `Fare`,`Cabin` and `Embarked` columns have missing values.I'll also use `Amelia` package from Amelia who is my favorite female follower in twitter to see how missing data is distributed.**
+
+```{r echo=TRUE} 
+library("Amelia")
+missmap(df_concat, main = "Missing Map")
+```
+
+**From above `Amelia` package it shows that missing data composes of 8% of the total data set.**
+**Next is to impute missing data in `Age` column using mean of the total age as shown below.**
+```{r echo=TRUE}
+df_concat$Age[is.na(df_concat$Age)] <- mean(df_concat$Age,na.rm=T)
+sum(is.na(df_concat$Age))
+```
+
+**Next I'll create a table to see the number of people in three towns and the missing values also in  `Embarked` column. **
+```{r echo=TRUE}
+table(df_concat$Embarked, useNA = "always")
+```
+
+**Fom above table it seems like most of the people who boarded the titanic were from `Southampton` with 914 people with only 2 missing values wich I'll use the `Southampton` to impute them as shown below.**
+```{r echo=TRUE}
+df_concat$Embarked[is.na(df_concat$Embarked)] <- 'S'
+sum(is.na(df_concat$Embarked))
+table(df_concat$Embarked, useNA = "always")
+
+```
+
+**Next is to remove missing value in `Fare` column using the mean of the `Fare` as shown below.**
+```{r echo=TRUE}
+df_concat$Fare[is.na(df_concat$Fare)] <- mean(df_concat$Fare,na.rm=T)
+sum(is.na(df_concat$Fare))
+
+```
+
+**Next I'll remove `Cabin` column from the dataset since it has no impact as shown below.** 
+```{r echo=TRUE}
+df_concat <- df_concat[-11]
+
+```
+
+**Let me countercheck if the data is now clean and has no missing value using below code snippet.**
+```{r echo=TRUE}
+sapply(df_concat, function(df)
+{
+  sum(is.na(df)==T)/length(df)
+})
+```
+
+**Let me countercheck if the data is now clean and has no missing value by visual representation using `Amelia` package.** 
+
+```{r echo=TRUE}
+library("Amelia")
+missmap(df_concat, main = "Missing Map")
+
+```
+
+
+**Bingo!! now all the missing values have been cleaned now I'll split my data into training and test set then use them in visual analysis of the two data set before actual machine learning is done on them as shown below.**
+```{r echo=TRUE}
+df.train.cleaned <- df_concat[1:891,]
+df.test.cleaned <- df_concat[892:1309,]
+```
+
+**Next I'll call `ggplot2` package which plays a crucial part in data visualization as shown below.**
+```{r echo=TRUE}
+library(ggplot2)
+```
+
+**Next I'll be using both trainig and test set in visualization I'll begin by creating a table of people who survived and died in my traing set as below.**
+```{r echo=TRUE}
+xtabs(~Survived, df.train.cleaned)
+```
+
+**From the table above 549 people died and 342 survived in the training set.**
+**I'll represent the above table using bar plot as shown below.**
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_bar(aes(x=Survived))
+```
+
+**Next I'll visualize `Sex` column in the traing set to see the gender that were many in the titanic as shown below.**
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_bar(aes(x=Sex))
+```
+
+**From above table it is evident that more males were in the titanic compared to females.**
+**Next I'll draw a bar plot to see how people were distributed in three classes using the below code.**
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_bar(aes(x=Pclass))
+```
+
+**From above table there were more people in the third class compared to other classes while second class being least.**
+**Next I'll use a histogram to show if `Fare` is normaally distributed and also see its skewness.**
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_histogram(aes(x=Fare),fill = "white", colour = "black")
+```
+
+**From the table above it is evident that `Fare` is right skewed hence the price is not normal distributed.**
+**Next is to draw a boxplot to see how price is distributed and also capture the outliers.**
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_boxplot(aes(x=factor(0),y=Fare)) + coord_flip()
+```
+
+**From above boxplot it can be seen that `Fare` is right skewed with even a person paying more than 500.**
+**Next I'll draw a histogram to show how `Age` is distributed.**
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_histogram(aes(x=Age),fill = "white", colour = "black")
+```
+
+**From above it is evident that `Age` is normally distributed with a mean of roughly 30.**
+**Next I'll draw a boxplot for further inference on the `Age`.**
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_boxplot(aes(x=factor(0),y=Age)) + coord_flip()
+```
+
+**From above boxplot it can be seen that `Age` is normally distributed.**
+**Next I'll make a table to show how survival count in the `Sex` is distributed.**
+```{r echo=TRUE}
+xtabs(~Survived+Sex,df.train.cleaned)
+```
+
+**From above table it is evident that more males died compared to females while more females survived compared to males.**
+**Next I'll draw a  bar plot to visualize above table.**
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_bar(aes(x=Sex, fill=factor(Survived)))
+```
+
+**Next I'll make a table to show the survival rate in the three classes as shown below.**
+```{r echo=TRUE}
+xtabs(~Survived+Pclass,df.train.cleaned)
+```
+
+**From above table more people died in the third class as compared to rest of classes while people who were in the first class survived to compared to the rest of the classes.**
+**Next I'll visualize above table using bar plot for visual inference.** 
+```{r}
+ggplot(df.train.cleaned) + geom_bar(aes(x=Pclass, fill=factor(Survived)) )
+```
+
+**Next I'll make a table to see survival rate from three stations as below.**
+```{r echo=TRUE}
+xtabs(~Survived+Embarked,df.train.cleaned)
+```
+
+**From the table above it is evident that more people from `Southampton` boarded the titanic and also it is them that died in large number than the rest and also it is them that died most while least death and survival registered by `Queenstown`.**
+**I'll visualize the above table using a bar plot for further visual inference.**
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_bar(aes(x=Embarked, fill=factor(Survived)) )
+```
+
+**Next I'll draw a boxplot to show how suvival rate for `Age` column .**
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_boxplot(aes(x = factor(Survived), y = Age))
+```
+
+**From above box plot it is evident that a maximum `Age` of about 40 survived and died while the least `Age` being 24 for for those who died while 22 being who survived.**
+**Next I'll visualize above scenario using a histogram as below.**
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_histogram(aes(x = Age),fill = "white", colour = "black") + facet_grid(factor(Survived) ~ .)
+```
+
+**Next I'll draw a boxplot of `Fare` against `Survived` to see if `Fare` played a major role in survival rate.** 
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_boxplot(aes(x = factor(Survived), y = Fare))
+```
+
+**From above table it is evident that those who paid high `Fare` survived as compared to those who paid least.**
+**Next I'll draw a histogram from above boxplot for further visual representation.**
+```{r echo=TRUE}
+ggplot(df.train.cleaned) + geom_histogram(aes(x = Fare),fill = "white", colour = "black") + facet_grid(factor(Survived) ~ .)
+```
+
+**Next I'll draw a table of both males and females to show their survival count in three classes as shown below.**
+```{r echo=TRUE}
+xtabs(~factor(Survived)+Pclass+Sex,df.train.cleaned)
+```
+
+**From above table it is evident that more males died compared to females while more females survived compared to males.** 
+**Next I'll draw a bar plot using `facet_grid` option to visualise above table.**
+```{r}
+ggplot(df.train.cleaned) + geom_bar(aes(x=Sex, fill=factor(Survived))) + facet_grid(Pclass ~ .)
+
+```
+
+**Next I'll draw a table of males and females differently in three classes to compare survival rates in three classes of the two genders.**
+```{r}
+xtabs(~Survived+Embarked+Sex,df.train.cleaned)
+```
+
+**From above table it is evident that more males died in `Cherbourg` and `Southamptton` as comparedto males with only `Queenstown` females died more than males, while survival rate also for females in two stations was high compared to males only `Queenstown` was vicevasa.**
+**I'll represent the above table using bar plot using `facet_grid` option for visualisation purposes.**
+```{r}
+ggplot(df.train.cleaned) + geom_bar(aes(x=Sex, fill=factor(Survived))) + facet_grid(Embarked ~ .)
+```
+
+**Next I'll create a child column giving an age an range of 18 a child and rest adult after that I'll draw a bar plot to represent survival rate for a child.**
+```{r echo=TRUE}
+df_concat$Child <- NA
+df_concat$Child[df_concat$Age < 18] <- 1
+df_concat$Child[df_concat$Age >= 18] <- 0
+str(df_concat$Child)
+ggplot(df_concat) + geom_bar(aes(x=Child))
+```
+
+**From above table it evident that more childrens died than those who survived.**
+**Next is to make some inferetial analysis from `Name` column by using regex expression which will help get initials from the name and see  people's initials survival rate both visually ad using table.**
+
+```{r echo=TRUE}
+df_concat$Title <- sapply(df_concat$Name, FUN=function(x) {strsplit(x, split='[,.]')[[1]][2]})
+df_concat$Title <- sub(' ', '',df_concat$Title)  # Remove the white space or blank
+table(df_concat$Title)
+```
+
+**From above table it is like most people who were in the titanic were Mr.** 
+**Next I'll represent above table using bar plot.**
+```{r echo=TRUE}
+ggplot(df_concat) + geom_bar(aes(x=Title))
+```
+
+**Next I'll reduce the above initails into manageable size using below snippet of code.**
+```{r echo=TRUE}
+df_concat$Title[df_concat$Title %in% c('Mme', 'Mlle')] <- 'Mlle'
+df_concat$Title[df_concat$Title %in% c('Capt', 'Don', 'Major', 'Sir')] <- 'Sir'
+df_concat$Title[df_concat$Title %in% c('Dona', 'Lady', 'the Countess', 'Jonkheer')] <- 'Lady'
+df_concat$Title <- factor(df_concat$Title)
+table(df_concat$Title)
+```
+
+**After reducing the initials I'll draw the same bar plot to see the difference.**
+
+
+```{r echo=TRUE}
+ggplot(df_concat) + geom_bar(aes(x=Title))
+```
+
+**Next I'll create aa table to make some inference on how the family size were distributed in the ship.**
+
+```{r echo=TRUE}
+df_concat$FamilySize <- df_concat$SibSp + df_concat$Parch + 1
+table(df_concat$FamilySize)
+```
+
+**From above it's like a `Familysize` of 1 person were many than others.Lastly I'll draw a bar plot to visualize the result.**
+
+```{r}
+ggplot(df_concat) + geom_bar(aes(x=FamilySize))
+```
+
+## Part 2:Feature Engineering
+
+Before doing machine learning processes data need to be cleaned in order to get good models with an accuracy that is to the point.
+Here I'll start with converting the data into factors and normalizing numerical columns as shown below
+```{r}
+#reading data
+df <- read.csv("titan.csv")
+#removing the unwanted column x
+df <- df[,-c(1)]
+df_clean <- df[,-c(1,4,9)]
+
+```
+
+I confirm the structure of my dataframe the do column conversion as shown below.
+```{r}
+str(df_clean)
+```
+
+There are many columns that need to be converted into factor, where below snippet of code will do.
+
+```{r}
+# data transformation
+to.factor <- function(df, variables){
+  for (variable in variables){
+    df[[variable]] <- as.factor(df[[variable]])
+  }
+  return(df)
+}
+
+cate_variable <- c("Pclass","Sex",  "Embarked", "Title", "Survived")
+df_clean <- to.factor(df = df_clean, variables = cate_variable)
+str(df_clean)
+
+```
+
+After converting the above columns into categorical factors I'll need to normalize age column and fare with below snippet of code.
+
+```{r}
+#normalizing - scaling
+normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+df_clean2 <- as.data.frame(lapply(df_clean[,c(4,7)], normalize))
+titan_clean <- as.data.frame(cbind(df_clean[-c(4,7)], df_clean2))
+
+```
+
+After I have finished feature engineering I'll split the data into training and test set using caret package.
+```{r}
+library(caret)
+split_index <- createDataPartition(titan_clean$Survived, p=0.8, list = FALSE)
+testing_set <- titan_clean[-split_index,]
+training_set <- titan_clean[split_index,]
+```
+
+## Part 3:Machine Learning
+In this section I'll be using the saved models that I saved after training if you need code on how I came up with the model I have hosted the in my GitHub account use link for the code source.
+
+For the documentation and explanation of the models please refer my project for more details on the algorithms and explanation of terms in this link.
+
+I'll load all the packages that I'll use in my project as below.
+
+```{r}
+#packages loading
+library(rpart.plot)
+library(rpart)
+library(caret)
+library(e1071)
+library(ROCR)
+library(e1071)
+library(dplyr)
+library(gbm)
+library(randomForest)
+```
+
+# 3.0.0 Logistic Regression.
+I had trained the logistic model and saved as an rds model and loaded here with **readRDS** function.
+The model had an **Accuracy** of **86%** and **Cohen's Kappa statistic(Kappa)** of **70%**  with a 10 fold cross-validation.
+```{r}
+trained.log.model <- readRDS("./logistic.model.rds")
+print(trained.log.model)
+
+
+```
+
+The model had **Aikake's Information Criterion (AIC)** of **778.2** which hepls in model complexity penalization.
+Most of the terms are directly proportion to survival rate.
+```{r}
+print(trained.log.model$finalModel)
+
+```
+
+From the model **62%** of the largest class did not survive(**No Information Rate**),**Sensitivity** of **93%** which is not bad and **Specificity** of **79%**,**Pos Pred Value** of **88%** which means 88% of the obsevation predicted that truly the population died in the titan,**Neg Pred Value** of **88%** this is rate of those who did not die as per the model.
+
+```{r}
+set.seed(127)
+predictions <- predict(trained.log.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)
+```
+
+## 3.0.1 ROC Curve
+
+```{r}
+source("roc_curve_plot_utils.R")
+logistic.preds.values <- predict(trained.log.model, testing_set[,-1],
+                                 type = "prob")
+logistic.predictions.values <- logistic.preds.values[,2]
+predictions <- prediction(logistic.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text="Logistic Regression ROC Curve")
+plot.pr.curve(predictions, title.text="Logistic Regression Precision/Recall Curve")
+
+
+```
+
+From above  **Area Under Curve (AUC)** of **0.91** truly the model will most of time predict  randomly chosen positive class instance well than negative.
+
+## 3.1.0 Random Forest.
+The random forest confusion matrix had an error rate of **14%**, I used **1800** trees.
+
+```{r}
+rf.model <- readRDS("./inal_model_rf.rds")
+print(rf.model)
+```
+
+From the model **62%** of the largest class did not survive(**No Information Rate**),**Sensitivity** of **93%** which is not bad and **Specificity** of **78%**,**Pos Pred Value** of **87%** which means 88% of the obsevation predicted that truly the population died in the titan,**Neg Pred Value** of **86%** this is rate of those who did not die as per the model and an **Accuracy** of **87**.
+
+```{r}
+predictions <- predict(rf.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)
+
+
+```
+
+
+## 3.1.1 ROC Curve.
+
+```{r}
+rf.preds.values <- predict(rf.model, testing_set[,-1],
+                             type = "prob")
+rf.predictions.values <- rf.preds.values[,2]
+predictions <- prediction(rf.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text="Random Forest ROC Curve")
+plot.pr.curve(predictions, title.text="Random Forest Precision/Recall Curve")
+
+
+```
+
+From above  **Area Under Curve (AUC)** of **0.93** truly the model will most of time predict  randomly chosen positive class instance well than negative.
+
+## 3.2.0 Gradient boosting classification Modeling.
+
+From the tuning process using **caret** package I got a shrinkage of **0.01**, number of trees **300** and interaction depth of **3**. For modelling purpose I used**gbm** function with the parameters to get the model information(see code information in above link to my GitHub)
+```{r}
+set.seed(127)
+gbm.model <- readRDS("./titan_gbm_train.rds")
+print(gbm.model)
+```
+
+From the model **62%** of the largest class did not survive(**No Information Rate**),**Sensitivity** of **93%** which is not bad and **Specificity** of **76%**,**Pos Pred Value** of **87%** which means 88% of the obsevation predicted that truly the population died in the titan,**Neg Pred Value** of **87%** this is rate of those who did not die as per the model and an **Accuracy** of **87**.
+
+```{r}
+predictions <- predict(gbm.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)
+
+
+```
+
+## 3.2.1 ROC Curve
+```{r}
+gbm.preds.values <- predict(gbm.model, testing_set[,-1],
+                                 type = "prob")
+gbm.predictions.values <- gbm.preds.values[,2]
+predictions <- prediction(gbm.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text="GBBOOST  ROC Curve")
+plot.pr.curve(predictions, title.text="GBBOOST  Precision/Recall Curve")
+
+
+
+```
+
+From above  **Area Under Curve (AUC)** of **0.91** truly the model will most of time predict  randomly chosen positive class instance well than negative.
+
+## 3.3.0  Classification and Regression Tree (CART)
+
+From the tuning process using **caret** package I got **cp** of  **0.01388889**. For modelling purpose I used **rpart** function with the parameters to get the model information(see code information in above link to my GitHub)
+
+```{r}
+cart.model <- readRDS("./fit_cart.rds")
+print(cart.model)
+```
+
+
+```{r}
+set.seed(127)
+predictions <- predict(cart.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)
+
+```
+
+From the model **62%** of the largest class did not survive(**No Information Rate**),**Sensitivity** of **94%** which is not bad and **Specificity** of **78%**,**Pos Pred Value** of **87%** which means 88% of the obsevation predicted that truly the population died in the titan,**Neg Pred Value** of **88%** this is rate of those who did not die as per the model and an **Accuracy** of **88**.
+
+## 3.3.1 ROC Curve.
+```{r}
+cart.preds.values <- predict(cart.model, testing_set[,-1],
+                                 type = "prob")
+cart.predictions.values <- cart.preds.values[,2]
+predictions <- prediction(cart.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text="CART ROC Curve")
+plot.pr.curve(predictions, title.text="CART Precision/Recall Curve")
+
+
+```
+
+From above  **Area Under Curve (AUC)** of **0.87** truly the model will most of time predict  randomly chosen positive class instance well than negative.
+
+## 3.4.0 Neural Network.
+
+For Neural Network parameters that are supposed to be tuned are size and decay which I got as **1** and **0.1** respectively.
+
+```{r}
+nnet.model <- readRDS("./fit_nnet.rds")
+print(nnet.model)
+
+```
+
+
+```{r}
+set.seed(127)
+predictions <- predict(nnet.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)
+```
+
+From the model **62%** of the largest class did not survive(**No Information Rate**),**Sensitivity** of **93%** which is not bad and **Specificity** of **77%**,**Pos Pred Value** of **87%** which means 88% of the obsevation predicted that truly the population died in the titan,**Neg Pred Value** of **86%** this is rate of those who did not die as per the model and an **Accuracy** of **87**.
+
+## 3.4.1 Roc Curve.
+
+```{r}
+nnet.preds.values <- predict(nnet.model, testing_set[,-1],
+                            type = "prob")
+nnet.predictions.values <- nnet.preds.values[,2]
+predictions <- prediction(nnet.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text="Neural Network ROC Curve")
+plot.pr.curve(predictions, title.text="Neural Network Precision/Recall Curve")
+
+
+```
+
+From above  **Area Under Curve (AUC)** of **0.9** truly the model will most of time predict  randomly chosen positive class instance well than negative.
+---
 title: Titanic Machine Learning from Disaster Project.
 author: Musa R. Nyakerabachi
 date: '2020-07-28'

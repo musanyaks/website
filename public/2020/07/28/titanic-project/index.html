@@ -529,9 +529,16 @@ df_new &lt;- data.frame(PassengerId = df_test$PassengerId, Survived = df_test$Su
 ##        SibSp        Parch       Ticket         Fare        Cabin     Embarked 
 ## 0.0000000000 0.0000000000 0.0000000000 0.0007639419 0.7746371276 0.0015278839</code></pre>
 <p><strong>From above function <code>Age</code>, <code>Fare</code>,<code>Cabin</code> and <code>Embarked</code> columns have missing values.I’ll also use <code>Amelia</code> package from Amelia who is my favorite female follower in twitter to see how missing data is distributed.</strong></p>
-<pre class="r"><code>library(&quot;Amelia&quot;)
-missmap(df_concat, main = &quot;Missing Map&quot;)</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-19-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>library(&quot;Amelia&quot;)</code></pre>
+<pre><code>## Loading required package: Rcpp</code></pre>
+<pre><code>## ## 
+## ## Amelia II: Multiple Imputation
+## ## (Version 1.7.6, built: 2019-11-24)
+## ## Copyright (C) 2005-2020 James Honaker, Gary King and Matthew Blackwell
+## ## Refer to http://gking.harvard.edu/amelia/ for more information
+## ##</code></pre>
+<pre class="r"><code>missmap(df_concat, main = &quot;Missing Map&quot;)</code></pre>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p><strong>From above <code>Amelia</code> package it shows that missing data composes of 8% of the total data set.</strong>
 <strong>Next is to impute missing data in <code>Age</code> column using mean of the total age as shown below.</strong></p>
 <pre class="r"><code>df_concat$Age[is.na(df_concat$Age)] &lt;- mean(df_concat$Age,na.rm=T)
@@ -568,7 +575,7 @@ sum(is.na(df_concat$Fare))</code></pre>
 <p><strong>Let me countercheck if the data is now clean and has no missing value by visual representation using <code>Amelia</code> package.</strong></p>
 <pre class="r"><code>library(&quot;Amelia&quot;)
 missmap(df_concat, main = &quot;Missing Map&quot;)</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-26-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 <p><strong>Bingo!! now all the missing values have been cleaned now I’ll split my data into training and test set then use them in visual analysis of the two data set before actual machine learning is done on them as shown below.</strong></p>
 <pre class="r"><code>df.train.cleaned &lt;- df_concat[1:891,]
 df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
@@ -582,30 +589,32 @@ df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
 <p><strong>From the table above 549 people died and 342 survived in the training set.</strong>
 <strong>I’ll represent the above table using bar plot as shown below.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Survived))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-30-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p><strong>Next I’ll visualize <code>Sex</code> column in the traing set to see the gender that were many in the titanic as shown below.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Sex))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-31-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <p><strong>From above table it is evident that more males were in the titanic compared to females.</strong>
 <strong>Next I’ll draw a bar plot to see how people were distributed in three classes using the below code.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Pclass))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-32-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <p><strong>From above table there were more people in the third class compared to other classes while second class being least.</strong>
 <strong>Next I’ll use a histogram to show if <code>Fare</code> is normaally distributed and also see its skewness.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_histogram(aes(x=Fare),fill = &quot;white&quot;, colour = &quot;black&quot;)</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-33-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 <p><strong>From the table above it is evident that <code>Fare</code> is right skewed hence the price is not normal distributed.</strong>
 <strong>Next is to draw a boxplot to see how price is distributed and also capture the outliers.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_boxplot(aes(x=factor(0),y=Fare)) + coord_flip()</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-34-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <p><strong>From above boxplot it can be seen that <code>Fare</code> is right skewed with even a person paying more than 500.</strong>
 <strong>Next I’ll draw a histogram to show how <code>Age</code> is distributed.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_histogram(aes(x=Age),fill = &quot;white&quot;, colour = &quot;black&quot;)</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-35-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <p><strong>From above it is evident that <code>Age</code> is normally distributed with a mean of roughly 30.</strong>
 <strong>Next I’ll draw a boxplot for further inference on the <code>Age</code>.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_boxplot(aes(x=factor(0),y=Age)) + coord_flip()</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-36-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 <p><strong>From above boxplot it can be seen that <code>Age</code> is normally distributed.</strong>
 <strong>Next I’ll make a table to show how survival count in the <code>Sex</code> is distributed.</strong></p>
 <pre class="r"><code>xtabs(~Survived+Sex,df.train.cleaned)</code></pre>
@@ -616,7 +625,7 @@ df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
 <p><strong>From above table it is evident that more males died compared to females while more females survived compared to males.</strong>
 <strong>Next I’ll draw a bar plot to visualize above table.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Sex, fill=factor(Survived)))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-38-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <p><strong>Next I’ll make a table to show the survival rate in the three classes as shown below.</strong></p>
 <pre class="r"><code>xtabs(~Survived+Pclass,df.train.cleaned)</code></pre>
 <pre><code>##         Pclass
@@ -626,7 +635,7 @@ df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
 <p><strong>From above table more people died in the third class as compared to rest of classes while people who were in the first class survived to compared to the rest of the classes.</strong>
 <strong>Next I’ll visualize above table using bar plot for visual inference.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Pclass, fill=factor(Survived)) )</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-40-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <p><strong>Next I’ll make a table to see survival rate from three stations as below.</strong></p>
 <pre class="r"><code>xtabs(~Survived+Embarked,df.train.cleaned)</code></pre>
 <pre><code>##         Embarked
@@ -636,21 +645,23 @@ df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
 <p><strong>From the table above it is evident that more people from <code>Southampton</code> boarded the titanic and also it is them that died in large number than the rest and also it is them that died most while least death and survival registered by <code>Queenstown</code>.</strong>
 <strong>I’ll visualize the above table using a bar plot for further visual inference.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Embarked, fill=factor(Survived)) )</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-42-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <p><strong>Next I’ll draw a boxplot to show how suvival rate for <code>Age</code> column .</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_boxplot(aes(x = factor(Survived), y = Age))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-43-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 <p><strong>From above box plot it is evident that a maximum <code>Age</code> of about 40 survived and died while the least <code>Age</code> being 24 for for those who died while 22 being who survived.</strong>
 <strong>Next I’ll visualize above scenario using a histogram as below.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_histogram(aes(x = Age),fill = &quot;white&quot;, colour = &quot;black&quot;) + facet_grid(factor(Survived) ~ .)</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-44-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
 <p><strong>Next I’ll draw a boxplot of <code>Fare</code> against <code>Survived</code> to see if <code>Fare</code> played a major role in survival rate.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_boxplot(aes(x = factor(Survived), y = Fare))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-45-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <p><strong>From above table it is evident that those who paid high <code>Fare</code> survived as compared to those who paid least.</strong>
 <strong>Next I’ll draw a histogram from above boxplot for further visual representation.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_histogram(aes(x = Fare),fill = &quot;white&quot;, colour = &quot;black&quot;) + facet_grid(factor(Survived) ~ .)</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-46-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 <p><strong>Next I’ll draw a table of both males and females to show their survival count in three classes as shown below.</strong></p>
 <pre class="r"><code>xtabs(~factor(Survived)+Pclass+Sex,df.train.cleaned)</code></pre>
 <pre><code>## , , Sex = female
@@ -669,7 +680,7 @@ df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
 <p><strong>From above table it is evident that more males died compared to females while more females survived compared to males.</strong>
 <strong>Next I’ll draw a bar plot using <code>facet_grid</code> option to visualise above table.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Sex, fill=factor(Survived))) + facet_grid(Pclass ~ .)</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-48-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
 <p><strong>Next I’ll draw a table of males and females differently in three classes to compare survival rates in three classes of the two genders.</strong></p>
 <pre class="r"><code>xtabs(~Survived+Embarked+Sex,df.train.cleaned)</code></pre>
 <pre><code>## , , Sex = female
@@ -688,7 +699,7 @@ df.test.cleaned &lt;- df_concat[892:1309,]</code></pre>
 <p><strong>From above table it is evident that more males died in <code>Cherbourg</code> and <code>Southamptton</code> as comparedto males with only <code>Queenstown</code> females died more than males, while survival rate also for females in two stations was high compared to males only <code>Queenstown</code> was vicevasa.</strong>
 <strong>I’ll represent the above table using bar plot using <code>facet_grid</code> option for visualisation purposes.</strong></p>
 <pre class="r"><code>ggplot(df.train.cleaned) + geom_bar(aes(x=Sex, fill=factor(Survived))) + facet_grid(Embarked ~ .)</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-50-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
 <p><strong>Next I’ll create a child column giving an age an range of 18 a child and rest adult after that I’ll draw a bar plot to represent survival rate for a child.</strong></p>
 <pre class="r"><code>df_concat$Child &lt;- NA
 df_concat$Child[df_concat$Age &lt; 18] &lt;- 1
@@ -696,7 +707,7 @@ df_concat$Child[df_concat$Age &gt;= 18] &lt;- 0
 str(df_concat$Child)</code></pre>
 <pre><code>##  num [1:1309] 0 0 0 0 0 0 0 1 0 1 ...</code></pre>
 <pre class="r"><code>ggplot(df_concat) + geom_bar(aes(x=Child))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-51-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
 <p><strong>From above table it evident that more childrens died than those who survived.</strong>
 <strong>Next is to make some inferetial analysis from <code>Name</code> column by using regex expression which will help get initials from the name and see people’s initials survival rate both visually ad using table.</strong></p>
 <pre class="r"><code>df_concat$Title &lt;- sapply(df_concat$Name, FUN=function(x) {strsplit(x, split=&#39;[,.]&#39;)[[1]][2]})
@@ -712,7 +723,7 @@ table(df_concat$Title)</code></pre>
 <p><strong>From above table it is like most people who were in the titanic were Mr.</strong>
 <strong>Next I’ll represent above table using bar plot.</strong></p>
 <pre class="r"><code>ggplot(df_concat) + geom_bar(aes(x=Title))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-53-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
 <p><strong>Next I’ll reduce the above initails into manageable size using below snippet of code.</strong></p>
 <pre class="r"><code>df_concat$Title[df_concat$Title %in% c(&#39;Mme&#39;, &#39;Mlle&#39;)] &lt;- &#39;Mlle&#39;
 df_concat$Title[df_concat$Title %in% c(&#39;Capt&#39;, &#39;Don&#39;, &#39;Major&#39;, &#39;Sir&#39;)] &lt;- &#39;Sir&#39;
@@ -724,7 +735,7 @@ table(df_concat$Title)</code></pre>
 ##      4      8      4     61    260      3    757    197      2      8      5</code></pre>
 <p><strong>After reducing the initials I’ll draw the same bar plot to see the difference.</strong></p>
 <pre class="r"><code>ggplot(df_concat) + geom_bar(aes(x=Title))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-55-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 <p><strong>Next I’ll create aa table to make some inference on how the family size were distributed in the ship.</strong></p>
 <pre class="r"><code>df_concat$FamilySize &lt;- df_concat$SibSp + df_concat$Parch + 1
 table(df_concat$FamilySize)</code></pre>
@@ -733,7 +744,491 @@ table(df_concat$FamilySize)</code></pre>
 ## 790 235 159  43  22  25  16   8  11</code></pre>
 <p><strong>From above it’s like a <code>Familysize</code> of 1 person were many than others.Lastly I’ll draw a bar plot to visualize the result.</strong></p>
 <pre class="r"><code>ggplot(df_concat) + geom_bar(aes(x=FamilySize))</code></pre>
-<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-57-1.png" width="80%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+</div>
+<div id="part-2feature-engineering" class="section level2">
+<h2>Part 2:Feature Engineering</h2>
+<p>Before doing machine learning processes data need to be cleaned in order to get good models with an accuracy that is to the point.
+Here I’ll start with converting the data into factors and normalizing numerical columns as shown below</p>
+<pre class="r"><code>#reading data
+df &lt;- read.csv(&quot;titan.csv&quot;)
+#removing the unwanted column x
+df &lt;- df[,-c(1)]
+df_clean &lt;- df[,-c(1,4,9)]</code></pre>
+<p>I confirm the structure of my dataframe the do column conversion as shown below.</p>
+<pre class="r"><code>str(df_clean)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    1309 obs. of  11 variables:
+##  $ Survived  : int  0 1 1 1 0 0 0 0 1 1 ...
+##  $ Pclass    : int  3 1 3 1 3 3 1 3 3 2 ...
+##  $ Sex       : chr  &quot;male&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; ...
+##  $ Age       : num  22 38 26 35 35 ...
+##  $ SibSp     : int  1 1 0 1 0 0 0 3 0 1 ...
+##  $ Parch     : int  0 0 0 0 0 0 0 1 2 0 ...
+##  $ Fare      : num  7.25 71.28 7.92 53.1 8.05 ...
+##  $ Embarked  : chr  &quot;S&quot; &quot;C&quot; &quot;S&quot; &quot;S&quot; ...
+##  $ Child     : int  0 0 0 0 0 0 0 1 0 1 ...
+##  $ Title     : chr  &quot;Mr&quot; &quot;Mrs&quot; &quot;Miss&quot; &quot;Mrs&quot; ...
+##  $ FamilySize: int  2 2 1 2 1 1 1 5 3 2 ...</code></pre>
+<p>There are many columns that need to be converted into factor, where below snippet of code will do.</p>
+<pre class="r"><code># data transformation
+to.factor &lt;- function(df, variables){
+  for (variable in variables){
+    df[[variable]] &lt;- as.factor(df[[variable]])
+  }
+  return(df)
+}
+
+cate_variable &lt;- c(&quot;Pclass&quot;,&quot;Sex&quot;,  &quot;Embarked&quot;, &quot;Title&quot;, &quot;Survived&quot;)
+df_clean &lt;- to.factor(df = df_clean, variables = cate_variable)
+str(df_clean)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    1309 obs. of  11 variables:
+##  $ Survived  : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 2 2 2 1 1 1 1 2 2 ...
+##  $ Pclass    : Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 3 1 3 1 3 3 1 3 3 2 ...
+##  $ Sex       : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 2 1 1 1 2 2 2 2 1 1 ...
+##  $ Age       : num  22 38 26 35 35 ...
+##  $ SibSp     : int  1 1 0 1 0 0 0 3 0 1 ...
+##  $ Parch     : int  0 0 0 0 0 0 0 1 2 0 ...
+##  $ Fare      : num  7.25 71.28 7.92 53.1 8.05 ...
+##  $ Embarked  : Factor w/ 3 levels &quot;C&quot;,&quot;Q&quot;,&quot;S&quot;: 3 1 3 3 3 2 3 3 3 1 ...
+##  $ Child     : int  0 0 0 0 0 0 0 1 0 1 ...
+##  $ Title     : Factor w/ 11 levels &quot;Col&quot;,&quot;Dr&quot;,&quot;Lady&quot;,..: 7 8 5 8 7 7 7 4 8 8 ...
+##  $ FamilySize: int  2 2 1 2 1 1 1 5 3 2 ...</code></pre>
+<p>After converting the above columns into categorical factors I’ll need to normalize age column and fare with below snippet of code.</p>
+<pre class="r"><code>#normalizing - scaling
+normalize &lt;- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+df_clean2 &lt;- as.data.frame(lapply(df_clean[,c(4,7)], normalize))
+titan_clean &lt;- as.data.frame(cbind(df_clean[-c(4,7)], df_clean2))</code></pre>
+<p>After I have finished feature engineering I’ll split the data into training and test set using caret package.</p>
+<pre class="r"><code>library(caret)</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## 
+## Attaching package: &#39;caret&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     lift</code></pre>
+<pre class="r"><code>split_index &lt;- createDataPartition(titan_clean$Survived, p=0.8, list = FALSE)
+testing_set &lt;- titan_clean[-split_index,]
+training_set &lt;- titan_clean[split_index,]</code></pre>
+</div>
+<div id="part-3machine-learning" class="section level2">
+<h2>Part 3:Machine Learning</h2>
+<p>In this section I’ll be using the saved models that I saved after training if you need code on how I came up with the model I have hosted the in my GitHub account use link for the code source.</p>
+<p>For the documentation and explanation of the models please refer my project for more details on the algorithms and explanation of terms in this link.</p>
+<p>I’ll load all the packages that I’ll use in my project as below.</p>
+<pre class="r"><code>#packages loading
+library(rpart.plot)</code></pre>
+<pre><code>## Loading required package: rpart</code></pre>
+<pre class="r"><code>library(rpart)
+library(caret)
+library(e1071)
+library(ROCR)
+library(e1071)
+library(dplyr)
+library(gbm)</code></pre>
+<pre><code>## Loaded gbm 2.1.8</code></pre>
+<pre class="r"><code>library(randomForest)</code></pre>
+<pre><code>## randomForest 4.6-14</code></pre>
+<pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;randomForest&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     combine</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     margin</code></pre>
+</div>
+</div>
+<div id="logistic-regression." class="section level1">
+<h1>3.0.0 Logistic Regression.</h1>
+<p>I had trained the logistic model and saved as an rds model and loaded here with <strong>readRDS</strong> function.
+The model had an <strong>Accuracy</strong> of <strong>86%</strong> and <strong>Cohen’s Kappa statistic(Kappa)</strong> of <strong>70%</strong> with a 10 fold cross-validation.</p>
+<pre class="r"><code>trained.log.model &lt;- readRDS(&quot;./logistic.model.rds&quot;)
+print(trained.log.model)</code></pre>
+<pre><code>## Generalized Linear Model 
+## 
+## 1048 samples
+##   10 predictor
+##    2 classes: &#39;0&#39;, &#39;1&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 943, 943, 943, 943, 943, 943, ... 
+## Resampling results:
+## 
+##   Accuracy  Kappa    
+##   0.864533  0.7072219</code></pre>
+<p>The model had <strong>Aikake’s Information Criterion (AIC)</strong> of <strong>778.2</strong> which hepls in model complexity penalization.
+Most of the terms are directly proportion to survival rate.</p>
+<pre class="r"><code>print(trained.log.model$finalModel)</code></pre>
+<pre><code>## 
+## Call:  NULL
+## 
+## Coefficients:
+## (Intercept)      Pclass2      Pclass3      Sexmale        SibSp        Parch  
+##   34.234124    -1.110276    -2.050782   -33.092484     0.553404     0.552330  
+##   EmbarkedQ    EmbarkedS        Child      TitleDr    TitleLady  TitleMaster  
+##    0.066021    -0.245861     0.021165     0.607688   -15.635388     2.548495  
+##   TitleMiss    TitleMlle      TitleMr     TitleMrs      TitleMs     TitleRev  
+##  -29.114702   -16.227355    -0.006556   -28.434349   -14.344976   -14.322320  
+##    TitleSir   FamilySize          Age         Fare  
+##    0.882737    -1.001760    -1.740304     0.658579  
+## 
+## Degrees of Freedom: 1047 Total (i.e. Null);  1026 Residual
+## Null Deviance:       1390 
+## Residual Deviance: 734.2     AIC: 778.2</code></pre>
+<p>From the model <strong>62%</strong> of the largest class did not survive(<strong>No Information Rate</strong>),<strong>Sensitivity</strong> of <strong>94%</strong> which is not bad and <strong>Specificity</strong> of <strong>86%</strong>,<strong>Pos Pred Value</strong> of <strong>92%</strong> which means 92% of the obsevation predicted that truly the population died in the titan,<strong>Neg Pred Value</strong> of <strong>90%</strong> this is rate of those who did not die as per the model.</p>
+<pre class="r"><code>set.seed(127)
+predictions &lt;- predict(trained.log.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 154  14
+##          1   9  84
+##                                           
+##                Accuracy : 0.9119          
+##                  95% CI : (0.8707, 0.9433)
+##     No Information Rate : 0.6245          
+##     P-Value [Acc &gt; NIR] : &lt;2e-16          
+##                                           
+##                   Kappa : 0.8102          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.4042          
+##                                           
+##             Sensitivity : 0.9448          
+##             Specificity : 0.8571          
+##          Pos Pred Value : 0.9167          
+##          Neg Pred Value : 0.9032          
+##              Prevalence : 0.6245          
+##          Detection Rate : 0.5900          
+##    Detection Prevalence : 0.6437          
+##       Balanced Accuracy : 0.9010          
+##                                           
+##        &#39;Positive&#39; Class : 0               
+## </code></pre>
+<div id="roc-curve" class="section level2">
+<h2>3.0.1 ROC Curve</h2>
+<pre class="r"><code>source(&quot;plot_utils.R&quot;)
+logistic.preds.values &lt;- predict(trained.log.model, testing_set[,-1],
+                                 type = &quot;prob&quot;)
+logistic.predictions.values &lt;- logistic.preds.values[,2]
+predictions &lt;- prediction(logistic.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text=&quot;Logistic Regression ROC Curve&quot;)
+plot.pr.curve(predictions, title.text=&quot;Logistic Regression Precision/Recall Curve&quot;)</code></pre>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
+<p>From above <strong>Area Under Curve (AUC)</strong> of <strong>0.94</strong> truly the model will most of time predict randomly chosen positive class instance well than negative.</p>
+</div>
+<div id="random-forest." class="section level2">
+<h2>3.1.0 Random Forest.</h2>
+<p>The random forest confusion matrix had an error rate of <strong>14%</strong>, I used <strong>1800</strong> trees.</p>
+<pre class="r"><code>rf.model &lt;- readRDS(&quot;./inal_model_rf.rds&quot;)
+print(rf.model)</code></pre>
+<pre><code>## 
+## Call:
+##  randomForest(formula = Survived ~ ., data = training_set, mtry = 1,      ntree = 1800) 
+##                Type of random forest: classification
+##                      Number of trees: 1800
+## No. of variables tried at each split: 1
+## 
+##         OOB estimate of  error rate: 13.65%
+## Confusion matrix:
+##     0   1 class.error
+## 0 595  57  0.08742331
+## 1  86 310  0.21717172</code></pre>
+<p>From the model <strong>62%</strong> of the largest class did not survive(<strong>No Information Rate</strong>),<strong>Sensitivity</strong> of <strong>93%</strong> which is not bad and <strong>Specificity</strong> of <strong>88%</strong>,<strong>Pos Pred Value</strong> of <strong>93%</strong> which means 93% of the obsevation predicted that truly the population died in the titan,<strong>Neg Pred Value</strong> of <strong>88%</strong> this is rate of those who did not die as per the model and an <strong>Accuracy</strong> of <strong>91</strong>.</p>
+<pre class="r"><code>predictions &lt;- predict(rf.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 151  12
+##          1  12  86
+##                                           
+##                Accuracy : 0.908           
+##                  95% CI : (0.8663, 0.9402)
+##     No Information Rate : 0.6245          
+##     P-Value [Acc &gt; NIR] : &lt;2e-16          
+##                                           
+##                   Kappa : 0.8039          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 1               
+##                                           
+##             Sensitivity : 0.9264          
+##             Specificity : 0.8776          
+##          Pos Pred Value : 0.9264          
+##          Neg Pred Value : 0.8776          
+##              Prevalence : 0.6245          
+##          Detection Rate : 0.5785          
+##    Detection Prevalence : 0.6245          
+##       Balanced Accuracy : 0.9020          
+##                                           
+##        &#39;Positive&#39; Class : 0               
+## </code></pre>
+</div>
+<div id="roc-curve." class="section level2">
+<h2>3.1.1 ROC Curve.</h2>
+<pre class="r"><code>rf.preds.values &lt;- predict(rf.model, testing_set[,-1],
+                             type = &quot;prob&quot;)
+rf.predictions.values &lt;- rf.preds.values[,2]
+predictions &lt;- prediction(rf.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text=&quot;Random Forest ROC Curve&quot;)
+plot.pr.curve(predictions, title.text=&quot;Random Forest Precision/Recall Curve&quot;)</code></pre>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<p>From above <strong>Area Under Curve (AUC)</strong> of <strong>0.96</strong> truly the model will most of time predict randomly chosen positive class instance well than negative.</p>
+</div>
+<div id="gradient-boosting-classification-modeling." class="section level2">
+<h2>3.2.0 Gradient boosting classification Modeling.</h2>
+<p>From the tuning process using <strong>caret</strong> package I got a shrinkage of <strong>0.01</strong>, number of trees <strong>300</strong> and interaction depth of <strong>3</strong>. For modelling purpose I used<strong>gbm</strong> function with the parameters to get the model information(see code information in above link to my GitHub)</p>
+<pre class="r"><code>set.seed(127)
+gbm.model &lt;- readRDS(&quot;./titan_gbm_train.rds&quot;)
+print(gbm.model)</code></pre>
+<pre><code>## Stochastic Gradient Boosting 
+## 
+## 1048 samples
+##   10 predictor
+##    2 classes: &#39;0&#39;, &#39;1&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 943, 943, 943, 943, 943, 943, ... 
+## Resampling results across tuning parameters:
+## 
+##   shrinkage  interaction.depth  n.trees  Accuracy   Kappa    
+##   0.001      1                  100      0.6221451  0.0000000
+##   0.001      1                  300      0.6221451  0.0000000
+##   0.001      1                  500      0.8493287  0.6768831
+##   0.001      2                  100      0.6221451  0.0000000
+##   0.001      2                  300      0.7939614  0.5119273
+##   0.001      2                  500      0.8608579  0.6965139
+##   0.001      3                  100      0.6221451  0.0000000
+##   0.001      3                  300      0.7939614  0.5119273
+##   0.001      3                  500      0.8570392  0.6869535
+##   0.001      4                  100      0.6221451  0.0000000
+##   0.001      4                  300      0.7949229  0.5144569
+##   0.001      4                  500      0.8474604  0.6641369
+##   0.010      1                  100      0.8493287  0.6768831
+##   0.010      1                  300      0.8493287  0.6768831
+##   0.010      1                  500      0.8598507  0.6974685
+##   0.010      2                  100      0.8656199  0.7076749
+##   0.010      2                  300      0.8665540  0.7103976
+##   0.010      2                  500      0.8675064  0.7136556
+##   0.010      3                  100      0.8656199  0.7077374
+##   0.010      3                  300      0.8713251  0.7212588
+##   0.010      3                  500      0.8684498  0.7160126
+##   0.010      4                  100      0.8665723  0.7100134
+##   0.010      4                  300      0.8684679  0.7152505
+##   0.010      4                  500      0.8684498  0.7161244
+##   0.100      1                  100      0.8626897  0.7036403
+##   0.100      1                  300      0.8617467  0.7023040
+##   0.100      1                  500      0.8646038  0.7086194
+##   0.100      2                  100      0.8636514  0.7066087
+##   0.100      2                  300      0.8589166  0.6954070
+##   0.100      2                  500      0.8617465  0.7014588
+##   0.100      3                  100      0.8549623  0.6891051
+##   0.100      3                  300      0.8560004  0.6902403
+##   0.100      3                  500      0.8592155  0.6989324
+##   0.100      4                  100      0.8549829  0.6877505
+##   0.100      4                  300      0.8560309  0.6892170
+##   0.100      4                  500      0.8496917  0.6762789
+## 
+## Tuning parameter &#39;n.minobsinnode&#39; was held constant at a value of 10
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were n.trees = 300, interaction.depth =
+##  3, shrinkage = 0.01 and n.minobsinnode = 10.</code></pre>
+<p>From the model <strong>62%</strong> of the largest class did not survive(<strong>No Information Rate</strong>),<strong>Sensitivity</strong> of <strong>94%</strong> which is not bad and <strong>Specificity</strong> of <strong>84%</strong>,<strong>Pos Pred Value</strong> of <strong>91%</strong> which means 88% of the obsevation predicted that truly the population died in the titan,<strong>Neg Pred Value</strong> of <strong>91%</strong> this is rate of those who did not die as per the model and an <strong>Accuracy</strong> of <strong>90</strong>.</p>
+<pre class="r"><code>predictions &lt;- predict(gbm.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 154  16
+##          1   9  82
+##                                          
+##                Accuracy : 0.9042         
+##                  95% CI : (0.8619, 0.937)
+##     No Information Rate : 0.6245         
+##     P-Value [Acc &gt; NIR] : &lt;2e-16         
+##                                          
+##                   Kappa : 0.7928         
+##                                          
+##  Mcnemar&#39;s Test P-Value : 0.2301         
+##                                          
+##             Sensitivity : 0.9448         
+##             Specificity : 0.8367         
+##          Pos Pred Value : 0.9059         
+##          Neg Pred Value : 0.9011         
+##              Prevalence : 0.6245         
+##          Detection Rate : 0.5900         
+##    Detection Prevalence : 0.6513         
+##       Balanced Accuracy : 0.8908         
+##                                          
+##        &#39;Positive&#39; Class : 0              
+## </code></pre>
+</div>
+<div id="roc-curve-1" class="section level2">
+<h2>3.2.1 ROC Curve</h2>
+<pre class="r"><code>gbm.preds.values &lt;- predict(gbm.model, testing_set[,-1],
+                                 type = &quot;prob&quot;)
+gbm.predictions.values &lt;- gbm.preds.values[,2]
+predictions &lt;- prediction(gbm.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text=&quot;GBBOOST  ROC Curve&quot;)
+plot.pr.curve(predictions, title.text=&quot;GBBOOST  Precision/Recall Curve&quot;)</code></pre>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
+<p>From above <strong>Area Under Curve (AUC)</strong> of <strong>0.91</strong> truly the model will most of time predict randomly chosen positive class instance well than negative.</p>
+</div>
+<div id="classification-and-regression-tree-cart" class="section level2">
+<h2>3.3.0 Classification and Regression Tree (CART)</h2>
+<p>From the tuning process using <strong>caret</strong> package I got <strong>cp</strong> of <strong>0.01388889</strong>. For modelling purpose I used <strong>rpart</strong> function with the parameters to get the model information(see code information in above link to my GitHub)</p>
+<pre class="r"><code>cart.model &lt;- readRDS(&quot;./fit_cart.rds&quot;)
+print(cart.model)</code></pre>
+<pre><code>## CART 
+## 
+## 1048 samples
+##   10 predictor
+##    2 classes: &#39;0&#39;, &#39;1&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 3 times) 
+## Summary of sample sizes: 942, 944, 943, 943, 944, 943, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp          Accuracy   Kappa    
+##   0.01388889  0.8629034  0.7025245
+##   0.01641414  0.8492493  0.6727766
+##   0.61111111  0.7335351  0.3369915
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.01388889.</code></pre>
+<pre class="r"><code>set.seed(127)
+predictions &lt;- predict(cart.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 153  16
+##          1  10  82
+##                                           
+##                Accuracy : 0.9004          
+##                  95% CI : (0.8575, 0.9339)
+##     No Information Rate : 0.6245          
+##     P-Value [Acc &gt; NIR] : &lt;2e-16          
+##                                           
+##                   Kappa : 0.785           
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.3268          
+##                                           
+##             Sensitivity : 0.9387          
+##             Specificity : 0.8367          
+##          Pos Pred Value : 0.9053          
+##          Neg Pred Value : 0.8913          
+##              Prevalence : 0.6245          
+##          Detection Rate : 0.5862          
+##    Detection Prevalence : 0.6475          
+##       Balanced Accuracy : 0.8877          
+##                                           
+##        &#39;Positive&#39; Class : 0               
+## </code></pre>
+<p>From the model <strong>62%</strong> of the largest class did not survive(<strong>No Information Rate</strong>),<strong>Sensitivity</strong> of <strong>94%</strong> which is not bad and <strong>Specificity</strong> of <strong>78%</strong>,<strong>Pos Pred Value</strong> of <strong>87%</strong> which means 88% of the obsevation predicted that truly the population died in the titan,<strong>Neg Pred Value</strong> of <strong>88%</strong> this is rate of those who did not die as per the model and an <strong>Accuracy</strong> of <strong>88</strong>.</p>
+</div>
+<div id="roc-curve.-1" class="section level2">
+<h2>3.3.1 ROC Curve.</h2>
+<pre class="r"><code>cart.preds.values &lt;- predict(cart.model, testing_set[,-1],
+                                 type = &quot;prob&quot;)
+cart.predictions.values &lt;- cart.preds.values[,2]
+predictions &lt;- prediction(cart.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text=&quot;CART ROC Curve&quot;)
+plot.pr.curve(predictions, title.text=&quot;CART Precision/Recall Curve&quot;)</code></pre>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
+<p>From above <strong>Area Under Curve (AUC)</strong> of <strong>0.96</strong> truly the model will most of time predict randomly chosen positive class instance well than negative.</p>
+</div>
+<div id="neural-network." class="section level2">
+<h2>3.4.0 Neural Network.</h2>
+<p>For Neural Network parameters that are supposed to be tuned are size and decay which I got as <strong>1</strong> and <strong>0.1</strong> respectively.</p>
+<pre class="r"><code>nnet.model &lt;- readRDS(&quot;./fit_nnet.rds&quot;)
+print(nnet.model)</code></pre>
+<pre><code>## Neural Network 
+## 
+## 1048 samples
+##   10 predictor
+##    2 classes: &#39;0&#39;, &#39;1&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 3 times) 
+## Summary of sample sizes: 944, 943, 944, 943, 943, 943, ... 
+## Resampling results across tuning parameters:
+## 
+##   size  decay  Accuracy   Kappa    
+##   1     0e+00  0.8350014  0.6228230
+##   1     1e-04  0.8537273  0.6846832
+##   1     1e-01  0.8686601  0.7150352
+##   3     0e+00  0.8569045  0.6890369
+##   3     1e-04  0.8483238  0.6699612
+##   3     1e-01  0.8632752  0.7031294
+##   5     0e+00  0.8419713  0.6570566
+##   5     1e-04  0.8451310  0.6635986
+##   5     1e-01  0.8553233  0.6856418
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were size = 1 and decay = 0.1.</code></pre>
+<pre class="r"><code>set.seed(127)
+predictions &lt;- predict(nnet.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 154  16
+##          1   9  82
+##                                          
+##                Accuracy : 0.9042         
+##                  95% CI : (0.8619, 0.937)
+##     No Information Rate : 0.6245         
+##     P-Value [Acc &gt; NIR] : &lt;2e-16         
+##                                          
+##                   Kappa : 0.7928         
+##                                          
+##  Mcnemar&#39;s Test P-Value : 0.2301         
+##                                          
+##             Sensitivity : 0.9448         
+##             Specificity : 0.8367         
+##          Pos Pred Value : 0.9059         
+##          Neg Pred Value : 0.9011         
+##              Prevalence : 0.6245         
+##          Detection Rate : 0.5900         
+##    Detection Prevalence : 0.6513         
+##       Balanced Accuracy : 0.8908         
+##                                          
+##        &#39;Positive&#39; Class : 0              
+## </code></pre>
+<p>From the model <strong>62%</strong> of the largest class did not survive(<strong>No Information Rate</strong>),<strong>Sensitivity</strong> of <strong>94%</strong> which is not bad and <strong>Specificity</strong> of <strong>84%</strong>,<strong>Pos Pred Value</strong> of <strong>91%</strong> which means 91% of the obsevation predicted that truly the population died in the titan,<strong>Neg Pred Value</strong> of <strong>90%</strong> this is rate of those who did not die as per the model and an <strong>Accuracy</strong> of <strong>90</strong>.</p>
+</div>
+<div id="roc-curve.-2" class="section level2">
+<h2>3.4.1 Roc Curve.</h2>
+<pre class="r"><code>nnet.preds.values &lt;- predict(nnet.model, testing_set[,-1],
+                            type = &quot;prob&quot;)
+nnet.predictions.values &lt;- nnet.preds.values[,2]
+predictions &lt;- prediction(nnet.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text=&quot;Neural Network ROC Curve&quot;)
+plot.pr.curve(predictions, title.text=&quot;Neural Network Precision/Recall Curve&quot;)</code></pre>
+<p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
+<p>From above <strong>Area Under Curve (AUC)</strong> of <strong>0.94</strong> truly the model will most of time predict randomly chosen positive class instance well than negative.</p>
 </div>
 </div>
 
@@ -743,13 +1238,13 @@ table(df_concat$FamilySize)</code></pre>
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="/2020/07/27/titanic-project./"><i class="fa fa-chevron-left"></i></a>
+    <a href="/2020/07/27/titanic-machine-learning-from-disaster-project./"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="/2020/07/27/titanic-project./">Titanic project.</a>
+      <a href="/2020/07/27/titanic-machine-learning-from-disaster-project./">Titanic Machine Learning from Disaster Project.</a>
     </nav>
     
   </div>

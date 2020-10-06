@@ -12,11 +12,11 @@
 
 
 <item>
-  <title>Titanic Machine Learning from Disaster Project.</title>
-  <link>/2020/07/28/titanic-machine-learning-from-disaster-project./</link>
+  <title>Titanic Project.</title>
+  <link>/2020/07/28/titanic-project./</link>
   <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
   
-<guid>/2020/07/28/titanic-machine-learning-from-disaster-project./</guid>
+<guid>/2020/07/28/titanic-project./</guid>
   <description>
 &lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;/rmarkdown-libs/jquery/jquery.min.js&#34;&gt;&lt;/script&gt;
@@ -29,6 +29,11 @@
 &lt;script src=&#34;/rmarkdown-libs/crosstalk/js/crosstalk.min.js&#34;&gt;&lt;/script&gt;
 
 
+&lt;div id=&#34;titanic-machine-learning-from-disaster-project&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Titanic: Machine Learning from Disaster Project&lt;/h1&gt;
+&lt;div id=&#34;part-1exploratory-data-analysis.&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Part 1:Exploratory Data Analysis.&lt;/h2&gt;
+&lt;/div&gt;
 &lt;div id=&#34;business-understanding.&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;1. BUSINESS UNDERSTANDING.&lt;/h2&gt;
 &lt;p&gt;Source:&lt;a href=&#34;https://www.kaggle.com/c/titanic/&#34;&gt;Machine Learning Titanic Competition&lt;/a&gt;&lt;/p&gt;
@@ -106,14 +111,11 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;&lt;strong&gt;First I’ll load the data file using user input option &lt;code&gt;file.choose()&lt;/code&gt;.The data is given in two set both training and test set.&lt;/strong&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;set-up.&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;2.2 Set Up.&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_train &amp;lt;- read.csv (file.choose(), stringsAsFactors = F,na.strings=c(&amp;quot;&amp;quot;,&amp;quot;NA&amp;quot;,&amp;quot; &amp;quot;))
 df_test &amp;lt;- read.csv (file.choose(), stringsAsFactors = F,na.strings=c(&amp;quot;&amp;quot;,&amp;quot;NA&amp;quot;,&amp;quot; &amp;quot;))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Next I’ll load the training set and test set data using &lt;code&gt;DT&lt;/code&gt; package as shown below.I’ll view only the first eight columns for easy page view but if you need whole columns for the two data sets remove &lt;code&gt;[,1:8]&lt;/code&gt; from the code snippet below&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
-library(ggplot2)
+
 DT::datatable(df_train[,1:8])&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:100%;height:auto;&#34; class=&#34;datatables html-widget&#34;&gt;&lt;/div&gt;
 &lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;filter&#34;:&#34;none&#34;,&#34;data&#34;:[[&#34;1&#34;,&#34;2&#34;,&#34;3&#34;,&#34;4&#34;,&#34;5&#34;,&#34;6&#34;,&#34;7&#34;,&#34;8&#34;,&#34;9&#34;,&#34;10&#34;,&#34;11&#34;,&#34;12&#34;,&#34;13&#34;,&#34;14&#34;,&#34;15&#34;,&#34;16&#34;,&#34;17&#34;,&#34;18&#34;,&#34;19&#34;,&#34;20&#34;,&#34;21&#34;,&#34;22&#34;,&#34;23&#34;,&#34;24&#34;,&#34;25&#34;,&#34;26&#34;,&#34;27&#34;,&#34;28&#34;,&#34;29&#34;,&#34;30&#34;,&#34;31&#34;,&#34;32&#34;,&#34;33&#34;,&#34;34&#34;,&#34;35&#34;,&#34;36&#34;,&#34;37&#34;,&#34;38&#34;,&#34;39&#34;,&#34;40&#34;,&#34;41&#34;,&#34;42&#34;,&#34;43&#34;,&#34;44&#34;,&#34;45&#34;,&#34;46&#34;,&#34;47&#34;,&#34;48&#34;,&#34;49&#34;,&#34;50&#34;,&#34;51&#34;,&#34;52&#34;,&#34;53&#34;,&#34;54&#34;,&#34;55&#34;,&#34;56&#34;,&#34;57&#34;,&#34;58&#34;,&#34;59&#34;,&#34;60&#34;,&#34;61&#34;,&#34;62&#34;,&#34;63&#34;,&#34;64&#34;,&#34;65&#34;,&#34;66&#34;,&#34;67&#34;,&#34;68&#34;,&#34;69&#34;,&#34;70&#34;,&#34;71&#34;,&#34;72&#34;,&#34;73&#34;,&#34;74&#34;,&#34;75&#34;,&#34;76&#34;,&#34;77&#34;,&#34;78&#34;,&#34;79&#34;,&#34;80&#34;,&#34;81&#34;,&#34;82&#34;,&#34;83&#34;,&#34;84&#34;,&#34;85&#34;,&#34;86&#34;,&#34;87&#34;,&#34;88&#34;,&#34;89&#34;,&#34;90&#34;,&#34;91&#34;,&#34;92&#34;,&#34;93&#34;,&#34;94&#34;,&#34;95&#34;,&#34;96&#34;,&#34;97&#34;,&#34;98&#34;,&#34;99&#34;,&#34;100&#34;,&#34;101&#34;,&#34;102&#34;,&#34;103&#34;,&#34;104&#34;,&#34;105&#34;,&#34;106&#34;,&#34;107&#34;,&#34;108&#34;,&#34;109&#34;,&#34;110&#34;,&#34;111&#34;,&#34;112&#34;,&#34;113&#34;,&#34;114&#34;,&#34;115&#34;,&#34;116&#34;,&#34;117&#34;,&#34;118&#34;,&#34;119&#34;,&#34;120&#34;,&#34;121&#34;,&#34;122&#34;,&#34;123&#34;,&#34;124&#34;,&#34;125&#34;,&#34;126&#34;,&#34;127&#34;,&#34;128&#34;,&#34;129&#34;,&#34;130&#34;,&#34;131&#34;,&#34;132&#34;,&#34;133&#34;,&#34;134&#34;,&#34;135&#34;,&#34;136&#34;,&#34;137&#34;,&#34;138&#34;,&#34;139&#34;,&#34;140&#34;,&#34;141&#34;,&#34;142&#34;,&#34;143&#34;,&#34;144&#34;,&#34;145&#34;,&#34;146&#34;,&#34;147&#34;,&#34;148&#34;,&#34;149&#34;,&#34;150&#34;,&#34;151&#34;,&#34;152&#34;,&#34;153&#34;,&#34;154&#34;,&#34;155&#34;,&#34;156&#34;,&#34;157&#34;,&#34;158&#34;,&#34;159&#34;,&#34;160&#34;,&#34;161&#34;,&#34;162&#34;,&#34;163&#34;,&#34;164&#34;,&#34;165&#34;,&#34;166&#34;,&#34;167&#34;,&#34;168&#34;,&#34;169&#34;,&#34;170&#34;,&#34;171&#34;,&#34;172&#34;,&#34;173&#34;,&#34;174&#34;,&#34;175&#34;,&#34;176&#34;,&#34;177&#34;,&#34;178&#34;,&#34;179&#34;,&#34;180&#34;,&#34;181&#34;,&#34;182&#34;,&#34;183&#34;,&#34;184&#34;,&#34;185&#34;,&#34;186&#34;,&#34;187&#34;,&#34;188&#34;,&#34;189&#34;,&#34;190&#34;,&#34;191&#34;,&#34;192&#34;,&#34;193&#34;,&#34;194&#34;,&#34;195&#34;,&#34;196&#34;,&#34;197&#34;,&#34;198&#34;,&#34;199&#34;,&#34;200&#34;,&#34;201&#34;,&#34;202&#34;,&#34;203&#34;,&#34;204&#34;,&#34;205&#34;,&#34;206&#34;,&#34;207&#34;,&#34;208&#34;,&#34;209&#34;,&#34;210&#34;,&#34;211&#34;,&#34;212&#34;,&#34;213&#34;,&#34;214&#34;,&#34;215&#34;,&#34;216&#34;,&#34;217&#34;,&#34;218&#34;,&#34;219&#34;,&#34;220&#34;,&#34;221&#34;,&#34;222&#34;,&#34;223&#34;,&#34;224&#34;,&#34;225&#34;,&#34;226&#34;,&#34;227&#34;,&#34;228&#34;,&#34;229&#34;,&#34;230&#34;,&#34;231&#34;,&#34;232&#34;,&#34;233&#34;,&#34;234&#34;,&#34;235&#34;,&#34;236&#34;,&#34;237&#34;,&#34;238&#34;,&#34;239&#34;,&#34;240&#34;,&#34;241&#34;,&#34;242&#34;,&#34;243&#34;,&#34;244&#34;,&#34;245&#34;,&#34;246&#34;,&#34;247&#34;,&#34;248&#34;,&#34;249&#34;,&#34;250&#34;,&#34;251&#34;,&#34;252&#34;,&#34;253&#34;,&#34;254&#34;,&#34;255&#34;,&#34;256&#34;,&#34;257&#34;,&#34;258&#34;,&#34;259&#34;,&#34;260&#34;,&#34;261&#34;,&#34;262&#34;,&#34;263&#34;,&#34;264&#34;,&#34;265&#34;,&#34;266&#34;,&#34;267&#34;,&#34;268&#34;,&#34;269&#34;,&#34;270&#34;,&#34;271&#34;,&#34;272&#34;,&#34;273&#34;,&#34;274&#34;,&#34;275&#34;,&#34;276&#34;,&#34;277&#34;,&#34;278&#34;,&#34;279&#34;,&#34;280&#34;,&#34;281&#34;,&#34;282&#34;,&#34;283&#34;,&#34;284&#34;,&#34;285&#34;,&#34;286&#34;,&#34;287&#34;,&#34;288&#34;,&#34;289&#34;,&#34;290&#34;,&#34;291&#34;,&#34;292&#34;,&#34;293&#34;,&#34;294&#34;,&#34;295&#34;,&#34;296&#34;,&#34;297&#34;,&#34;298&#34;,&#34;299&#34;,&#34;300&#34;,&#34;301&#34;,&#34;302&#34;,&#34;303&#34;,&#34;304&#34;,&#34;305&#34;,&#34;306&#34;,&#34;307&#34;,&#34;308&#34;,&#34;309&#34;,&#34;310&#34;,&#34;311&#34;,&#34;312&#34;,&#34;313&#34;,&#34;314&#34;,&#34;315&#34;,&#34;316&#34;,&#34;317&#34;,&#34;318&#34;,&#34;319&#34;,&#34;320&#34;,&#34;321&#34;,&#34;322&#34;,&#34;323&#34;,&#34;324&#34;,&#34;325&#34;,&#34;326&#34;,&#34;327&#34;,&#34;328&#34;,&#34;329&#34;,&#34;330&#34;,&#34;331&#34;,&#34;332&#34;,&#34;333&#34;,&#34;334&#34;,&#34;335&#34;,&#34;336&#34;,&#34;337&#34;,&#34;338&#34;,&#34;339&#34;,&#34;340&#34;,&#34;341&#34;,&#34;342&#34;,&#34;343&#34;,&#34;344&#34;,&#34;345&#34;,&#34;346&#34;,&#34;347&#34;,&#34;348&#34;,&#34;349&#34;,&#34;350&#34;,&#34;351&#34;,&#34;352&#34;,&#34;353&#34;,&#34;354&#34;,&#34;355&#34;,&#34;356&#34;,&#34;357&#34;,&#34;358&#34;,&#34;359&#34;,&#34;360&#34;,&#34;361&#34;,&#34;362&#34;,&#34;363&#34;,&#34;364&#34;,&#34;365&#34;,&#34;366&#34;,&#34;367&#34;,&#34;368&#34;,&#34;369&#34;,&#34;370&#34;,&#34;371&#34;,&#34;372&#34;,&#34;373&#34;,&#34;374&#34;,&#34;375&#34;,&#34;376&#34;,&#34;377&#34;,&#34;378&#34;,&#34;379&#34;,&#34;380&#34;,&#34;381&#34;,&#34;382&#34;,&#34;383&#34;,&#34;384&#34;,&#34;385&#34;,&#34;386&#34;,&#34;387&#34;,&#34;388&#34;,&#34;389&#34;,&#34;390&#34;,&#34;391&#34;,&#34;392&#34;,&#34;393&#34;,&#34;394&#34;,&#34;395&#34;,&#34;396&#34;,&#34;397&#34;,&#34;398&#34;,&#34;399&#34;,&#34;400&#34;,&#34;401&#34;,&#34;402&#34;,&#34;403&#34;,&#34;404&#34;,&#34;405&#34;,&#34;406&#34;,&#34;407&#34;,&#34;408&#34;,&#34;409&#34;,&#34;410&#34;,&#34;411&#34;,&#34;412&#34;,&#34;413&#34;,&#34;414&#34;,&#34;415&#34;,&#34;416&#34;,&#34;417&#34;,&#34;418&#34;,&#34;419&#34;,&#34;420&#34;,&#34;421&#34;,&#34;422&#34;,&#34;423&#34;,&#34;424&#34;,&#34;425&#34;,&#34;426&#34;,&#34;427&#34;,&#34;428&#34;,&#34;429&#34;,&#34;430&#34;,&#34;431&#34;,&#34;432&#34;,&#34;433&#34;,&#34;434&#34;,&#34;435&#34;,&#34;436&#34;,&#34;437&#34;,&#34;438&#34;,&#34;439&#34;,&#34;440&#34;,&#34;441&#34;,&#34;442&#34;,&#34;443&#34;,&#34;444&#34;,&#34;445&#34;,&#34;446&#34;,&#34;447&#34;,&#34;448&#34;,&#34;449&#34;,&#34;450&#34;,&#34;451&#34;,&#34;452&#34;,&#34;453&#34;,&#34;454&#34;,&#34;455&#34;,&#34;456&#34;,&#34;457&#34;,&#34;458&#34;,&#34;459&#34;,&#34;460&#34;,&#34;461&#34;,&#34;462&#34;,&#34;463&#34;,&#34;464&#34;,&#34;465&#34;,&#34;466&#34;,&#34;467&#34;,&#34;468&#34;,&#34;469&#34;,&#34;470&#34;,&#34;471&#34;,&#34;472&#34;,&#34;473&#34;,&#34;474&#34;,&#34;475&#34;,&#34;476&#34;,&#34;477&#34;,&#34;478&#34;,&#34;479&#34;,&#34;480&#34;,&#34;481&#34;,&#34;482&#34;,&#34;483&#34;,&#34;484&#34;,&#34;485&#34;,&#34;486&#34;,&#34;487&#34;,&#34;488&#34;,&#34;489&#34;,&#34;490&#34;,&#34;491&#34;,&#34;492&#34;,&#34;493&#34;,&#34;494&#34;,&#34;495&#34;,&#34;496&#34;,&#34;497&#34;,&#34;498&#34;,&#34;499&#34;,&#34;500&#34;,&#34;501&#34;,&#34;502&#34;,&#34;503&#34;,&#34;504&#34;,&#34;505&#34;,&#34;506&#34;,&#34;507&#34;,&#34;508&#34;,&#34;509&#34;,&#34;510&#34;,&#34;511&#34;,&#34;512&#34;,&#34;513&#34;,&#34;514&#34;,&#34;515&#34;,&#34;516&#34;,&#34;517&#34;,&#34;518&#34;,&#34;519&#34;,&#34;520&#34;,&#34;521&#34;,&#34;522&#34;,&#34;523&#34;,&#34;524&#34;,&#34;525&#34;,&#34;526&#34;,&#34;527&#34;,&#34;528&#34;,&#34;529&#34;,&#34;530&#34;,&#34;531&#34;,&#34;532&#34;,&#34;533&#34;,&#34;534&#34;,&#34;535&#34;,&#34;536&#34;,&#34;537&#34;,&#34;538&#34;,&#34;539&#34;,&#34;540&#34;,&#34;541&#34;,&#34;542&#34;,&#34;543&#34;,&#34;544&#34;,&#34;545&#34;,&#34;546&#34;,&#34;547&#34;,&#34;548&#34;,&#34;549&#34;,&#34;550&#34;,&#34;551&#34;,&#34;552&#34;,&#34;553&#34;,&#34;554&#34;,&#34;555&#34;,&#34;556&#34;,&#34;557&#34;,&#34;558&#34;,&#34;559&#34;,&#34;560&#34;,&#34;561&#34;,&#34;562&#34;,&#34;563&#34;,&#34;564&#34;,&#34;565&#34;,&#34;566&#34;,&#34;567&#34;,&#34;568&#34;,&#34;569&#34;,&#34;570&#34;,&#34;571&#34;,&#34;572&#34;,&#34;573&#34;,&#34;574&#34;,&#34;575&#34;,&#34;576&#34;,&#34;577&#34;,&#34;578&#34;,&#34;579&#34;,&#34;580&#34;,&#34;581&#34;,&#34;582&#34;,&#34;583&#34;,&#34;584&#34;,&#34;585&#34;,&#34;586&#34;,&#34;587&#34;,&#34;588&#34;,&#34;589&#34;,&#34;590&#34;,&#34;591&#34;,&#34;592&#34;,&#34;593&#34;,&#34;594&#34;,&#34;595&#34;,&#34;596&#34;,&#34;597&#34;,&#34;598&#34;,&#34;599&#34;,&#34;600&#34;,&#34;601&#34;,&#34;602&#34;,&#34;603&#34;,&#34;604&#34;,&#34;605&#34;,&#34;606&#34;,&#34;607&#34;,&#34;608&#34;,&#34;609&#34;,&#34;610&#34;,&#34;611&#34;,&#34;612&#34;,&#34;613&#34;,&#34;614&#34;,&#34;615&#34;,&#34;616&#34;,&#34;617&#34;,&#34;618&#34;,&#34;619&#34;,&#34;620&#34;,&#34;621&#34;,&#34;622&#34;,&#34;623&#34;,&#34;624&#34;,&#34;625&#34;,&#34;626&#34;,&#34;627&#34;,&#34;628&#34;,&#34;629&#34;,&#34;630&#34;,&#34;631&#34;,&#34;632&#34;,&#34;633&#34;,&#34;634&#34;,&#34;635&#34;,&#34;636&#34;,&#34;637&#34;,&#34;638&#34;,&#34;639&#34;,&#34;640&#34;,&#34;641&#34;,&#34;642&#34;,&#34;643&#34;,&#34;644&#34;,&#34;645&#34;,&#34;646&#34;,&#34;647&#34;,&#34;648&#34;,&#34;649&#34;,&#34;650&#34;,&#34;651&#34;,&#34;652&#34;,&#34;653&#34;,&#34;654&#34;,&#34;655&#34;,&#34;656&#34;,&#34;657&#34;,&#34;658&#34;,&#34;659&#34;,&#34;660&#34;,&#34;661&#34;,&#34;662&#34;,&#34;663&#34;,&#34;664&#34;,&#34;665&#34;,&#34;666&#34;,&#34;667&#34;,&#34;668&#34;,&#34;669&#34;,&#34;670&#34;,&#34;671&#34;,&#34;672&#34;,&#34;673&#34;,&#34;674&#34;,&#34;675&#34;,&#34;676&#34;,&#34;677&#34;,&#34;678&#34;,&#34;679&#34;,&#34;680&#34;,&#34;681&#34;,&#34;682&#34;,&#34;683&#34;,&#34;684&#34;,&#34;685&#34;,&#34;686&#34;,&#34;687&#34;,&#34;688&#34;,&#34;689&#34;,&#34;690&#34;,&#34;691&#34;,&#34;692&#34;,&#34;693&#34;,&#34;694&#34;,&#34;695&#34;,&#34;696&#34;,&#34;697&#34;,&#34;698&#34;,&#34;699&#34;,&#34;700&#34;,&#34;701&#34;,&#34;702&#34;,&#34;703&#34;,&#34;704&#34;,&#34;705&#34;,&#34;706&#34;,&#34;707&#34;,&#34;708&#34;,&#34;709&#34;,&#34;710&#34;,&#34;711&#34;,&#34;712&#34;,&#34;713&#34;,&#34;714&#34;,&#34;715&#34;,&#34;716&#34;,&#34;717&#34;,&#34;718&#34;,&#34;719&#34;,&#34;720&#34;,&#34;721&#34;,&#34;722&#34;,&#34;723&#34;,&#34;724&#34;,&#34;725&#34;,&#34;726&#34;,&#34;727&#34;,&#34;728&#34;,&#34;729&#34;,&#34;730&#34;,&#34;731&#34;,&#34;732&#34;,&#34;733&#34;,&#34;734&#34;,&#34;735&#34;,&#34;736&#34;,&#34;737&#34;,&#34;738&#34;,&#34;739&#34;,&#34;740&#34;,&#34;741&#34;,&#34;742&#34;,&#34;743&#34;,&#34;744&#34;,&#34;745&#34;,&#34;746&#34;,&#34;747&#34;,&#34;748&#34;,&#34;749&#34;,&#34;750&#34;,&#34;751&#34;,&#34;752&#34;,&#34;753&#34;,&#34;754&#34;,&#34;755&#34;,&#34;756&#34;,&#34;757&#34;,&#34;758&#34;,&#34;759&#34;,&#34;760&#34;,&#34;761&#34;,&#34;762&#34;,&#34;763&#34;,&#34;764&#34;,&#34;765&#34;,&#34;766&#34;,&#34;767&#34;,&#34;768&#34;,&#34;769&#34;,&#34;770&#34;,&#34;771&#34;,&#34;772&#34;,&#34;773&#34;,&#34;774&#34;,&#34;775&#34;,&#34;776&#34;,&#34;777&#34;,&#34;778&#34;,&#34;779&#34;,&#34;780&#34;,&#34;781&#34;,&#34;782&#34;,&#34;783&#34;,&#34;784&#34;,&#34;785&#34;,&#34;786&#34;,&#34;787&#34;,&#34;788&#34;,&#34;789&#34;,&#34;790&#34;,&#34;791&#34;,&#34;792&#34;,&#34;793&#34;,&#34;794&#34;,&#34;795&#34;,&#34;796&#34;,&#34;797&#34;,&#34;798&#34;,&#34;799&#34;,&#34;800&#34;,&#34;801&#34;,&#34;802&#34;,&#34;803&#34;,&#34;804&#34;,&#34;805&#34;,&#34;806&#34;,&#34;807&#34;,&#34;808&#34;,&#34;809&#34;,&#34;810&#34;,&#34;811&#34;,&#34;812&#34;,&#34;813&#34;,&#34;814&#34;,&#34;815&#34;,&#34;816&#34;,&#34;817&#34;,&#34;818&#34;,&#34;819&#34;,&#34;820&#34;,&#34;821&#34;,&#34;822&#34;,&#34;823&#34;,&#34;824&#34;,&#34;825&#34;,&#34;826&#34;,&#34;827&#34;,&#34;828&#34;,&#34;829&#34;,&#34;830&#34;,&#34;831&#34;,&#34;832&#34;,&#34;833&#34;,&#34;834&#34;,&#34;835&#34;,&#34;836&#34;,&#34;837&#34;,&#34;838&#34;,&#34;839&#34;,&#34;840&#34;,&#34;841&#34;,&#34;842&#34;,&#34;843&#34;,&#34;844&#34;,&#34;845&#34;,&#34;846&#34;,&#34;847&#34;,&#34;848&#34;,&#34;849&#34;,&#34;850&#34;,&#34;851&#34;,&#34;852&#34;,&#34;853&#34;,&#34;854&#34;,&#34;855&#34;,&#34;856&#34;,&#34;857&#34;,&#34;858&#34;,&#34;859&#34;,&#34;860&#34;,&#34;861&#34;,&#34;862&#34;,&#34;863&#34;,&#34;864&#34;,&#34;865&#34;,&#34;866&#34;,&#34;867&#34;,&#34;868&#34;,&#34;869&#34;,&#34;870&#34;,&#34;871&#34;,&#34;872&#34;,&#34;873&#34;,&#34;874&#34;,&#34;875&#34;,&#34;876&#34;,&#34;877&#34;,&#34;878&#34;,&#34;879&#34;,&#34;880&#34;,&#34;881&#34;,&#34;882&#34;,&#34;883&#34;,&#34;884&#34;,&#34;885&#34;,&#34;886&#34;,&#34;887&#34;,&#34;888&#34;,&#34;889&#34;,&#34;890&#34;,&#34;891&#34;],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727,728,729,730,731,732,733,734,735,736,737,738,739,740,741,742,743,744,745,746,747,748,749,750,751,752,753,754,755,756,757,758,759,760,761,762,763,764,765,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781,782,783,784,785,786,787,788,789,790,791,792,793,794,795,796,797,798,799,800,801,802,803,804,805,806,807,808,809,810,811,812,813,814,815,816,817,818,819,820,821,822,823,824,825,826,827,828,829,830,831,832,833,834,835,836,837,838,839,840,841,842,843,844,845,846,847,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,864,865,866,867,868,869,870,871,872,873,874,875,876,877,878,879,880,881,882,883,884,885,886,887,888,889,890,891],[0,1,1,1,0,0,0,0,1,1,1,1,0,0,0,1,0,1,0,1,0,1,1,1,0,1,0,0,1,0,0,1,1,0,0,0,1,0,0,1,0,0,0,1,1,0,0,1,0,0,0,0,1,1,0,1,1,0,1,0,0,1,0,0,0,1,1,0,1,0,0,0,0,0,1,0,0,0,1,1,0,1,1,0,1,1,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,1,0,0,1,0,0,0,0,1,1,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,1,0,1,1,1,1,0,0,1,0,0,0,0,0,1,0,0,1,1,1,0,1,0,0,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,1,1,1,0,1,0,0,0,0,0,1,1,1,0,1,1,0,1,1,0,0,0,1,0,0,0,1,0,0,1,0,1,1,1,1,0,0,0,0,0,0,1,1,1,1,0,1,0,1,1,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,1,0,1,0,1,1,1,1,0,0,0,1,0,0,1,1,0,1,1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,1,0,0,0,1,1,0,1,0,0,0,1,0,1,1,1,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,0,0,1,0,1,0,0,1,0,0,1,1,1,1,1,1,1,0,0,0,1,0,1,0,1,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,1,1,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,1,0,1,1,0,1,1,0,0,1,0,1,0,1,0,0,1,0,0,1,0,0,0,1,0,0,1,0,1,0,1,0,1,1,0,0,1,0,0,1,1,0,1,1,0,0,1,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,1,0,1,1,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0,1,1,0,0,0,1,0,0,1,1,1,0,0,1,0,0,1,0,0,1,0,0,1,1,0,0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,1,1,1,0,1,0,1,0,1,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,1,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,1,0,0,1,1,0,0,0,0,1,1,1,1,1,0,1,0,0,0,1,1,0,0,1,0,0,0,1,0,1,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,1,0,1,0,0,1,0,0,1,1,0,0,1,1,0,0,0,1,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,1,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,0,0,1,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,1,1,1,1,1,0,0,0,1,0,0,1,1,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0,1,1,1,1,0,0,0,1,0,0,1,1,0,0,1,0,1,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,1,0,1,0],[3,1,3,1,3,3,1,3,3,2,3,1,3,3,3,2,3,2,3,3,2,2,3,1,3,3,3,1,3,3,1,1,3,2,1,1,3,3,3,3,3,2,3,2,3,3,3,3,3,3,3,3,1,2,1,1,2,3,2,3,3,1,1,3,1,3,2,3,3,3,2,3,2,3,3,3,3,3,2,3,3,3,3,1,2,3,3,3,1,3,3,3,1,3,3,3,1,1,2,2,3,3,1,3,3,3,3,3,3,3,1,3,3,3,3,3,3,2,1,3,2,3,2,2,1,3,3,3,3,3,3,3,3,2,2,2,1,1,3,1,3,3,3,3,2,2,3,3,2,2,2,1,3,3,3,1,3,3,3,3,3,2,3,3,3,3,1,3,1,3,1,3,3,3,1,3,3,1,2,3,3,2,3,2,3,1,3,1,3,3,2,2,3,2,1,1,3,3,3,2,3,3,3,3,3,3,3,3,3,1,3,2,3,2,3,1,3,2,1,2,3,2,3,3,1,3,2,3,2,3,1,3,2,3,2,3,2,2,2,2,3,3,2,3,3,1,3,2,1,2,3,3,1,3,3,3,1,1,1,2,3,3,1,1,3,2,3,3,1,1,1,3,2,1,3,1,3,2,3,3,3,3,3,3,1,3,3,3,2,3,1,1,2,3,3,1,3,1,1,1,3,3,3,2,3,1,1,1,2,1,1,1,2,3,2,3,2,2,1,1,3,3,2,2,3,1,3,2,3,1,3,1,1,3,1,3,1,1,3,1,2,1,2,2,2,2,2,3,3,3,3,1,3,3,3,3,1,2,3,3,3,2,3,3,3,3,1,3,3,1,1,3,3,1,3,1,3,1,3,3,1,3,3,1,3,2,3,2,3,2,1,3,3,1,3,3,3,2,2,2,3,3,3,3,3,2,3,2,3,3,3,3,1,2,3,3,2,2,2,3,3,3,3,3,3,3,2,2,3,3,1,3,2,3,1,1,3,2,1,2,2,3,3,2,3,1,2,1,3,1,2,3,1,1,3,3,1,1,2,3,1,3,1,2,3,3,2,1,3,3,3,3,2,2,3,1,2,3,3,3,3,2,3,3,1,3,1,1,3,3,3,3,1,1,3,3,1,3,1,3,3,3,3,3,1,1,2,1,3,3,3,3,1,1,3,1,2,3,2,3,1,3,3,1,3,3,2,1,3,2,2,3,3,3,3,2,1,1,3,1,1,3,3,2,1,1,2,2,3,2,1,2,3,3,3,1,1,1,1,3,3,3,2,3,3,3,3,3,3,3,2,1,1,3,3,3,2,1,3,3,2,1,2,1,3,1,2,1,3,3,3,1,3,3,2,3,2,3,3,1,2,3,1,3,1,3,3,1,2,1,3,3,3,3,3,2,3,3,2,2,3,1,3,3,3,1,2,1,3,3,1,3,1,1,3,2,3,2,3,3,3,1,3,3,3,1,3,1,3,3,3,2,3,3,3,2,3,3,2,1,1,3,1,3,3,2,2,3,3,1,2,1,2,2,2,3,3,3,3,1,3,1,3,3,2,2,3,3,3,1,1,3,3,3,1,2,3,3,1,3,1,1,3,3,3,2,2,1,1,3,1,1,1,3,2,3,1,2,3,3,2,3,2,2,1,3,2,3,2,3,1,3,2,2,2,3,3,1,3,3,1,1,1,3,3,1,3,2,1,3,2,3,3,3,2,2,3,2,3,1,3,3,3,1,3,1,1,3,3,3,3,3,2,3,2,3,3,3,3,1,3,1,1,3,3,3,3,3,3,1,3,2,3,1,3,2,1,3,3,3,2,2,1,3,3,3,1,3,2,1,3,3,2,3,3,1,3,2,3,3,1,3,1,3,3,3,3,2,3,1,3,2,3,3,3,1,3,3,3,1,3,2,1,3,3,3,3,3,2,1,3,3,3,1,2,3,1,1,3,3,3,2,1,3,2,2,2,1,3,3,3,1,1,3,2,3,3,3,3,1,2,3,3,2,3,3,2,1,3,1,3],[&#34;Braund, Mr. Owen Harris&#34;,&#34;Cumings, Mrs. John Bradley (Florence Briggs Thayer)&#34;,&#34;Heikkinen, Miss. Laina&#34;,&#34;Futrelle, Mrs. Jacques Heath (Lily May Peel)&#34;,&#34;Allen, Mr. William Henry&#34;,&#34;Moran, Mr. James&#34;,&#34;McCarthy, Mr. Timothy J&#34;,&#34;Palsson, Master. Gosta Leonard&#34;,&#34;Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)&#34;,&#34;Nasser, Mrs. Nicholas (Adele Achem)&#34;,&#34;Sandstrom, Miss. Marguerite Rut&#34;,&#34;Bonnell, Miss. Elizabeth&#34;,&#34;Saundercock, Mr. William Henry&#34;,&#34;Andersson, Mr. Anders Johan&#34;,&#34;Vestrom, Miss. Hulda Amanda Adolfina&#34;,&#34;Hewlett, Mrs. (Mary D Kingcome) &#34;,&#34;Rice, Master. Eugene&#34;,&#34;Williams, Mr. Charles Eugene&#34;,&#34;Vander Planke, Mrs. Julius (Emelia Maria Vandemoortele)&#34;,&#34;Masselmani, Mrs. Fatima&#34;,&#34;Fynney, Mr. Joseph J&#34;,&#34;Beesley, Mr. Lawrence&#34;,&#34;McGowan, Miss. Anna \&#34;Annie\&#34;&#34;,&#34;Sloper, Mr. William Thompson&#34;,&#34;Palsson, Miss. Torborg Danira&#34;,&#34;Asplund, Mrs. Carl Oscar (Selma Augusta Emilia Johansson)&#34;,&#34;Emir, Mr. Farred Chehab&#34;,&#34;Fortune, Mr. Charles Alexander&#34;,&#34;O&#39;Dwyer, Miss. Ellen \&#34;Nellie\&#34;&#34;,&#34;Todoroff, Mr. Lalio&#34;,&#34;Uruchurtu, Don. Manuel E&#34;,&#34;Spencer, Mrs. William Augustus (Marie Eugenie)&#34;,&#34;Glynn, Miss. Mary Agatha&#34;,&#34;Wheadon, Mr. Edward H&#34;,&#34;Meyer, Mr. Edgar Joseph&#34;,&#34;Holverson, Mr. Alexander Oskar&#34;,&#34;Mamee, Mr. Hanna&#34;,&#34;Cann, Mr. Ernest Charles&#34;,&#34;Vander Planke, Miss. Augusta Maria&#34;,&#34;Nicola-Yarred, Miss. Jamila&#34;,&#34;Ahlin, Mrs. Johan (Johanna Persdotter Larsson)&#34;,&#34;Turpin, Mrs. William John Robert (Dorothy Ann Wonnacott)&#34;,&#34;Kraeff, Mr. Theodor&#34;,&#34;Laroche, Miss. Simonne Marie Anne Andree&#34;,&#34;Devaney, Miss. Margaret Delia&#34;,&#34;Rogers, Mr. William John&#34;,&#34;Lennon, Mr. Denis&#34;,&#34;O&#39;Driscoll, Miss. Bridget&#34;,&#34;Samaan, Mr. Youssef&#34;,&#34;Arnold-Franchi, Mrs. Josef (Josefine Franchi)&#34;,&#34;Panula, Master. Juha Niilo&#34;,&#34;Nosworthy, Mr. Richard Cater&#34;,&#34;Harper, Mrs. Henry Sleeper (Myna Haxtun)&#34;,&#34;Faunthorpe, Mrs. Lizzie (Elizabeth Anne Wilkinson)&#34;,&#34;Ostby, Mr. Engelhart Cornelius&#34;,&#34;Woolner, Mr. Hugh&#34;,&#34;Rugg, Miss. Emily&#34;,&#34;Novel, Mr. Mansouer&#34;,&#34;West, Miss. Constance Mirium&#34;,&#34;Goodwin, Master. William Frederick&#34;,&#34;Sirayanian, Mr. Orsen&#34;,&#34;Icard, Miss. Amelie&#34;,&#34;Harris, Mr. Henry Birkhardt&#34;,&#34;Skoog, Master. Harald&#34;,&#34;Stewart, Mr. Albert A&#34;,&#34;Moubarek, Master. Gerios&#34;,&#34;Nye, Mrs. (Elizabeth Ramell)&#34;,&#34;Crease, Mr. Ernest James&#34;,&#34;Andersson, Miss. Erna Alexandra&#34;,&#34;Kink, Mr. Vincenz&#34;,&#34;Jenkin, Mr. Stephen Curnow&#34;,&#34;Goodwin, Miss. Lillian Amy&#34;,&#34;Hood, Mr. Ambrose Jr&#34;,&#34;Chronopoulos, Mr. Apostolos&#34;,&#34;Bing, Mr. Lee&#34;,&#34;Moen, Mr. Sigurd Hansen&#34;,&#34;Staneff, Mr. Ivan&#34;,&#34;Moutal, Mr. Rahamin Haim&#34;,&#34;Caldwell, Master. Alden Gates&#34;,&#34;Dowdell, Miss. Elizabeth&#34;,&#34;Waelens, Mr. Achille&#34;,&#34;Sheerlinck, Mr. Jan Baptist&#34;,&#34;McDermott, Miss. Brigdet Delia&#34;,&#34;Carrau, Mr. Francisco M&#34;,&#34;Ilett, Miss. Bertha&#34;,&#34;Backstrom, Mrs. Karl Alfred (Maria Mathilda Gustafsson)&#34;,&#34;Ford, Mr. William Neal&#34;,&#34;Slocovski, Mr. Selman Francis&#34;,&#34;Fortune, Miss. Mabel Helen&#34;,&#34;Celotti, Mr. Francesco&#34;,&#34;Christmann, Mr. Emil&#34;,&#34;Andreasson, Mr. Paul Edvin&#34;,&#34;Chaffee, Mr. Herbert Fuller&#34;,&#34;Dean, Mr. Bertram Frank&#34;,&#34;Coxon, Mr. Daniel&#34;,&#34;Shorney, Mr. Charles Joseph&#34;,&#34;Goldschmidt, Mr. George B&#34;,&#34;Greenfield, Mr. William Bertram&#34;,&#34;Doling, Mrs. John T (Ada Julia Bone)&#34;,&#34;Kantor, Mr. Sinai&#34;,&#34;Petranec, Miss. Matilda&#34;,&#34;Petroff, Mr. Pastcho (\&#34;Pentcho\&#34;)&#34;,&#34;White, Mr. Richard Frasar&#34;,&#34;Johansson, Mr. Gustaf Joel&#34;,&#34;Gustafsson, Mr. Anders Vilhelm&#34;,&#34;Mionoff, Mr. Stoytcho&#34;,&#34;Salkjelsvik, Miss. Anna Kristine&#34;,&#34;Moss, Mr. Albert Johan&#34;,&#34;Rekic, Mr. Tido&#34;,&#34;Moran, Miss. Bertha&#34;,&#34;Porter, Mr. Walter Chamberlain&#34;,&#34;Zabour, Miss. Hileni&#34;,&#34;Barton, Mr. David John&#34;,&#34;Jussila, Miss. Katriina&#34;,&#34;Attalah, Miss. Malake&#34;,&#34;Pekoniemi, Mr. Edvard&#34;,&#34;Connors, Mr. Patrick&#34;,&#34;Turpin, Mr. William John Robert&#34;,&#34;Baxter, Mr. Quigg Edmond&#34;,&#34;Andersson, Miss. Ellis Anna Maria&#34;,&#34;Hickman, Mr. Stanley George&#34;,&#34;Moore, Mr. Leonard Charles&#34;,&#34;Nasser, Mr. Nicholas&#34;,&#34;Webber, Miss. Susan&#34;,&#34;White, Mr. Percival Wayland&#34;,&#34;Nicola-Yarred, Master. Elias&#34;,&#34;McMahon, Mr. Martin&#34;,&#34;Madsen, Mr. Fridtjof Arne&#34;,&#34;Peter, Miss. Anna&#34;,&#34;Ekstrom, Mr. Johan&#34;,&#34;Drazenoic, Mr. Jozef&#34;,&#34;Coelho, Mr. Domingos Fernandeo&#34;,&#34;Robins, Mrs. Alexander A (Grace Charity Laury)&#34;,&#34;Weisz, Mrs. Leopold (Mathilde Francoise Pede)&#34;,&#34;Sobey, Mr. Samuel James Hayden&#34;,&#34;Richard, Mr. Emile&#34;,&#34;Newsom, Miss. Helen Monypeny&#34;,&#34;Futrelle, Mr. Jacques Heath&#34;,&#34;Osen, Mr. Olaf Elon&#34;,&#34;Giglio, Mr. Victor&#34;,&#34;Boulos, Mrs. Joseph (Sultana)&#34;,&#34;Nysten, Miss. Anna Sofia&#34;,&#34;Hakkarainen, Mrs. Pekka Pietari (Elin Matilda Dolck)&#34;,&#34;Burke, Mr. Jeremiah&#34;,&#34;Andrew, Mr. Edgardo Samuel&#34;,&#34;Nicholls, Mr. Joseph Charles&#34;,&#34;Andersson, Mr. August Edvard (\&#34;Wennerstrom\&#34;)&#34;,&#34;Ford, Miss. Robina Maggie \&#34;Ruby\&#34;&#34;,&#34;Navratil, Mr. Michel (\&#34;Louis M Hoffman\&#34;)&#34;,&#34;Byles, Rev. Thomas Roussel Davids&#34;,&#34;Bateman, Rev. Robert James&#34;,&#34;Pears, Mrs. Thomas (Edith Wearne)&#34;,&#34;Meo, Mr. Alfonzo&#34;,&#34;van Billiard, Mr. Austin Blyler&#34;,&#34;Olsen, Mr. Ole Martin&#34;,&#34;Williams, Mr. Charles Duane&#34;,&#34;Gilnagh, Miss. Katherine \&#34;Katie\&#34;&#34;,&#34;Corn, Mr. Harry&#34;,&#34;Smiljanic, Mr. Mile&#34;,&#34;Sage, Master. Thomas Henry&#34;,&#34;Cribb, Mr. John Hatfield&#34;,&#34;Watt, Mrs. James (Elizabeth \&#34;Bessie\&#34; Inglis Milne)&#34;,&#34;Bengtsson, Mr. John Viktor&#34;,&#34;Calic, Mr. Jovo&#34;,&#34;Panula, Master. Eino Viljami&#34;,&#34;Goldsmith, Master. Frank John William \&#34;Frankie\&#34;&#34;,&#34;Chibnall, Mrs. (Edith Martha Bowerman)&#34;,&#34;Skoog, Mrs. William (Anna Bernhardina Karlsson)&#34;,&#34;Baumann, Mr. John D&#34;,&#34;Ling, Mr. Lee&#34;,&#34;Van der hoef, Mr. Wyckoff&#34;,&#34;Rice, Master. Arthur&#34;,&#34;Johnson, Miss. Eleanor Ileen&#34;,&#34;Sivola, Mr. Antti Wilhelm&#34;,&#34;Smith, Mr. James Clinch&#34;,&#34;Klasen, Mr. Klas Albin&#34;,&#34;Lefebre, Master. Henry Forbes&#34;,&#34;Isham, Miss. Ann Elizabeth&#34;,&#34;Hale, Mr. Reginald&#34;,&#34;Leonard, Mr. Lionel&#34;,&#34;Sage, Miss. Constance Gladys&#34;,&#34;Pernot, Mr. Rene&#34;,&#34;Asplund, Master. Clarence Gustaf Hugo&#34;,&#34;Becker, Master. Richard F&#34;,&#34;Kink-Heilmann, Miss. Luise Gretchen&#34;,&#34;Rood, Mr. Hugh Roscoe&#34;,&#34;O&#39;Brien, Mrs. Thomas (Johanna \&#34;Hannah\&#34; Godfrey)&#34;,&#34;Romaine, Mr. Charles Hallace (\&#34;Mr C Rolmane\&#34;)&#34;,&#34;Bourke, Mr. John&#34;,&#34;Turcin, Mr. Stjepan&#34;,&#34;Pinsky, Mrs. (Rosa)&#34;,&#34;Carbines, Mr. William&#34;,&#34;Andersen-Jensen, Miss. Carla Christine Nielsine&#34;,&#34;Navratil, Master. Michel M&#34;,&#34;Brown, Mrs. James Joseph (Margaret Tobin)&#34;,&#34;Lurette, Miss. Elise&#34;,&#34;Mernagh, Mr. Robert&#34;,&#34;Olsen, Mr. Karl Siegwart Andreas&#34;,&#34;Madigan, Miss. Margaret \&#34;Maggie\&#34;&#34;,&#34;Yrois, Miss. Henriette (\&#34;Mrs Harbeck\&#34;)&#34;,&#34;Vande Walle, Mr. Nestor Cyriel&#34;,&#34;Sage, Mr. Frederick&#34;,&#34;Johanson, Mr. Jakob Alfred&#34;,&#34;Youseff, Mr. Gerious&#34;,&#34;Cohen, Mr. Gurshon \&#34;Gus\&#34;&#34;,&#34;Strom, Miss. Telma Matilda&#34;,&#34;Backstrom, Mr. Karl Alfred&#34;,&#34;Albimona, Mr. Nassef Cassem&#34;,&#34;Carr, Miss. Helen \&#34;Ellen\&#34;&#34;,&#34;Blank, Mr. Henry&#34;,&#34;Ali, Mr. Ahmed&#34;,&#34;Cameron, Miss. Clear Annie&#34;,&#34;Perkin, Mr. John Henry&#34;,&#34;Givard, Mr. Hans Kristensen&#34;,&#34;Kiernan, Mr. Philip&#34;,&#34;Newell, Miss. Madeleine&#34;,&#34;Honkanen, Miss. Eliina&#34;,&#34;Jacobsohn, Mr. Sidney Samuel&#34;,&#34;Bazzani, Miss. Albina&#34;,&#34;Harris, Mr. Walter&#34;,&#34;Sunderland, Mr. Victor Francis&#34;,&#34;Bracken, Mr. James H&#34;,&#34;Green, Mr. George Henry&#34;,&#34;Nenkoff, Mr. Christo&#34;,&#34;Hoyt, Mr. Frederick Maxfield&#34;,&#34;Berglund, Mr. Karl Ivar Sven&#34;,&#34;Mellors, Mr. William John&#34;,&#34;Lovell, Mr. John Hall (\&#34;Henry\&#34;)&#34;,&#34;Fahlstrom, Mr. Arne Jonas&#34;,&#34;Lefebre, Miss. Mathilde&#34;,&#34;Harris, Mrs. Henry Birkhardt (Irene Wallach)&#34;,&#34;Larsson, Mr. Bengt Edvin&#34;,&#34;Sjostedt, Mr. Ernst Adolf&#34;,&#34;Asplund, Miss. Lillian Gertrud&#34;,&#34;Leyson, Mr. Robert William Norman&#34;,&#34;Harknett, Miss. Alice Phoebe&#34;,&#34;Hold, Mr. Stephen&#34;,&#34;Collyer, Miss. Marjorie \&#34;Lottie\&#34;&#34;,&#34;Pengelly, Mr. Frederick William&#34;,&#34;Hunt, Mr. George Henry&#34;,&#34;Zabour, Miss. Thamine&#34;,&#34;Murphy, Miss. Katherine \&#34;Kate\&#34;&#34;,&#34;Coleridge, Mr. Reginald Charles&#34;,&#34;Maenpaa, Mr. Matti Alexanteri&#34;,&#34;Attalah, Mr. Sleiman&#34;,&#34;Minahan, Dr. William Edward&#34;,&#34;Lindahl, Miss. Agda Thorilda Viktoria&#34;,&#34;Hamalainen, Mrs. William (Anna)&#34;,&#34;Beckwith, Mr. Richard Leonard&#34;,&#34;Carter, Rev. Ernest Courtenay&#34;,&#34;Reed, Mr. James George&#34;,&#34;Strom, Mrs. Wilhelm (Elna Matilda Persson)&#34;,&#34;Stead, Mr. William Thomas&#34;,&#34;Lobb, Mr. William Arthur&#34;,&#34;Rosblom, Mrs. Viktor (Helena Wilhelmina)&#34;,&#34;Touma, Mrs. Darwis (Hanne Youssef Razi)&#34;,&#34;Thorne, Mrs. Gertrude Maybelle&#34;,&#34;Cherry, Miss. Gladys&#34;,&#34;Ward, Miss. Anna&#34;,&#34;Parrish, Mrs. (Lutie Davis)&#34;,&#34;Smith, Mr. Thomas&#34;,&#34;Asplund, Master. Edvin Rojj Felix&#34;,&#34;Taussig, Mr. Emil&#34;,&#34;Harrison, Mr. William&#34;,&#34;Henry, Miss. Delia&#34;,&#34;Reeves, Mr. David&#34;,&#34;Panula, Mr. Ernesti Arvid&#34;,&#34;Persson, Mr. Ernst Ulrik&#34;,&#34;Graham, Mrs. William Thompson (Edith Junkins)&#34;,&#34;Bissette, Miss. Amelia&#34;,&#34;Cairns, Mr. Alexander&#34;,&#34;Tornquist, Mr. William Henry&#34;,&#34;Mellinger, Mrs. (Elizabeth Anne Maidment)&#34;,&#34;Natsch, Mr. Charles H&#34;,&#34;Healy, Miss. Hanora \&#34;Nora\&#34;&#34;,&#34;Andrews, Miss. Kornelia Theodosia&#34;,&#34;Lindblom, Miss. Augusta Charlotta&#34;,&#34;Parkes, Mr. Francis \&#34;Frank\&#34;&#34;,&#34;Rice, Master. Eric&#34;,&#34;Abbott, Mrs. Stanton (Rosa Hunt)&#34;,&#34;Duane, Mr. Frank&#34;,&#34;Olsson, Mr. Nils Johan Goransson&#34;,&#34;de Pelsmaeker, Mr. Alfons&#34;,&#34;Dorking, Mr. Edward Arthur&#34;,&#34;Smith, Mr. Richard William&#34;,&#34;Stankovic, Mr. Ivan&#34;,&#34;de Mulder, Mr. Theodore&#34;,&#34;Naidenoff, Mr. Penko&#34;,&#34;Hosono, Mr. Masabumi&#34;,&#34;Connolly, Miss. Kate&#34;,&#34;Barber, Miss. Ellen \&#34;Nellie\&#34;&#34;,&#34;Bishop, Mrs. Dickinson H (Helen Walton)&#34;,&#34;Levy, Mr. Rene Jacques&#34;,&#34;Haas, Miss. Aloisia&#34;,&#34;Mineff, Mr. Ivan&#34;,&#34;Lewy, Mr. Ervin G&#34;,&#34;Hanna, Mr. Mansour&#34;,&#34;Allison, Miss. Helen Loraine&#34;,&#34;Saalfeld, Mr. Adolphe&#34;,&#34;Baxter, Mrs. James (Helene DeLaudeniere Chaput)&#34;,&#34;Kelly, Miss. Anna Katherine \&#34;Annie Kate\&#34;&#34;,&#34;McCoy, Mr. Bernard&#34;,&#34;Johnson, Mr. William Cahoone Jr&#34;,&#34;Keane, Miss. Nora A&#34;,&#34;Williams, Mr. Howard Hugh \&#34;Harry\&#34;&#34;,&#34;Allison, Master. Hudson Trevor&#34;,&#34;Fleming, Miss. Margaret&#34;,&#34;Penasco y Castellana, Mrs. Victor de Satode (Maria Josefa Perez de Soto y Vallejo)&#34;,&#34;Abelson, Mr. Samuel&#34;,&#34;Francatelli, Miss. Laura Mabel&#34;,&#34;Hays, Miss. Margaret Bechstein&#34;,&#34;Ryerson, Miss. Emily Borie&#34;,&#34;Lahtinen, Mrs. William (Anna Sylfven)&#34;,&#34;Hendekovic, Mr. Ignjac&#34;,&#34;Hart, Mr. Benjamin&#34;,&#34;Nilsson, Miss. Helmina Josefina&#34;,&#34;Kantor, Mrs. Sinai (Miriam Sternin)&#34;,&#34;Moraweck, Dr. Ernest&#34;,&#34;Wick, Miss. Mary Natalie&#34;,&#34;Spedden, Mrs. Frederic Oakley (Margaretta Corning Stone)&#34;,&#34;Dennis, Mr. Samuel&#34;,&#34;Danoff, Mr. Yoto&#34;,&#34;Slayter, Miss. Hilda Mary&#34;,&#34;Caldwell, Mrs. Albert Francis (Sylvia Mae Harbaugh)&#34;,&#34;Sage, Mr. George John Jr&#34;,&#34;Young, Miss. Marie Grice&#34;,&#34;Nysveen, Mr. Johan Hansen&#34;,&#34;Ball, Mrs. (Ada E Hall)&#34;,&#34;Goldsmith, Mrs. Frank John (Emily Alice Brown)&#34;,&#34;Hippach, Miss. Jean Gertrude&#34;,&#34;McCoy, Miss. Agnes&#34;,&#34;Partner, Mr. Austen&#34;,&#34;Graham, Mr. George Edward&#34;,&#34;Vander Planke, Mr. Leo Edmondus&#34;,&#34;Frauenthal, Mrs. Henry William (Clara Heinsheimer)&#34;,&#34;Denkoff, Mr. Mitto&#34;,&#34;Pears, Mr. Thomas Clinton&#34;,&#34;Burns, Miss. Elizabeth Margaret&#34;,&#34;Dahl, Mr. Karl Edwart&#34;,&#34;Blackwell, Mr. Stephen Weart&#34;,&#34;Navratil, Master. Edmond Roger&#34;,&#34;Fortune, Miss. Alice Elizabeth&#34;,&#34;Collander, Mr. Erik Gustaf&#34;,&#34;Sedgwick, Mr. Charles Frederick Waddington&#34;,&#34;Fox, Mr. Stanley Hubert&#34;,&#34;Brown, Miss. Amelia \&#34;Mildred\&#34;&#34;,&#34;Smith, Miss. Marion Elsie&#34;,&#34;Davison, Mrs. Thomas Henry (Mary E Finck)&#34;,&#34;Coutts, Master. William Loch \&#34;William\&#34;&#34;,&#34;Dimic, Mr. Jovan&#34;,&#34;Odahl, Mr. Nils Martin&#34;,&#34;Williams-Lambert, Mr. Fletcher Fellows&#34;,&#34;Elias, Mr. Tannous&#34;,&#34;Arnold-Franchi, Mr. Josef&#34;,&#34;Yousif, Mr. Wazli&#34;,&#34;Vanden Steen, Mr. Leo Peter&#34;,&#34;Bowerman, Miss. Elsie Edith&#34;,&#34;Funk, Miss. Annie Clemmer&#34;,&#34;McGovern, Miss. Mary&#34;,&#34;Mockler, Miss. Helen Mary \&#34;Ellie\&#34;&#34;,&#34;Skoog, Mr. Wilhelm&#34;,&#34;del Carlo, Mr. Sebastiano&#34;,&#34;Barbara, Mrs. (Catherine David)&#34;,&#34;Asim, Mr. Adola&#34;,&#34;O&#39;Brien, Mr. Thomas&#34;,&#34;Adahl, Mr. Mauritz Nils Martin&#34;,&#34;Warren, Mrs. Frank Manley (Anna Sophia Atkinson)&#34;,&#34;Moussa, Mrs. (Mantoura Boulos)&#34;,&#34;Jermyn, Miss. Annie&#34;,&#34;Aubart, Mme. Leontine Pauline&#34;,&#34;Harder, Mr. George Achilles&#34;,&#34;Wiklund, Mr. Jakob Alfred&#34;,&#34;Beavan, Mr. William Thomas&#34;,&#34;Ringhini, Mr. Sante&#34;,&#34;Palsson, Miss. Stina Viola&#34;,&#34;Meyer, Mrs. Edgar Joseph (Leila Saks)&#34;,&#34;Landergren, Miss. Aurora Adelia&#34;,&#34;Widener, Mr. Harry Elkins&#34;,&#34;Betros, Mr. Tannous&#34;,&#34;Gustafsson, Mr. Karl Gideon&#34;,&#34;Bidois, Miss. Rosalie&#34;,&#34;Nakid, Miss. Maria (\&#34;Mary\&#34;)&#34;,&#34;Tikkanen, Mr. Juho&#34;,&#34;Holverson, Mrs. Alexander Oskar (Mary Aline Towner)&#34;,&#34;Plotcharsky, Mr. Vasil&#34;,&#34;Davies, Mr. Charles Henry&#34;,&#34;Goodwin, Master. Sidney Leonard&#34;,&#34;Buss, Miss. Kate&#34;,&#34;Sadlier, Mr. Matthew&#34;,&#34;Lehmann, Miss. Bertha&#34;,&#34;Carter, Mr. William Ernest&#34;,&#34;Jansson, Mr. Carl Olof&#34;,&#34;Gustafsson, Mr. Johan Birger&#34;,&#34;Newell, Miss. Marjorie&#34;,&#34;Sandstrom, Mrs. Hjalmar (Agnes Charlotta Bengtsson)&#34;,&#34;Johansson, Mr. Erik&#34;,&#34;Olsson, Miss. Elina&#34;,&#34;McKane, Mr. Peter David&#34;,&#34;Pain, Dr. Alfred&#34;,&#34;Trout, Mrs. William H (Jessie L)&#34;,&#34;Niskanen, Mr. Juha&#34;,&#34;Adams, Mr. John&#34;,&#34;Jussila, Miss. Mari Aina&#34;,&#34;Hakkarainen, Mr. Pekka Pietari&#34;,&#34;Oreskovic, Miss. Marija&#34;,&#34;Gale, Mr. Shadrach&#34;,&#34;Widegren, Mr. Carl/Charles Peter&#34;,&#34;Richards, Master. William Rowe&#34;,&#34;Birkeland, Mr. Hans Martin Monsen&#34;,&#34;Lefebre, Miss. Ida&#34;,&#34;Sdycoff, Mr. Todor&#34;,&#34;Hart, Mr. Henry&#34;,&#34;Minahan, Miss. Daisy E&#34;,&#34;Cunningham, Mr. Alfred Fleming&#34;,&#34;Sundman, Mr. Johan Julian&#34;,&#34;Meek, Mrs. Thomas (Annie Louise Rowley)&#34;,&#34;Drew, Mrs. James Vivian (Lulu Thorne Christian)&#34;,&#34;Silven, Miss. Lyyli Karoliina&#34;,&#34;Matthews, Mr. William John&#34;,&#34;Van Impe, Miss. Catharina&#34;,&#34;Gheorgheff, Mr. Stanio&#34;,&#34;Charters, Mr. David&#34;,&#34;Zimmerman, Mr. Leo&#34;,&#34;Danbom, Mrs. Ernst Gilbert (Anna Sigrid Maria Brogren)&#34;,&#34;Rosblom, Mr. Viktor Richard&#34;,&#34;Wiseman, Mr. Phillippe&#34;,&#34;Clarke, Mrs. Charles V (Ada Maria Winfield)&#34;,&#34;Phillips, Miss. Kate Florence (\&#34;Mrs Kate Louise Phillips Marshall\&#34;)&#34;,&#34;Flynn, Mr. James&#34;,&#34;Pickard, Mr. Berk (Berk Trembisky)&#34;,&#34;Bjornstrom-Steffansson, Mr. Mauritz Hakan&#34;,&#34;Thorneycroft, Mrs. Percival (Florence Kate White)&#34;,&#34;Louch, Mrs. Charles Alexander (Alice Adelaide Slow)&#34;,&#34;Kallio, Mr. Nikolai Erland&#34;,&#34;Silvey, Mr. William Baird&#34;,&#34;Carter, Miss. Lucile Polk&#34;,&#34;Ford, Miss. Doolina Margaret \&#34;Daisy\&#34;&#34;,&#34;Richards, Mrs. Sidney (Emily Hocking)&#34;,&#34;Fortune, Mr. Mark&#34;,&#34;Kvillner, Mr. Johan Henrik Johannesson&#34;,&#34;Hart, Mrs. Benjamin (Esther Ada Bloomfield)&#34;,&#34;Hampe, Mr. Leon&#34;,&#34;Petterson, Mr. Johan Emil&#34;,&#34;Reynaldo, Ms. Encarnacion&#34;,&#34;Johannesen-Bratthammer, Mr. Bernt&#34;,&#34;Dodge, Master. Washington&#34;,&#34;Mellinger, Miss. Madeleine Violet&#34;,&#34;Seward, Mr. Frederic Kimber&#34;,&#34;Baclini, Miss. Marie Catherine&#34;,&#34;Peuchen, Major. Arthur Godfrey&#34;,&#34;West, Mr. Edwy Arthur&#34;,&#34;Hagland, Mr. Ingvald Olai Olsen&#34;,&#34;Foreman, Mr. Benjamin Laventall&#34;,&#34;Goldenberg, Mr. Samuel L&#34;,&#34;Peduzzi, Mr. Joseph&#34;,&#34;Jalsevac, Mr. Ivan&#34;,&#34;Millet, Mr. Francis Davis&#34;,&#34;Kenyon, Mrs. Frederick R (Marion)&#34;,&#34;Toomey, Miss. Ellen&#34;,&#34;O&#39;Connor, Mr. Maurice&#34;,&#34;Anderson, Mr. Harry&#34;,&#34;Morley, Mr. William&#34;,&#34;Gee, Mr. Arthur H&#34;,&#34;Milling, Mr. Jacob Christian&#34;,&#34;Maisner, Mr. Simon&#34;,&#34;Goncalves, Mr. Manuel Estanslas&#34;,&#34;Campbell, Mr. William&#34;,&#34;Smart, Mr. John Montgomery&#34;,&#34;Scanlan, Mr. James&#34;,&#34;Baclini, Miss. Helene Barbara&#34;,&#34;Keefe, Mr. Arthur&#34;,&#34;Cacic, Mr. Luka&#34;,&#34;West, Mrs. Edwy Arthur (Ada Mary Worth)&#34;,&#34;Jerwan, Mrs. Amin S (Marie Marthe Thuillard)&#34;,&#34;Strandberg, Miss. Ida Sofia&#34;,&#34;Clifford, Mr. George Quincy&#34;,&#34;Renouf, Mr. Peter Henry&#34;,&#34;Braund, Mr. Lewis Richard&#34;,&#34;Karlsson, Mr. Nils August&#34;,&#34;Hirvonen, Miss. Hildur E&#34;,&#34;Goodwin, Master. Harold Victor&#34;,&#34;Frost, Mr. Anthony Wood \&#34;Archie\&#34;&#34;,&#34;Rouse, Mr. Richard Henry&#34;,&#34;Turkula, Mrs. (Hedwig)&#34;,&#34;Bishop, Mr. Dickinson H&#34;,&#34;Lefebre, Miss. Jeannie&#34;,&#34;Hoyt, Mrs. Frederick Maxfield (Jane Anne Forby)&#34;,&#34;Kent, Mr. Edward Austin&#34;,&#34;Somerton, Mr. Francis William&#34;,&#34;Coutts, Master. Eden Leslie \&#34;Neville\&#34;&#34;,&#34;Hagland, Mr. Konrad Mathias Reiersen&#34;,&#34;Windelov, Mr. Einar&#34;,&#34;Molson, Mr. Harry Markland&#34;,&#34;Artagaveytia, Mr. Ramon&#34;,&#34;Stanley, Mr. Edward Roland&#34;,&#34;Yousseff, Mr. Gerious&#34;,&#34;Eustis, Miss. Elizabeth Mussey&#34;,&#34;Shellard, Mr. Frederick William&#34;,&#34;Allison, Mrs. Hudson J C (Bessie Waldo Daniels)&#34;,&#34;Svensson, Mr. Olof&#34;,&#34;Calic, Mr. Petar&#34;,&#34;Canavan, Miss. Mary&#34;,&#34;O&#39;Sullivan, Miss. Bridget Mary&#34;,&#34;Laitinen, Miss. Kristina Sofia&#34;,&#34;Maioni, Miss. Roberta&#34;,&#34;Penasco y Castellana, Mr. Victor de Satode&#34;,&#34;Quick, Mrs. Frederick Charles (Jane Richards)&#34;,&#34;Bradley, Mr. George (\&#34;George Arthur Brayton\&#34;)&#34;,&#34;Olsen, Mr. Henry Margido&#34;,&#34;Lang, Mr. Fang&#34;,&#34;Daly, Mr. Eugene Patrick&#34;,&#34;Webber, Mr. James&#34;,&#34;McGough, Mr. James Robert&#34;,&#34;Rothschild, Mrs. Martin (Elizabeth L. Barrett)&#34;,&#34;Coleff, Mr. Satio&#34;,&#34;Walker, Mr. William Anderson&#34;,&#34;Lemore, Mrs. (Amelia Milley)&#34;,&#34;Ryan, Mr. Patrick&#34;,&#34;Angle, Mrs. William A (Florence \&#34;Mary\&#34; Agnes Hughes)&#34;,&#34;Pavlovic, Mr. Stefo&#34;,&#34;Perreault, Miss. Anne&#34;,&#34;Vovk, Mr. Janko&#34;,&#34;Lahoud, Mr. Sarkis&#34;,&#34;Hippach, Mrs. Louis Albert (Ida Sophia Fischer)&#34;,&#34;Kassem, Mr. Fared&#34;,&#34;Farrell, Mr. James&#34;,&#34;Ridsdale, Miss. Lucy&#34;,&#34;Farthing, Mr. John&#34;,&#34;Salonen, Mr. Johan Werner&#34;,&#34;Hocking, Mr. Richard George&#34;,&#34;Quick, Miss. Phyllis May&#34;,&#34;Toufik, Mr. Nakli&#34;,&#34;Elias, Mr. Joseph Jr&#34;,&#34;Peter, Mrs. Catherine (Catherine Rizk)&#34;,&#34;Cacic, Miss. Marija&#34;,&#34;Hart, Miss. Eva Miriam&#34;,&#34;Butt, Major. Archibald Willingham&#34;,&#34;LeRoy, Miss. Bertha&#34;,&#34;Risien, Mr. Samuel Beard&#34;,&#34;Frolicher, Miss. Hedwig Margaritha&#34;,&#34;Crosby, Miss. Harriet R&#34;,&#34;Andersson, Miss. Ingeborg Constanzia&#34;,&#34;Andersson, Miss. Sigrid Elisabeth&#34;,&#34;Beane, Mr. Edward&#34;,&#34;Douglas, Mr. Walter Donald&#34;,&#34;Nicholson, Mr. Arthur Ernest&#34;,&#34;Beane, Mrs. Edward (Ethel Clarke)&#34;,&#34;Padro y Manent, Mr. Julian&#34;,&#34;Goldsmith, Mr. Frank John&#34;,&#34;Davies, Master. John Morgan Jr&#34;,&#34;Thayer, Mr. John Borland Jr&#34;,&#34;Sharp, Mr. Percival James R&#34;,&#34;O&#39;Brien, Mr. Timothy&#34;,&#34;Leeni, Mr. Fahim (\&#34;Philip Zenni\&#34;)&#34;,&#34;Ohman, Miss. Velin&#34;,&#34;Wright, Mr. George&#34;,&#34;Duff Gordon, Lady. (Lucille Christiana Sutherland) (\&#34;Mrs Morgan\&#34;)&#34;,&#34;Robbins, Mr. Victor&#34;,&#34;Taussig, Mrs. Emil (Tillie Mandelbaum)&#34;,&#34;de Messemaeker, Mrs. Guillaume Joseph (Emma)&#34;,&#34;Morrow, Mr. Thomas Rowan&#34;,&#34;Sivic, Mr. Husein&#34;,&#34;Norman, Mr. Robert Douglas&#34;,&#34;Simmons, Mr. John&#34;,&#34;Meanwell, Miss. (Marion Ogden)&#34;,&#34;Davies, Mr. Alfred J&#34;,&#34;Stoytcheff, Mr. Ilia&#34;,&#34;Palsson, Mrs. Nils (Alma Cornelia Berglund)&#34;,&#34;Doharr, Mr. Tannous&#34;,&#34;Jonsson, Mr. Carl&#34;,&#34;Harris, Mr. George&#34;,&#34;Appleton, Mrs. Edward Dale (Charlotte Lamson)&#34;,&#34;Flynn, Mr. John Irwin (\&#34;Irving\&#34;)&#34;,&#34;Kelly, Miss. Mary&#34;,&#34;Rush, Mr. Alfred George John&#34;,&#34;Patchett, Mr. George&#34;,&#34;Garside, Miss. Ethel&#34;,&#34;Silvey, Mrs. William Baird (Alice Munger)&#34;,&#34;Caram, Mrs. Joseph (Maria Elias)&#34;,&#34;Jussila, Mr. Eiriik&#34;,&#34;Christy, Miss. Julie Rachel&#34;,&#34;Thayer, Mrs. John Borland (Marian Longstreth Morris)&#34;,&#34;Downton, Mr. William James&#34;,&#34;Ross, Mr. John Hugo&#34;,&#34;Paulner, Mr. Uscher&#34;,&#34;Taussig, Miss. Ruth&#34;,&#34;Jarvis, Mr. John Denzil&#34;,&#34;Frolicher-Stehli, Mr. Maxmillian&#34;,&#34;Gilinski, Mr. Eliezer&#34;,&#34;Murdlin, Mr. Joseph&#34;,&#34;Rintamaki, Mr. Matti&#34;,&#34;Stephenson, Mrs. Walter Bertram (Martha Eustis)&#34;,&#34;Elsbury, Mr. William James&#34;,&#34;Bourke, Miss. Mary&#34;,&#34;Chapman, Mr. John Henry&#34;,&#34;Van Impe, Mr. Jean Baptiste&#34;,&#34;Leitch, Miss. Jessie Wills&#34;,&#34;Johnson, Mr. Alfred&#34;,&#34;Boulos, Mr. Hanna&#34;,&#34;Duff Gordon, Sir. Cosmo Edmund (\&#34;Mr Morgan\&#34;)&#34;,&#34;Jacobsohn, Mrs. Sidney Samuel (Amy Frances Christy)&#34;,&#34;Slabenoff, Mr. Petco&#34;,&#34;Harrington, Mr. Charles H&#34;,&#34;Torber, Mr. Ernst William&#34;,&#34;Homer, Mr. Harry (\&#34;Mr E Haven\&#34;)&#34;,&#34;Lindell, Mr. Edvard Bengtsson&#34;,&#34;Karaic, Mr. Milan&#34;,&#34;Daniel, Mr. Robert Williams&#34;,&#34;Laroche, Mrs. Joseph (Juliette Marie Louise Lafargue)&#34;,&#34;Shutes, Miss. Elizabeth W&#34;,&#34;Andersson, Mrs. Anders Johan (Alfrida Konstantia Brogren)&#34;,&#34;Jardin, Mr. Jose Neto&#34;,&#34;Murphy, Miss. Margaret Jane&#34;,&#34;Horgan, Mr. John&#34;,&#34;Brocklebank, Mr. William Alfred&#34;,&#34;Herman, Miss. Alice&#34;,&#34;Danbom, Mr. Ernst Gilbert&#34;,&#34;Lobb, Mrs. William Arthur (Cordelia K Stanlick)&#34;,&#34;Becker, Miss. Marion Louise&#34;,&#34;Gavey, Mr. Lawrence&#34;,&#34;Yasbeck, Mr. Antoni&#34;,&#34;Kimball, Mr. Edwin Nelson Jr&#34;,&#34;Nakid, Mr. Sahid&#34;,&#34;Hansen, Mr. Henry Damsgaard&#34;,&#34;Bowen, Mr. David John \&#34;Dai\&#34;&#34;,&#34;Sutton, Mr. Frederick&#34;,&#34;Kirkland, Rev. Charles Leonard&#34;,&#34;Longley, Miss. Gretchen Fiske&#34;,&#34;Bostandyeff, Mr. Guentcho&#34;,&#34;O&#39;Connell, Mr. Patrick D&#34;,&#34;Barkworth, Mr. Algernon Henry Wilson&#34;,&#34;Lundahl, Mr. Johan Svensson&#34;,&#34;Stahelin-Maeglin, Dr. Max&#34;,&#34;Parr, Mr. William Henry Marsh&#34;,&#34;Skoog, Miss. Mabel&#34;,&#34;Davis, Miss. Mary&#34;,&#34;Leinonen, Mr. Antti Gustaf&#34;,&#34;Collyer, Mr. Harvey&#34;,&#34;Panula, Mrs. Juha (Maria Emilia Ojala)&#34;,&#34;Thorneycroft, Mr. Percival&#34;,&#34;Jensen, Mr. Hans Peder&#34;,&#34;Sagesser, Mlle. Emma&#34;,&#34;Skoog, Miss. Margit Elizabeth&#34;,&#34;Foo, Mr. Choong&#34;,&#34;Baclini, Miss. Eugenie&#34;,&#34;Harper, Mr. Henry Sleeper&#34;,&#34;Cor, Mr. Liudevit&#34;,&#34;Simonius-Blumer, Col. Oberst Alfons&#34;,&#34;Willey, Mr. Edward&#34;,&#34;Stanley, Miss. Amy Zillah Elsie&#34;,&#34;Mitkoff, Mr. Mito&#34;,&#34;Doling, Miss. Elsie&#34;,&#34;Kalvik, Mr. Johannes Halvorsen&#34;,&#34;O&#39;Leary, Miss. Hanora \&#34;Norah\&#34;&#34;,&#34;Hegarty, Miss. Hanora \&#34;Nora\&#34;&#34;,&#34;Hickman, Mr. Leonard Mark&#34;,&#34;Radeff, Mr. Alexander&#34;,&#34;Bourke, Mrs. John (Catherine)&#34;,&#34;Eitemiller, Mr. George Floyd&#34;,&#34;Newell, Mr. Arthur Webster&#34;,&#34;Frauenthal, Dr. Henry William&#34;,&#34;Badt, Mr. Mohamed&#34;,&#34;Colley, Mr. Edward Pomeroy&#34;,&#34;Coleff, Mr. Peju&#34;,&#34;Lindqvist, Mr. Eino William&#34;,&#34;Hickman, Mr. Lewis&#34;,&#34;Butler, Mr. Reginald Fenton&#34;,&#34;Rommetvedt, Mr. Knud Paust&#34;,&#34;Cook, Mr. Jacob&#34;,&#34;Taylor, Mrs. Elmer Zebley (Juliet Cummins Wright)&#34;,&#34;Brown, Mrs. Thomas William Solomon (Elizabeth Catherine Ford)&#34;,&#34;Davidson, Mr. Thornton&#34;,&#34;Mitchell, Mr. Henry Michael&#34;,&#34;Wilhelms, Mr. Charles&#34;,&#34;Watson, Mr. Ennis Hastings&#34;,&#34;Edvardsson, Mr. Gustaf Hjalmar&#34;,&#34;Sawyer, Mr. Frederick Charles&#34;,&#34;Turja, Miss. Anna Sofia&#34;,&#34;Goodwin, Mrs. Frederick (Augusta Tyler)&#34;,&#34;Cardeza, Mr. Thomas Drake Martinez&#34;,&#34;Peters, Miss. Katie&#34;,&#34;Hassab, Mr. Hammad&#34;,&#34;Olsvigen, Mr. Thor Anderson&#34;,&#34;Goodwin, Mr. Charles Edward&#34;,&#34;Brown, Mr. Thomas William Solomon&#34;,&#34;Laroche, Mr. Joseph Philippe Lemercier&#34;,&#34;Panula, Mr. Jaako Arnold&#34;,&#34;Dakic, Mr. Branko&#34;,&#34;Fischer, Mr. Eberhard Thelander&#34;,&#34;Madill, Miss. Georgette Alexandra&#34;,&#34;Dick, Mr. Albert Adrian&#34;,&#34;Karun, Miss. Manca&#34;,&#34;Lam, Mr. Ali&#34;,&#34;Saad, Mr. Khalil&#34;,&#34;Weir, Col. John&#34;,&#34;Chapman, Mr. Charles Henry&#34;,&#34;Kelly, Mr. James&#34;,&#34;Mullens, Miss. Katherine \&#34;Katie\&#34;&#34;,&#34;Thayer, Mr. John Borland&#34;,&#34;Humblen, Mr. Adolf Mathias Nicolai Olsen&#34;,&#34;Astor, Mrs. John Jacob (Madeleine Talmadge Force)&#34;,&#34;Silverthorne, Mr. Spencer Victor&#34;,&#34;Barbara, Miss. Saiide&#34;,&#34;Gallagher, Mr. Martin&#34;,&#34;Hansen, Mr. Henrik Juul&#34;,&#34;Morley, Mr. Henry Samuel (\&#34;Mr Henry Marshall\&#34;)&#34;,&#34;Kelly, Mrs. Florence \&#34;Fannie\&#34;&#34;,&#34;Calderhead, Mr. Edward Pennington&#34;,&#34;Cleaver, Miss. Alice&#34;,&#34;Moubarek, Master. Halim Gonios (\&#34;William George\&#34;)&#34;,&#34;Mayne, Mlle. Berthe Antonine (\&#34;Mrs de Villiers\&#34;)&#34;,&#34;Klaber, Mr. Herman&#34;,&#34;Taylor, Mr. Elmer Zebley&#34;,&#34;Larsson, Mr. August Viktor&#34;,&#34;Greenberg, Mr. Samuel&#34;,&#34;Soholt, Mr. Peter Andreas Lauritz Andersen&#34;,&#34;Endres, Miss. Caroline Louise&#34;,&#34;Troutt, Miss. Edwina Celia \&#34;Winnie\&#34;&#34;,&#34;McEvoy, Mr. Michael&#34;,&#34;Johnson, Mr. Malkolm Joackim&#34;,&#34;Harper, Miss. Annie Jessie \&#34;Nina\&#34;&#34;,&#34;Jensen, Mr. Svend Lauritz&#34;,&#34;Gillespie, Mr. William Henry&#34;,&#34;Hodges, Mr. Henry Price&#34;,&#34;Chambers, Mr. Norman Campbell&#34;,&#34;Oreskovic, Mr. Luka&#34;,&#34;Renouf, Mrs. Peter Henry (Lillian Jefferys)&#34;,&#34;Mannion, Miss. Margareth&#34;,&#34;Bryhl, Mr. Kurt Arnold Gottfrid&#34;,&#34;Ilmakangas, Miss. Pieta Sofia&#34;,&#34;Allen, Miss. Elisabeth Walton&#34;,&#34;Hassan, Mr. Houssein G N&#34;,&#34;Knight, Mr. Robert J&#34;,&#34;Berriman, Mr. William John&#34;,&#34;Troupiansky, Mr. Moses Aaron&#34;,&#34;Williams, Mr. Leslie&#34;,&#34;Ford, Mrs. Edward (Margaret Ann Watson)&#34;,&#34;Lesurer, Mr. Gustave J&#34;,&#34;Ivanoff, Mr. Kanio&#34;,&#34;Nankoff, Mr. Minko&#34;,&#34;Hawksford, Mr. Walter James&#34;,&#34;Cavendish, Mr. Tyrell William&#34;,&#34;Ryerson, Miss. Susan Parker \&#34;Suzette\&#34;&#34;,&#34;McNamee, Mr. Neal&#34;,&#34;Stranden, Mr. Juho&#34;,&#34;Crosby, Capt. Edward Gifford&#34;,&#34;Abbott, Mr. Rossmore Edward&#34;,&#34;Sinkkonen, Miss. Anna&#34;,&#34;Marvin, Mr. Daniel Warner&#34;,&#34;Connaghton, Mr. Michael&#34;,&#34;Wells, Miss. Joan&#34;,&#34;Moor, Master. Meier&#34;,&#34;Vande Velde, Mr. Johannes Joseph&#34;,&#34;Jonkoff, Mr. Lalio&#34;,&#34;Herman, Mrs. Samuel (Jane Laver)&#34;,&#34;Hamalainen, Master. Viljo&#34;,&#34;Carlsson, Mr. August Sigfrid&#34;,&#34;Bailey, Mr. Percy Andrew&#34;,&#34;Theobald, Mr. Thomas Leonard&#34;,&#34;Rothes, the Countess. of (Lucy Noel Martha Dyer-Edwards)&#34;,&#34;Garfirth, Mr. John&#34;,&#34;Nirva, Mr. Iisakki Antino Aijo&#34;,&#34;Barah, Mr. Hanna Assi&#34;,&#34;Carter, Mrs. William Ernest (Lucile Polk)&#34;,&#34;Eklund, Mr. Hans Linus&#34;,&#34;Hogeboom, Mrs. John C (Anna Andrews)&#34;,&#34;Brewe, Dr. Arthur Jackson&#34;,&#34;Mangan, Miss. Mary&#34;,&#34;Moran, Mr. Daniel J&#34;,&#34;Gronnestad, Mr. Daniel Danielsen&#34;,&#34;Lievens, Mr. Rene Aime&#34;,&#34;Jensen, Mr. Niels Peder&#34;,&#34;Mack, Mrs. (Mary)&#34;,&#34;Elias, Mr. Dibo&#34;,&#34;Hocking, Mrs. Elizabeth (Eliza Needs)&#34;,&#34;Myhrman, Mr. Pehr Fabian Oliver Malkolm&#34;,&#34;Tobin, Mr. Roger&#34;,&#34;Emanuel, Miss. Virginia Ethel&#34;,&#34;Kilgannon, Mr. Thomas J&#34;,&#34;Robert, Mrs. Edward Scott (Elisabeth Walton McMillan)&#34;,&#34;Ayoub, Miss. Banoura&#34;,&#34;Dick, Mrs. Albert Adrian (Vera Gillespie)&#34;,&#34;Long, Mr. Milton Clyde&#34;,&#34;Johnston, Mr. Andrew G&#34;,&#34;Ali, Mr. William&#34;,&#34;Harmer, Mr. Abraham (David Lishin)&#34;,&#34;Sjoblom, Miss. Anna Sofia&#34;,&#34;Rice, Master. George Hugh&#34;,&#34;Dean, Master. Bertram Vere&#34;,&#34;Guggenheim, Mr. Benjamin&#34;,&#34;Keane, Mr. Andrew \&#34;Andy\&#34;&#34;,&#34;Gaskell, Mr. Alfred&#34;,&#34;Sage, Miss. Stella Anna&#34;,&#34;Hoyt, Mr. William Fisher&#34;,&#34;Dantcheff, Mr. Ristiu&#34;,&#34;Otter, Mr. Richard&#34;,&#34;Leader, Dr. Alice (Farnham)&#34;,&#34;Osman, Mrs. Mara&#34;,&#34;Ibrahim Shawah, Mr. Yousseff&#34;,&#34;Van Impe, Mrs. Jean Baptiste (Rosalie Paula Govaert)&#34;,&#34;Ponesell, Mr. Martin&#34;,&#34;Collyer, Mrs. Harvey (Charlotte Annie Tate)&#34;,&#34;Carter, Master. William Thornton II&#34;,&#34;Thomas, Master. Assad Alexander&#34;,&#34;Hedman, Mr. Oskar Arvid&#34;,&#34;Johansson, Mr. Karl Johan&#34;,&#34;Andrews, Mr. Thomas Jr&#34;,&#34;Pettersson, Miss. Ellen Natalia&#34;,&#34;Meyer, Mr. August&#34;,&#34;Chambers, Mrs. Norman Campbell (Bertha Griggs)&#34;,&#34;Alexander, Mr. William&#34;,&#34;Lester, Mr. James&#34;,&#34;Slemen, Mr. Richard James&#34;,&#34;Andersson, Miss. Ebba Iris Alfrida&#34;,&#34;Tomlin, Mr. Ernest Portage&#34;,&#34;Fry, Mr. Richard&#34;,&#34;Heininen, Miss. Wendla Maria&#34;,&#34;Mallet, Mr. Albert&#34;,&#34;Holm, Mr. John Fredrik Alexander&#34;,&#34;Skoog, Master. Karl Thorsten&#34;,&#34;Hays, Mrs. Charles Melville (Clara Jennings Gregg)&#34;,&#34;Lulic, Mr. Nikola&#34;,&#34;Reuchlin, Jonkheer. John George&#34;,&#34;Moor, Mrs. (Beila)&#34;,&#34;Panula, Master. Urho Abraham&#34;,&#34;Flynn, Mr. John&#34;,&#34;Lam, Mr. Len&#34;,&#34;Mallet, Master. Andre&#34;,&#34;McCormack, Mr. Thomas Joseph&#34;,&#34;Stone, Mrs. George Nelson (Martha Evelyn)&#34;,&#34;Yasbeck, Mrs. Antoni (Selini Alexander)&#34;,&#34;Richards, Master. George Sibley&#34;,&#34;Saad, Mr. Amin&#34;,&#34;Augustsson, Mr. Albert&#34;,&#34;Allum, Mr. Owen George&#34;,&#34;Compton, Miss. Sara Rebecca&#34;,&#34;Pasic, Mr. Jakob&#34;,&#34;Sirota, Mr. Maurice&#34;,&#34;Chip, Mr. Chang&#34;,&#34;Marechal, Mr. Pierre&#34;,&#34;Alhomaki, Mr. Ilmari Rudolf&#34;,&#34;Mudd, Mr. Thomas Charles&#34;,&#34;Serepeca, Miss. Augusta&#34;,&#34;Lemberopolous, Mr. Peter L&#34;,&#34;Culumovic, Mr. Jeso&#34;,&#34;Abbing, Mr. Anthony&#34;,&#34;Sage, Mr. Douglas Bullen&#34;,&#34;Markoff, Mr. Marin&#34;,&#34;Harper, Rev. John&#34;,&#34;Goldenberg, Mrs. Samuel L (Edwiga Grabowska)&#34;,&#34;Andersson, Master. Sigvard Harald Elias&#34;,&#34;Svensson, Mr. Johan&#34;,&#34;Boulos, Miss. Nourelain&#34;,&#34;Lines, Miss. Mary Conover&#34;,&#34;Carter, Mrs. Ernest Courtenay (Lilian Hughes)&#34;,&#34;Aks, Mrs. Sam (Leah Rosen)&#34;,&#34;Wick, Mrs. George Dennick (Mary Hitchcock)&#34;,&#34;Daly, Mr. Peter Denis &#34;,&#34;Baclini, Mrs. Solomon (Latifa Qurban)&#34;,&#34;Razi, Mr. Raihed&#34;,&#34;Hansen, Mr. Claus Peter&#34;,&#34;Giles, Mr. Frederick Edward&#34;,&#34;Swift, Mrs. Frederick Joel (Margaret Welles Barron)&#34;,&#34;Sage, Miss. Dorothy Edith \&#34;Dolly\&#34;&#34;,&#34;Gill, Mr. John William&#34;,&#34;Bystrom, Mrs. (Karolina)&#34;,&#34;Duran y More, Miss. Asuncion&#34;,&#34;Roebling, Mr. Washington Augustus II&#34;,&#34;van Melkebeke, Mr. Philemon&#34;,&#34;Johnson, Master. Harold Theodor&#34;,&#34;Balkic, Mr. Cerin&#34;,&#34;Beckwith, Mrs. Richard Leonard (Sallie Monypeny)&#34;,&#34;Carlsson, Mr. Frans Olof&#34;,&#34;Vander Cruyssen, Mr. Victor&#34;,&#34;Abelson, Mrs. Samuel (Hannah Wizosky)&#34;,&#34;Najib, Miss. Adele Kiamie \&#34;Jane\&#34;&#34;,&#34;Gustafsson, Mr. Alfred Ossian&#34;,&#34;Petroff, Mr. Nedelio&#34;,&#34;Laleff, Mr. Kristo&#34;,&#34;Potter, Mrs. Thomas Jr (Lily Alexenia Wilson)&#34;,&#34;Shelley, Mrs. William (Imanita Parrish Hall)&#34;,&#34;Markun, Mr. Johann&#34;,&#34;Dahlberg, Miss. Gerda Ulrika&#34;,&#34;Banfield, Mr. Frederick James&#34;,&#34;Sutehall, Mr. Henry Jr&#34;,&#34;Rice, Mrs. William (Margaret Norton)&#34;,&#34;Montvila, Rev. Juozas&#34;,&#34;Graham, Miss. Margaret Edith&#34;,&#34;Johnston, Miss. Catherine Helen \&#34;Carrie\&#34;&#34;,&#34;Behr, Mr. Karl Howell&#34;,&#34;Dooley, Mr. Patrick&#34;],[&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;,&#34;female&#34;,&#34;male&#34;,&#34;female&#34;,&#34;female&#34;,&#34;male&#34;,&#34;male&#34;],[22,38,26,35,35,null,54,2,27,14,4,58,20,39,14,55,2,null,31,null,35,34,15,28,8,38,null,19,null,null,40,null,null,66,28,42,null,21,18,14,40,27,null,3,19,null,null,null,null,18,7,21,49,29,65,null,21,28.5,5,11,22,38,45,4,null,null,29,19,17,26,32,16,21,26,32,25,null,null,0.83,30,22,29,null,28,17,33,16,null,23,24,29,20,46,26,59,null,71,23,34,34,28,null,21,33,37,28,21,null,38,null,47,14.5,22,20,17,21,70.5,29,24,2,21,null,32.5,32.5,54,12,null,24,null,45,33,20,47,29,25,23,19,37,16,24,null,22,24,19,18,19,27,9,36.5,42,51,22,55.5,40.5,null,51,16,30,null,null,44,40,26,17,1,9,null,45,null,28,61,4,1,21,56,18,null,50,30,36,null,null,9,1,4,null,null,45,40,36,32,19,19,3,44,58,null,42,null,24,28,null,34,45.5,18,2,32,26,16,40,24,35,22,30,null,31,27,42,32,30,16,27,51,null,38,22,19,20.5,18,null,35,29,59,5,24,null,44,8,19,33,null,null,29,22,30,44,25,24,37,54,null,29,62,30,41,29,null,30,35,50,null,3,52,40,null,36,16,25,58,35,null,25,41,37,null,63,45,null,7,35,65,28,16,19,null,33,30,22,42,22,26,19,36,24,24,null,23.5,2,null,50,null,null,19,null,null,0.92,null,17,30,30,24,18,26,28,43,26,24,54,31,40,22,27,30,22,null,36,61,36,31,16,null,45.5,38,16,null,null,29,41,45,45,2,24,28,25,36,24,40,null,3,42,23,null,15,25,null,28,22,38,null,null,40,29,45,35,null,30,60,null,null,24,25,18,19,22,3,null,22,27,20,19,42,1,32,35,null,18,1,36,null,17,36,21,28,23,24,22,31,46,23,28,39,26,21,28,20,34,51,3,21,null,null,null,33,null,44,null,34,18,30,10,null,21,29,28,18,null,28,19,null,32,28,null,42,17,50,14,21,24,64,31,45,20,25,28,null,4,13,34,5,52,36,null,30,49,null,29,65,null,50,null,48,34,47,48,null,38,null,56,null,0.75,null,38,33,23,22,null,34,29,22,2,9,null,50,63,25,null,35,58,30,9,null,21,55,71,21,null,54,null,25,24,17,21,null,37,16,18,33,null,28,26,29,null,36,54,24,47,34,null,36,32,30,22,null,44,null,40.5,50,null,39,23,2,null,17,null,30,7,45,30,null,22,36,9,11,32,50,64,19,null,33,8,17,27,null,22,22,62,48,null,39,36,null,40,28,null,null,24,19,29,null,32,62,53,36,null,16,19,34,39,null,32,25,39,54,36,null,18,47,60,22,null,35,52,47,null,37,36,null,49,null,49,24,null,null,44,35,36,30,27,22,40,39,null,null,null,35,24,34,26,4,26,27,42,20,21,21,61,57,21,26,null,80,51,32,null,9,28,32,31,41,null,20,24,2,null,0.75,48,19,56,null,23,null,18,21,null,18,24,null,32,23,58,50,40,47,36,20,32,25,null,43,null,40,31,70,31,null,18,24.5,18,43,36,null,27,20,14,60,25,14,19,18,15,31,4,null,25,60,52,44,null,49,42,18,35,18,25,26,39,45,42,22,null,24,null,48,29,52,19,38,27,null,33,6,17,34,50,27,20,30,null,25,25,29,11,null,23,23,28.5,48,35,null,null,null,36,21,24,31,70,16,30,19,31,4,6,33,23,48,0.67,28,18,34,33,null,41,20,36,16,51,null,30.5,null,32,24,48,57,null,54,18,null,5,null,43,13,17,29,null,25,25,18,8,1,46,null,16,null,null,25,39,49,31,30,30,34,31,11,0.42,27,31,39,18,39,33,26,39,35,6,30.5,null,23,31,43,10,52,27,38,27,2,null,null,1,null,62,15,0.83,null,23,18,39,21,null,32,null,20,16,30,34.5,17,42,null,35,28,null,4,74,9,16,44,18,45,51,24,null,41,21,48,null,24,42,27,31,null,4,26,47,33,47,28,15,20,19,null,56,25,33,22,28,25,39,27,19,null,26,32],[1,1,0,1,0,0,0,3,0,1,1,0,0,1,0,0,4,0,1,0,0,0,0,0,3,1,0,3,0,0,0,1,0,0,1,1,0,0,2,1,1,1,0,1,0,0,1,0,2,1,4,0,1,1,0,0,0,0,1,5,0,0,1,3,0,1,0,0,4,2,0,5,0,1,0,0,0,0,0,0,0,0,0,0,0,3,1,0,3,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,2,0,0,0,0,1,0,1,0,1,0,0,0,1,0,4,2,0,1,0,0,1,0,0,1,0,0,0,1,1,0,0,0,1,0,0,0,0,1,0,0,1,0,2,0,0,0,1,0,0,0,0,0,0,0,8,0,0,0,0,4,0,0,1,0,0,0,4,1,0,0,1,3,0,0,0,8,0,4,2,0,0,1,0,1,0,0,0,1,1,0,0,0,0,0,0,0,8,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,1,0,0,0,0,3,1,0,0,4,0,0,1,0,0,0,1,1,0,0,0,2,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,4,1,0,0,0,4,1,0,0,0,0,0,0,0,1,0,0,4,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,2,0,0,0,1,0,1,1,0,0,2,1,0,1,0,1,0,0,1,0,0,0,1,8,0,0,0,1,0,2,0,0,2,1,0,1,0,0,0,1,3,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,1,0,1,0,0,0,1,1,0,0,3,1,0,0,0,0,0,0,0,1,0,0,5,0,0,0,1,0,2,1,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,3,0,0,1,0,0,0,1,0,0,0,0,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,2,2,1,0,1,0,1,0,0,0,0,0,2,0,1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,2,0,0,1,0,0,0,1,1,0,0,5,0,0,0,1,3,1,0,0,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,2,1,0,1,0,0,0,0,0,0,0,0,4,4,1,1,0,1,0,1,1,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,2,0,0,0,0,0,2,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,1,1,0,0,0,1,2,0,0,0,0,1,0,0,1,0,1,0,1,0,0,1,1,1,2,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,0,1,0,0,3,0,2,1,0,0,0,0,0,0,0,0,0,2,0,1,0,0,2,0,0,0,1,2,0,0,0,1,1,1,0,0,0,0,0,0,1,0,0,0,0,5,1,1,4,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,3,0,1,1,0,0,0,0,0,0,1,0,0,0,0,1,2,1,0,1,1,0,1,0,1,0,0,0,1,1,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,4,1,0,0,0,8,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,1,0,0,0,4,0,0,0,1,0,3,1,0,0,0,4,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,8,0,0,1,4,0,1,0,1,0,1,0,0,0,2,1,0,8,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,1,2,0,1,0,0,5,0,0,1,0,0,0,0,0,0,0,1,5,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,1,0,0,0,1,0,0,0,2,2,0,0,0,2,0,1,0,0,2,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,3,0,2,0,0,0,0,2,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,2,0,0,0,2,0,0,0,0,1,0,2,2,0,0,0,0,2,0,1,0,0,0,2,1,0,0,0,1,2,1,4,0,0,0,1,1,0,0,1,1,0,0,0,2,0,2,1,2,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,2,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,2,1,0,0,1,0,0,2,2,0,0,0,1,0,2,1,0,0,0,1,0,1,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,1,0,0,0,0,0,2,0,0,0,0,0,2,1,0,1,0,0,0,2,1,0,0,0,1,2,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,4,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,2,0,0,0,2,0,0,0,0,2,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,2,0,2,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,2,2,3,4,0,1,0,0,0,0,2,1,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,2,0,0,0,0,0,0,1,2,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,1,2,0,2,0,0,0,2,2,2,2,0,0,0,0,0,1,1,2,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,2,0,1,0,0,0,0,0,2,0,1,0,0,0,0,1,0,0,0,0,0,0,0,2,0,5,0,0,0,0,2,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,2,0,0,1,5,0,0,0,2,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,6,1,0,0,0,2,1,2,1,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,2,0,0,1,1,0,0,0,1,1,0,0,2,1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,1,0,0,0,2,0,0,0,1,2,0,0,0,2,0,0,0,0,0,0,1,0,1,2,1,0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,2,1,0,0,1,1,0,0,2,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,1,0,2,0,1,1,0,1,1,0,3,0,0,0,0,2,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,5,0,0,2,0,0]],&#34;container&#34;:&#34;&lt;table class=\&#34;display\&#34;&gt;\n  &lt;thead&gt;\n    &lt;tr&gt;\n      &lt;th&gt; &lt;\/th&gt;\n      &lt;th&gt;PassengerId&lt;\/th&gt;\n      &lt;th&gt;Survived&lt;\/th&gt;\n      &lt;th&gt;Pclass&lt;\/th&gt;\n      &lt;th&gt;Name&lt;\/th&gt;\n      &lt;th&gt;Sex&lt;\/th&gt;\n      &lt;th&gt;Age&lt;\/th&gt;\n      &lt;th&gt;SibSp&lt;\/th&gt;\n      &lt;th&gt;Parch&lt;\/th&gt;\n    &lt;\/tr&gt;\n  &lt;\/thead&gt;\n&lt;\/table&gt;&#34;,&#34;options&#34;:{&#34;columnDefs&#34;:[{&#34;className&#34;:&#34;dt-right&#34;,&#34;targets&#34;:[1,2,3,6,7,8]},{&#34;orderable&#34;:false,&#34;targets&#34;:0}],&#34;order&#34;:[],&#34;autoWidth&#34;:false,&#34;orderClasses&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
@@ -187,9 +189,6 @@ df_new &amp;lt;- data.frame(PassengerId = df_test$PassengerId, Survived = df_tes
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_test$Survived [df_test$Sex == &amp;quot;female&amp;quot;] &amp;lt;- 1
 
 df_new &amp;lt;- data.frame(PassengerId = df_test$PassengerId, Survived = df_test$Survived)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;data-analysis.&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;3 Data Analysis.&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nrow(df_new)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [1] 418&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;From above &lt;code&gt;nrow&lt;/code&gt; function it evident that the number of rows corresponds with what is given in &lt;code&gt;Kaggle&lt;/code&gt; test set data.&lt;/strong&gt;
@@ -278,9 +277,16 @@ df_new &amp;lt;- data.frame(PassengerId = df_test$PassengerId, Survived = df_tes
 ##        SibSp        Parch       Ticket         Fare        Cabin     Embarked 
 ## 0.0000000000 0.0000000000 0.0000000000 0.0007639419 0.7746371276 0.0015278839&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;From above function &lt;code&gt;Age&lt;/code&gt;, &lt;code&gt;Fare&lt;/code&gt;,&lt;code&gt;Cabin&lt;/code&gt; and &lt;code&gt;Embarked&lt;/code&gt; columns have missing values.I’ll also use &lt;code&gt;Amelia&lt;/code&gt; package from Amelia who is my favorite female follower in twitter to see how missing data is distributed.&lt;/strong&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;Amelia&amp;quot;)
-missmap(df_concat, main = &amp;quot;Missing Map&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;Amelia&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: Rcpp&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## ## 
+## ## Amelia II: Multiple Imputation
+## ## (Version 1.7.6, built: 2019-11-24)
+## ## Copyright (C) 2005-2020 James Honaker, Gary King and Matthew Blackwell
+## ## Refer to http://gking.harvard.edu/amelia/ for more information
+## ##&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;missmap(df_concat, main = &amp;quot;Missing Map&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;From above &lt;code&gt;Amelia&lt;/code&gt; package it shows that missing data composes of 8% of the total data set.&lt;/strong&gt;
 &lt;strong&gt;Next is to impute missing data in &lt;code&gt;Age&lt;/code&gt; column using mean of the total age as shown below.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_concat$Age[is.na(df_concat$Age)] &amp;lt;- mean(df_concat$Age,na.rm=T)
@@ -317,10 +323,12 @@ sum(is.na(df_concat$Fare))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Let me countercheck if the data is now clean and has no missing value by visual representation using &lt;code&gt;Amelia&lt;/code&gt; package.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;Amelia&amp;quot;)
 missmap(df_concat, main = &amp;quot;Missing Map&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-26-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-26-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Bingo!! now all the missing values have been cleaned now I’ll split my data into training and test set then use them in visual analysis of the two data set before actual machine learning is done on them as shown below.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df.train.cleaned &amp;lt;- df_concat[1:891,]
 df.test.cleaned &amp;lt;- df_concat[892:1309,]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Next I’ll call &lt;code&gt;ggplot2&lt;/code&gt; package which plays a crucial part in data visualization as shown below.&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Next I’ll be using both trainig and test set in visualization I’ll begin by creating a table of people who survived and died in my traing set as below.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;xtabs(~Survived, df.train.cleaned)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Survived
@@ -328,35 +336,33 @@ df.test.cleaned &amp;lt;- df_concat[892:1309,]&lt;/code&gt;&lt;/pre&gt;
 ## 549 342&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;From the table above 549 people died and 342 survived in the training set.&lt;/strong&gt;
 &lt;strong&gt;I’ll represent the above table using bar plot as shown below.&lt;/strong&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;visualization-part.&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;4. Visualization Part.&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Next I’ll call &lt;code&gt;ggplot2&lt;/code&gt; package which plays a crucial part in data visualization as shown below.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_bar(aes(x=Survived))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-29-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-30-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Next I’ll visualize &lt;code&gt;Sex&lt;/code&gt; column in the traing set to see the gender that were many in the titanic as shown below.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_bar(aes(x=Sex))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-30-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-31-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;From above table it is evident that more males were in the titanic compared to females.&lt;/strong&gt;
 &lt;strong&gt;Next I’ll draw a bar plot to see how people were distributed in three classes using the below code.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_bar(aes(x=Pclass))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-31-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-32-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;From above table there were more people in the third class compared to other classes while second class being least.&lt;/strong&gt;
 &lt;strong&gt;Next I’ll use a histogram to show if &lt;code&gt;Fare&lt;/code&gt; is normaally distributed and also see its skewness.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_histogram(aes(x=Fare),fill = &amp;quot;white&amp;quot;, colour = &amp;quot;black&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-32-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-33-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;From the table above it is evident that &lt;code&gt;Fare&lt;/code&gt; is right skewed hence the price is not normal distributed.&lt;/strong&gt;
 &lt;strong&gt;Next is to draw a boxplot to see how price is distributed and also capture the outliers.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_boxplot(aes(x=factor(0),y=Fare)) + coord_flip()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-33-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-34-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;From above boxplot it can be seen that &lt;code&gt;Fare&lt;/code&gt; is right skewed with even a person paying more than 500.&lt;/strong&gt;
 &lt;strong&gt;Next I’ll draw a histogram to show how &lt;code&gt;Age&lt;/code&gt; is distributed.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_histogram(aes(x=Age),fill = &amp;quot;white&amp;quot;, colour = &amp;quot;black&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-34-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-35-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;From above it is evident that &lt;code&gt;Age&lt;/code&gt; is normally distributed with a mean of roughly 30.&lt;/strong&gt;
 &lt;strong&gt;Next I’ll draw a boxplot for further inference on the &lt;code&gt;Age&lt;/code&gt;.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_boxplot(aes(x=factor(0),y=Age)) + coord_flip()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-35-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-36-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;From above boxplot it can be seen that &lt;code&gt;Age&lt;/code&gt; is normally distributed.&lt;/strong&gt;
 &lt;strong&gt;Next I’ll make a table to show how survival count in the &lt;code&gt;Sex&lt;/code&gt; is distributed.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;xtabs(~Survived+Sex,df.train.cleaned)&lt;/code&gt;&lt;/pre&gt;
@@ -367,7 +373,7 @@ df.test.cleaned &amp;lt;- df_concat[892:1309,]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;From above table it is evident that more males died compared to females while more females survived compared to males.&lt;/strong&gt;
 &lt;strong&gt;Next I’ll draw a bar plot to visualize above table.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_bar(aes(x=Sex, fill=factor(Survived)))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-37-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-38-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Next I’ll make a table to show the survival rate in the three classes as shown below.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;xtabs(~Survived+Pclass,df.train.cleaned)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;##         Pclass
@@ -377,7 +383,7 @@ df.test.cleaned &amp;lt;- df_concat[892:1309,]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;From above table more people died in the third class as compared to rest of classes while people who were in the first class survived to compared to the rest of the classes.&lt;/strong&gt;
 &lt;strong&gt;Next I’ll visualize above table using bar plot for visual inference.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_bar(aes(x=Pclass, fill=factor(Survived)) )&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-39-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-40-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Next I’ll make a table to see survival rate from three stations as below.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;xtabs(~Survived+Embarked,df.train.cleaned)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;##         Embarked
@@ -387,21 +393,23 @@ df.test.cleaned &amp;lt;- df_concat[892:1309,]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;From the table above it is evident that more people from &lt;code&gt;Southampton&lt;/code&gt; boarded the titanic and also it is them that died in large number than the rest and also it is them that died most while least death and survival registered by &lt;code&gt;Queenstown&lt;/code&gt;.&lt;/strong&gt;
 &lt;strong&gt;I’ll visualize the above table using a bar plot for further visual inference.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_bar(aes(x=Embarked, fill=factor(Survived)) )&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-41-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-42-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Next I’ll draw a boxplot to show how suvival rate for &lt;code&gt;Age&lt;/code&gt; column .&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_boxplot(aes(x = factor(Survived), y = Age))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-42-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-43-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;From above box plot it is evident that a maximum &lt;code&gt;Age&lt;/code&gt; of about 40 survived and died while the least &lt;code&gt;Age&lt;/code&gt; being 24 for for those who died while 22 being who survived.&lt;/strong&gt;
 &lt;strong&gt;Next I’ll visualize above scenario using a histogram as below.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_histogram(aes(x = Age),fill = &amp;quot;white&amp;quot;, colour = &amp;quot;black&amp;quot;) + facet_grid(factor(Survived) ~ .)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-43-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-44-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Next I’ll draw a boxplot of &lt;code&gt;Fare&lt;/code&gt; against &lt;code&gt;Survived&lt;/code&gt; to see if &lt;code&gt;Fare&lt;/code&gt; played a major role in survival rate.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_boxplot(aes(x = factor(Survived), y = Fare))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-44-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-45-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;From above table it is evident that those who paid high &lt;code&gt;Fare&lt;/code&gt; survived as compared to those who paid least.&lt;/strong&gt;
 &lt;strong&gt;Next I’ll draw a histogram from above boxplot for further visual representation.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_histogram(aes(x = Fare),fill = &amp;quot;white&amp;quot;, colour = &amp;quot;black&amp;quot;) + facet_grid(factor(Survived) ~ .)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-45-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-46-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Next I’ll draw a table of both males and females to show their survival count in three classes as shown below.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;xtabs(~factor(Survived)+Pclass+Sex,df.train.cleaned)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## , , Sex = female
@@ -420,7 +428,7 @@ df.test.cleaned &amp;lt;- df_concat[892:1309,]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;From above table it is evident that more males died compared to females while more females survived compared to males.&lt;/strong&gt;
 &lt;strong&gt;Next I’ll draw a bar plot using &lt;code&gt;facet_grid&lt;/code&gt; option to visualise above table.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_bar(aes(x=Sex, fill=factor(Survived))) + facet_grid(Pclass ~ .)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-47-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-48-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Next I’ll draw a table of males and females differently in three classes to compare survival rates in three classes of the two genders.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;xtabs(~Survived+Embarked+Sex,df.train.cleaned)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## , , Sex = female
@@ -439,7 +447,7 @@ df.test.cleaned &amp;lt;- df_concat[892:1309,]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;From above table it is evident that more males died in &lt;code&gt;Cherbourg&lt;/code&gt; and &lt;code&gt;Southamptton&lt;/code&gt; as comparedto males with only &lt;code&gt;Queenstown&lt;/code&gt; females died more than males, while survival rate also for females in two stations was high compared to males only &lt;code&gt;Queenstown&lt;/code&gt; was vicevasa.&lt;/strong&gt;
 &lt;strong&gt;I’ll represent the above table using bar plot using &lt;code&gt;facet_grid&lt;/code&gt; option for visualisation purposes.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df.train.cleaned) + geom_bar(aes(x=Sex, fill=factor(Survived))) + facet_grid(Embarked ~ .)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-49-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-50-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Next I’ll create a child column giving an age an range of 18 a child and rest adult after that I’ll draw a bar plot to represent survival rate for a child.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_concat$Child &amp;lt;- NA
 df_concat$Child[df_concat$Age &amp;lt; 18] &amp;lt;- 1
@@ -447,7 +455,7 @@ df_concat$Child[df_concat$Age &amp;gt;= 18] &amp;lt;- 0
 str(df_concat$Child)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;##  num [1:1309] 0 0 0 0 0 0 0 1 0 1 ...&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df_concat) + geom_bar(aes(x=Child))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-50-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-51-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;From above table it evident that more childrens died than those who survived.&lt;/strong&gt;
 &lt;strong&gt;Next is to make some inferetial analysis from &lt;code&gt;Name&lt;/code&gt; column by using regex expression which will help get initials from the name and see people’s initials survival rate both visually ad using table.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_concat$Title &amp;lt;- sapply(df_concat$Name, FUN=function(x) {strsplit(x, split=&amp;#39;[,.]&amp;#39;)[[1]][2]})
@@ -463,7 +471,7 @@ table(df_concat$Title)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;From above table it is like most people who were in the titanic were Mr.&lt;/strong&gt;
 &lt;strong&gt;Next I’ll represent above table using bar plot.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df_concat) + geom_bar(aes(x=Title))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-52-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-53-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Next I’ll reduce the above initails into manageable size using below snippet of code.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_concat$Title[df_concat$Title %in% c(&amp;#39;Mme&amp;#39;, &amp;#39;Mlle&amp;#39;)] &amp;lt;- &amp;#39;Mlle&amp;#39;
 df_concat$Title[df_concat$Title %in% c(&amp;#39;Capt&amp;#39;, &amp;#39;Don&amp;#39;, &amp;#39;Major&amp;#39;, &amp;#39;Sir&amp;#39;)] &amp;lt;- &amp;#39;Sir&amp;#39;
@@ -475,7 +483,7 @@ table(df_concat$Title)&lt;/code&gt;&lt;/pre&gt;
 ##      4      8      4     61    260      3    757    197      2      8      5&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;After reducing the initials I’ll draw the same bar plot to see the difference.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df_concat) + geom_bar(aes(x=Title))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-54-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-55-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Next I’ll create aa table to make some inference on how the family size were distributed in the ship.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_concat$FamilySize &amp;lt;- df_concat$SibSp + df_concat$Parch + 1
 table(df_concat$FamilySize)&lt;/code&gt;&lt;/pre&gt;
@@ -484,7 +492,492 @@ table(df_concat$FamilySize)&lt;/code&gt;&lt;/pre&gt;
 ## 790 235 159  43  22  25  16   8  11&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;From above it’s like a &lt;code&gt;Familysize&lt;/code&gt; of 1 person were many than others.Lastly I’ll draw a bar plot to visualize the result.&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(df_concat) + geom_bar(aes(x=FamilySize))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-56-1.png&#34; width=&#34;80%&#34; height=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-57-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;part-2feature-engineering&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Part 2:Feature Engineering&lt;/h2&gt;
+&lt;p&gt;Before doing machine learning processes data need to be cleaned in order to get good models with an accuracy that is to the point.
+Here I’ll start with converting the data into factors and normalizing numerical columns as shown below&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#reading data
+df &amp;lt;- read.csv(&amp;quot;titan.csv&amp;quot;)
+#removing the unwanted column x
+df &amp;lt;- df[,-c(1)]
+df_clean &amp;lt;- df[,-c(1,4,9)]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I confirm the structure of my dataframe the do column conversion as shown below.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;str(df_clean)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;data.frame&amp;#39;:    1309 obs. of  11 variables:
+##  $ Survived  : int  0 1 1 1 0 0 0 0 1 1 ...
+##  $ Pclass    : int  3 1 3 1 3 3 1 3 3 2 ...
+##  $ Sex       : chr  &amp;quot;male&amp;quot; &amp;quot;female&amp;quot; &amp;quot;female&amp;quot; &amp;quot;female&amp;quot; ...
+##  $ Age       : num  22 38 26 35 35 ...
+##  $ SibSp     : int  1 1 0 1 0 0 0 3 0 1 ...
+##  $ Parch     : int  0 0 0 0 0 0 0 1 2 0 ...
+##  $ Fare      : num  7.25 71.28 7.92 53.1 8.05 ...
+##  $ Embarked  : chr  &amp;quot;S&amp;quot; &amp;quot;C&amp;quot; &amp;quot;S&amp;quot; &amp;quot;S&amp;quot; ...
+##  $ Child     : int  0 0 0 0 0 0 0 1 0 1 ...
+##  $ Title     : chr  &amp;quot;Mr&amp;quot; &amp;quot;Mrs&amp;quot; &amp;quot;Miss&amp;quot; &amp;quot;Mrs&amp;quot; ...
+##  $ FamilySize: int  2 2 1 2 1 1 1 5 3 2 ...&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There are many columns that need to be converted into factor, where below snippet of code will do.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# data transformation
+to.factor &amp;lt;- function(df, variables){
+  for (variable in variables){
+    df[[variable]] &amp;lt;- as.factor(df[[variable]])
+  }
+  return(df)
+}
+
+cate_variable &amp;lt;- c(&amp;quot;Pclass&amp;quot;,&amp;quot;Sex&amp;quot;,  &amp;quot;Embarked&amp;quot;, &amp;quot;Title&amp;quot;, &amp;quot;Survived&amp;quot;)
+df_clean &amp;lt;- to.factor(df = df_clean, variables = cate_variable)
+str(df_clean)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;data.frame&amp;#39;:    1309 obs. of  11 variables:
+##  $ Survived  : Factor w/ 2 levels &amp;quot;0&amp;quot;,&amp;quot;1&amp;quot;: 1 2 2 2 1 1 1 1 2 2 ...
+##  $ Pclass    : Factor w/ 3 levels &amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;: 3 1 3 1 3 3 1 3 3 2 ...
+##  $ Sex       : Factor w/ 2 levels &amp;quot;female&amp;quot;,&amp;quot;male&amp;quot;: 2 1 1 1 2 2 2 2 1 1 ...
+##  $ Age       : num  22 38 26 35 35 ...
+##  $ SibSp     : int  1 1 0 1 0 0 0 3 0 1 ...
+##  $ Parch     : int  0 0 0 0 0 0 0 1 2 0 ...
+##  $ Fare      : num  7.25 71.28 7.92 53.1 8.05 ...
+##  $ Embarked  : Factor w/ 3 levels &amp;quot;C&amp;quot;,&amp;quot;Q&amp;quot;,&amp;quot;S&amp;quot;: 3 1 3 3 3 2 3 3 3 1 ...
+##  $ Child     : int  0 0 0 0 0 0 0 1 0 1 ...
+##  $ Title     : Factor w/ 11 levels &amp;quot;Col&amp;quot;,&amp;quot;Dr&amp;quot;,&amp;quot;Lady&amp;quot;,..: 7 8 5 8 7 7 7 4 8 8 ...
+##  $ FamilySize: int  2 2 1 2 1 1 1 5 3 2 ...&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After converting the above columns into categorical factors I’ll need to normalize age column and fare with below snippet of code.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#normalizing - scaling
+normalize &amp;lt;- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+df_clean2 &amp;lt;- as.data.frame(lapply(df_clean[,c(4,7)], normalize))
+titan_clean &amp;lt;- as.data.frame(cbind(df_clean[-c(4,7)], df_clean2))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After I have finished feature engineering I’ll split the data into training and test set using caret package.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(caret)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: lattice&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;caret&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:purrr&amp;#39;:
+## 
+##     lift&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;split_index &amp;lt;- createDataPartition(titan_clean$Survived, p=0.8, list = FALSE)
+testing_set &amp;lt;- titan_clean[-split_index,]
+training_set &amp;lt;- titan_clean[split_index,]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;part-3machine-learning&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Part 3:Machine Learning&lt;/h2&gt;
+&lt;p&gt;In this section I’ll be using the saved models that I saved after training if you need code on how I came up with the model I have hosted the in my GitHub account use link for the code source.&lt;/p&gt;
+&lt;p&gt;For the documentation and explanation of the models please refer my project for more details on the algorithms and explanation of terms in this link.&lt;/p&gt;
+&lt;p&gt;I’ll load all the packages that I’ll use in my project as below.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#packages loading
+library(rpart.plot)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: rpart&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(rpart)
+library(caret)
+library(e1071)
+library(ROCR)
+library(e1071)
+library(dplyr)
+library(gbm)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loaded gbm 2.1.8&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(randomForest)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## randomForest 4.6-14&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Type rfNews() to see new features/changes/bug fixes.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;randomForest&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:dplyr&amp;#39;:
+## 
+##     combine&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:ggplot2&amp;#39;:
+## 
+##     margin&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;logistic-regression.&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;3.0.0 Logistic Regression.&lt;/h1&gt;
+&lt;p&gt;I had trained the logistic model and saved as an rds model and loaded here with &lt;strong&gt;readRDS&lt;/strong&gt; function.
+The model had an &lt;strong&gt;Accuracy&lt;/strong&gt; of &lt;strong&gt;86%&lt;/strong&gt; and &lt;strong&gt;Cohen’s Kappa statistic(Kappa)&lt;/strong&gt; of &lt;strong&gt;70%&lt;/strong&gt; with a 10 fold cross-validation.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;trained.log.model &amp;lt;- readRDS(&amp;quot;./logistic.model.rds&amp;quot;)
+print(trained.log.model)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Generalized Linear Model 
+## 
+## 1048 samples
+##   10 predictor
+##    2 classes: &amp;#39;0&amp;#39;, &amp;#39;1&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 943, 943, 943, 943, 943, 943, ... 
+## Resampling results:
+## 
+##   Accuracy  Kappa    
+##   0.864533  0.7072219&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The model had &lt;strong&gt;Aikake’s Information Criterion (AIC)&lt;/strong&gt; of &lt;strong&gt;778.2&lt;/strong&gt; which hepls in model complexity penalization.
+Most of the terms are directly proportion to survival rate.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(trained.log.model$finalModel)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:  NULL
+## 
+## Coefficients:
+## (Intercept)      Pclass2      Pclass3      Sexmale        SibSp        Parch  
+##   34.234124    -1.110276    -2.050782   -33.092484     0.553404     0.552330  
+##   EmbarkedQ    EmbarkedS        Child      TitleDr    TitleLady  TitleMaster  
+##    0.066021    -0.245861     0.021165     0.607688   -15.635388     2.548495  
+##   TitleMiss    TitleMlle      TitleMr     TitleMrs      TitleMs     TitleRev  
+##  -29.114702   -16.227355    -0.006556   -28.434349   -14.344976   -14.322320  
+##    TitleSir   FamilySize          Age         Fare  
+##    0.882737    -1.001760    -1.740304     0.658579  
+## 
+## Degrees of Freedom: 1047 Total (i.e. Null);  1026 Residual
+## Null Deviance:       1390 
+## Residual Deviance: 734.2     AIC: 778.2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From the model &lt;strong&gt;62%&lt;/strong&gt; of the largest class did not survive(&lt;strong&gt;No Information Rate&lt;/strong&gt;),&lt;strong&gt;Sensitivity&lt;/strong&gt; of &lt;strong&gt;93%&lt;/strong&gt; which is not bad and &lt;strong&gt;Specificity&lt;/strong&gt; of &lt;strong&gt;79%&lt;/strong&gt;,&lt;strong&gt;Pos Pred Value&lt;/strong&gt; of &lt;strong&gt;88%&lt;/strong&gt; which means 88% of the obsevation predicted that truly the population died in the titan,&lt;strong&gt;Neg Pred Value&lt;/strong&gt; of &lt;strong&gt;88%&lt;/strong&gt; this is rate of those who did not die as per the model.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(127)
+predictions &amp;lt;- predict(trained.log.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 154  14
+##          1   9  84
+##                                           
+##                Accuracy : 0.9119          
+##                  95% CI : (0.8707, 0.9433)
+##     No Information Rate : 0.6245          
+##     P-Value [Acc &amp;gt; NIR] : &amp;lt;2e-16          
+##                                           
+##                   Kappa : 0.8102          
+##                                           
+##  Mcnemar&amp;#39;s Test P-Value : 0.4042          
+##                                           
+##             Sensitivity : 0.9448          
+##             Specificity : 0.8571          
+##          Pos Pred Value : 0.9167          
+##          Neg Pred Value : 0.9032          
+##              Prevalence : 0.6245          
+##          Detection Rate : 0.5900          
+##    Detection Prevalence : 0.6437          
+##       Balanced Accuracy : 0.9010          
+##                                           
+##        &amp;#39;Positive&amp;#39; Class : 0               
+## &lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;roc-curve&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;3.0.1 ROC Curve&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;quot;plot_utils.R&amp;quot;)
+logistic.preds.values &amp;lt;- predict(trained.log.model, testing_set[,-1],
+                                 type = &amp;quot;prob&amp;quot;)
+logistic.predictions.values &amp;lt;- logistic.preds.values[,2]
+predictions &amp;lt;- prediction(logistic.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text=&amp;quot;Logistic Regression ROC Curve&amp;quot;)
+plot.pr.curve(predictions, title.text=&amp;quot;Logistic Regression Precision/Recall Curve&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-67-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;From above &lt;strong&gt;Area Under Curve (AUC)&lt;/strong&gt; of &lt;strong&gt;0.91&lt;/strong&gt; truly the model will most of time predict randomly chosen positive class instance well than negative.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;random-forest.&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;3.1.0 Random Forest.&lt;/h2&gt;
+&lt;p&gt;The random forest confusion matrix had an error rate of &lt;strong&gt;14%&lt;/strong&gt;, I used &lt;strong&gt;1800&lt;/strong&gt; trees.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rf.model &amp;lt;- readRDS(&amp;quot;./inal_model_rf.rds&amp;quot;)
+print(rf.model)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+##  randomForest(formula = Survived ~ ., data = training_set, mtry = 1,      ntree = 1800) 
+##                Type of random forest: classification
+##                      Number of trees: 1800
+## No. of variables tried at each split: 1
+## 
+##         OOB estimate of  error rate: 13.65%
+## Confusion matrix:
+##     0   1 class.error
+## 0 595  57  0.08742331
+## 1  86 310  0.21717172&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From the model &lt;strong&gt;62%&lt;/strong&gt; of the largest class did not survive(&lt;strong&gt;No Information Rate&lt;/strong&gt;),&lt;strong&gt;Sensitivity&lt;/strong&gt; of &lt;strong&gt;93%&lt;/strong&gt; which is not bad and &lt;strong&gt;Specificity&lt;/strong&gt; of &lt;strong&gt;78%&lt;/strong&gt;,&lt;strong&gt;Pos Pred Value&lt;/strong&gt; of &lt;strong&gt;87%&lt;/strong&gt; which means 88% of the obsevation predicted that truly the population died in the titan,&lt;strong&gt;Neg Pred Value&lt;/strong&gt; of &lt;strong&gt;86%&lt;/strong&gt; this is rate of those who did not die as per the model and an &lt;strong&gt;Accuracy&lt;/strong&gt; of &lt;strong&gt;87&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;predictions &amp;lt;- predict(rf.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 151  12
+##          1  12  86
+##                                           
+##                Accuracy : 0.908           
+##                  95% CI : (0.8663, 0.9402)
+##     No Information Rate : 0.6245          
+##     P-Value [Acc &amp;gt; NIR] : &amp;lt;2e-16          
+##                                           
+##                   Kappa : 0.8039          
+##                                           
+##  Mcnemar&amp;#39;s Test P-Value : 1               
+##                                           
+##             Sensitivity : 0.9264          
+##             Specificity : 0.8776          
+##          Pos Pred Value : 0.9264          
+##          Neg Pred Value : 0.8776          
+##              Prevalence : 0.6245          
+##          Detection Rate : 0.5785          
+##    Detection Prevalence : 0.6245          
+##       Balanced Accuracy : 0.9020          
+##                                           
+##        &amp;#39;Positive&amp;#39; Class : 0               
+## &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;roc-curve.&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;3.1.1 ROC Curve.&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rf.preds.values &amp;lt;- predict(rf.model, testing_set[,-1],
+                             type = &amp;quot;prob&amp;quot;)
+rf.predictions.values &amp;lt;- rf.preds.values[,2]
+predictions &amp;lt;- prediction(rf.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text=&amp;quot;Random Forest ROC Curve&amp;quot;)
+plot.pr.curve(predictions, title.text=&amp;quot;Random Forest Precision/Recall Curve&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-70-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;From above &lt;strong&gt;Area Under Curve (AUC)&lt;/strong&gt; of &lt;strong&gt;0.93&lt;/strong&gt; truly the model will most of time predict randomly chosen positive class instance well than negative.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;gradient-boosting-classification-modeling.&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;3.2.0 Gradient boosting classification Modeling.&lt;/h2&gt;
+&lt;p&gt;From the tuning process using &lt;strong&gt;caret&lt;/strong&gt; package I got a shrinkage of &lt;strong&gt;0.01&lt;/strong&gt;, number of trees &lt;strong&gt;300&lt;/strong&gt; and interaction depth of &lt;strong&gt;3&lt;/strong&gt;. For modelling purpose I used&lt;strong&gt;gbm&lt;/strong&gt; function with the parameters to get the model information(see code information in above link to my GitHub)&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(127)
+gbm.model &amp;lt;- readRDS(&amp;quot;./titan_gbm_train.rds&amp;quot;)
+print(gbm.model)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Stochastic Gradient Boosting 
+## 
+## 1048 samples
+##   10 predictor
+##    2 classes: &amp;#39;0&amp;#39;, &amp;#39;1&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## Summary of sample sizes: 943, 943, 943, 943, 943, 943, ... 
+## Resampling results across tuning parameters:
+## 
+##   shrinkage  interaction.depth  n.trees  Accuracy   Kappa    
+##   0.001      1                  100      0.6221451  0.0000000
+##   0.001      1                  300      0.6221451  0.0000000
+##   0.001      1                  500      0.8493287  0.6768831
+##   0.001      2                  100      0.6221451  0.0000000
+##   0.001      2                  300      0.7939614  0.5119273
+##   0.001      2                  500      0.8608579  0.6965139
+##   0.001      3                  100      0.6221451  0.0000000
+##   0.001      3                  300      0.7939614  0.5119273
+##   0.001      3                  500      0.8570392  0.6869535
+##   0.001      4                  100      0.6221451  0.0000000
+##   0.001      4                  300      0.7949229  0.5144569
+##   0.001      4                  500      0.8474604  0.6641369
+##   0.010      1                  100      0.8493287  0.6768831
+##   0.010      1                  300      0.8493287  0.6768831
+##   0.010      1                  500      0.8598507  0.6974685
+##   0.010      2                  100      0.8656199  0.7076749
+##   0.010      2                  300      0.8665540  0.7103976
+##   0.010      2                  500      0.8675064  0.7136556
+##   0.010      3                  100      0.8656199  0.7077374
+##   0.010      3                  300      0.8713251  0.7212588
+##   0.010      3                  500      0.8684498  0.7160126
+##   0.010      4                  100      0.8665723  0.7100134
+##   0.010      4                  300      0.8684679  0.7152505
+##   0.010      4                  500      0.8684498  0.7161244
+##   0.100      1                  100      0.8626897  0.7036403
+##   0.100      1                  300      0.8617467  0.7023040
+##   0.100      1                  500      0.8646038  0.7086194
+##   0.100      2                  100      0.8636514  0.7066087
+##   0.100      2                  300      0.8589166  0.6954070
+##   0.100      2                  500      0.8617465  0.7014588
+##   0.100      3                  100      0.8549623  0.6891051
+##   0.100      3                  300      0.8560004  0.6902403
+##   0.100      3                  500      0.8592155  0.6989324
+##   0.100      4                  100      0.8549829  0.6877505
+##   0.100      4                  300      0.8560309  0.6892170
+##   0.100      4                  500      0.8496917  0.6762789
+## 
+## Tuning parameter &amp;#39;n.minobsinnode&amp;#39; was held constant at a value of 10
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were n.trees = 300, interaction.depth =
+##  3, shrinkage = 0.01 and n.minobsinnode = 10.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From the model &lt;strong&gt;62%&lt;/strong&gt; of the largest class did not survive(&lt;strong&gt;No Information Rate&lt;/strong&gt;),&lt;strong&gt;Sensitivity&lt;/strong&gt; of &lt;strong&gt;93%&lt;/strong&gt; which is not bad and &lt;strong&gt;Specificity&lt;/strong&gt; of &lt;strong&gt;76%&lt;/strong&gt;,&lt;strong&gt;Pos Pred Value&lt;/strong&gt; of &lt;strong&gt;87%&lt;/strong&gt; which means 88% of the obsevation predicted that truly the population died in the titan,&lt;strong&gt;Neg Pred Value&lt;/strong&gt; of &lt;strong&gt;87%&lt;/strong&gt; this is rate of those who did not die as per the model and an &lt;strong&gt;Accuracy&lt;/strong&gt; of &lt;strong&gt;87&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;predictions &amp;lt;- predict(gbm.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 154  16
+##          1   9  82
+##                                          
+##                Accuracy : 0.9042         
+##                  95% CI : (0.8619, 0.937)
+##     No Information Rate : 0.6245         
+##     P-Value [Acc &amp;gt; NIR] : &amp;lt;2e-16         
+##                                          
+##                   Kappa : 0.7928         
+##                                          
+##  Mcnemar&amp;#39;s Test P-Value : 0.2301         
+##                                          
+##             Sensitivity : 0.9448         
+##             Specificity : 0.8367         
+##          Pos Pred Value : 0.9059         
+##          Neg Pred Value : 0.9011         
+##              Prevalence : 0.6245         
+##          Detection Rate : 0.5900         
+##    Detection Prevalence : 0.6513         
+##       Balanced Accuracy : 0.8908         
+##                                          
+##        &amp;#39;Positive&amp;#39; Class : 0              
+## &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;roc-curve-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;3.2.1 ROC Curve&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gbm.preds.values &amp;lt;- predict(gbm.model, testing_set[,-1],
+                                 type = &amp;quot;prob&amp;quot;)
+gbm.predictions.values &amp;lt;- gbm.preds.values[,2]
+predictions &amp;lt;- prediction(gbm.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text=&amp;quot;GBBOOST  ROC Curve&amp;quot;)
+plot.pr.curve(predictions, title.text=&amp;quot;GBBOOST  Precision/Recall Curve&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-73-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;From above &lt;strong&gt;Area Under Curve (AUC)&lt;/strong&gt; of &lt;strong&gt;0.91&lt;/strong&gt; truly the model will most of time predict randomly chosen positive class instance well than negative.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;classification-and-regression-tree-cart&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;3.3.0 Classification and Regression Tree (CART)&lt;/h2&gt;
+&lt;p&gt;From the tuning process using &lt;strong&gt;caret&lt;/strong&gt; package I got &lt;strong&gt;cp&lt;/strong&gt; of &lt;strong&gt;0.01388889&lt;/strong&gt;. For modelling purpose I used &lt;strong&gt;rpart&lt;/strong&gt; function with the parameters to get the model information(see code information in above link to my GitHub)&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cart.model &amp;lt;- readRDS(&amp;quot;./fit_cart.rds&amp;quot;)
+print(cart.model)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## CART 
+## 
+## 1048 samples
+##   10 predictor
+##    2 classes: &amp;#39;0&amp;#39;, &amp;#39;1&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 3 times) 
+## Summary of sample sizes: 942, 944, 943, 943, 944, 943, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp          Accuracy   Kappa    
+##   0.01388889  0.8629034  0.7025245
+##   0.01641414  0.8492493  0.6727766
+##   0.61111111  0.7335351  0.3369915
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.01388889.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(127)
+predictions &amp;lt;- predict(cart.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 153  16
+##          1  10  82
+##                                           
+##                Accuracy : 0.9004          
+##                  95% CI : (0.8575, 0.9339)
+##     No Information Rate : 0.6245          
+##     P-Value [Acc &amp;gt; NIR] : &amp;lt;2e-16          
+##                                           
+##                   Kappa : 0.785           
+##                                           
+##  Mcnemar&amp;#39;s Test P-Value : 0.3268          
+##                                           
+##             Sensitivity : 0.9387          
+##             Specificity : 0.8367          
+##          Pos Pred Value : 0.9053          
+##          Neg Pred Value : 0.8913          
+##              Prevalence : 0.6245          
+##          Detection Rate : 0.5862          
+##    Detection Prevalence : 0.6475          
+##       Balanced Accuracy : 0.8877          
+##                                           
+##        &amp;#39;Positive&amp;#39; Class : 0               
+## &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From the model &lt;strong&gt;62%&lt;/strong&gt; of the largest class did not survive(&lt;strong&gt;No Information Rate&lt;/strong&gt;),&lt;strong&gt;Sensitivity&lt;/strong&gt; of &lt;strong&gt;94%&lt;/strong&gt; which is not bad and &lt;strong&gt;Specificity&lt;/strong&gt; of &lt;strong&gt;78%&lt;/strong&gt;,&lt;strong&gt;Pos Pred Value&lt;/strong&gt; of &lt;strong&gt;87%&lt;/strong&gt; which means 88% of the obsevation predicted that truly the population died in the titan,&lt;strong&gt;Neg Pred Value&lt;/strong&gt; of &lt;strong&gt;88%&lt;/strong&gt; this is rate of those who did not die as per the model and an &lt;strong&gt;Accuracy&lt;/strong&gt; of &lt;strong&gt;88&lt;/strong&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;roc-curve.-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;3.3.1 ROC Curve.&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cart.preds.values &amp;lt;- predict(cart.model, testing_set[,-1],
+                                 type = &amp;quot;prob&amp;quot;)
+cart.predictions.values &amp;lt;- cart.preds.values[,2]
+predictions &amp;lt;- prediction(cart.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text=&amp;quot;CART ROC Curve&amp;quot;)
+plot.pr.curve(predictions, title.text=&amp;quot;CART Precision/Recall Curve&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-76-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;From above &lt;strong&gt;Area Under Curve (AUC)&lt;/strong&gt; of &lt;strong&gt;0.87&lt;/strong&gt; truly the model will most of time predict randomly chosen positive class instance well than negative.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;neural-network.&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;3.4.0 Neural Network.&lt;/h2&gt;
+&lt;p&gt;For Neural Network parameters that are supposed to be tuned are size and decay which I got as &lt;strong&gt;1&lt;/strong&gt; and &lt;strong&gt;0.1&lt;/strong&gt; respectively.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nnet.model &amp;lt;- readRDS(&amp;quot;./fit_nnet.rds&amp;quot;)
+print(nnet.model)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Neural Network 
+## 
+## 1048 samples
+##   10 predictor
+##    2 classes: &amp;#39;0&amp;#39;, &amp;#39;1&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 3 times) 
+## Summary of sample sizes: 944, 943, 944, 943, 943, 943, ... 
+## Resampling results across tuning parameters:
+## 
+##   size  decay  Accuracy   Kappa    
+##   1     0e+00  0.8350014  0.6228230
+##   1     1e-04  0.8537273  0.6846832
+##   1     1e-01  0.8686601  0.7150352
+##   3     0e+00  0.8569045  0.6890369
+##   3     1e-04  0.8483238  0.6699612
+##   3     1e-01  0.8632752  0.7031294
+##   5     0e+00  0.8419713  0.6570566
+##   5     1e-04  0.8451310  0.6635986
+##   5     1e-01  0.8553233  0.6856418
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were size = 1 and decay = 0.1.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(127)
+predictions &amp;lt;- predict(nnet.model, newdata = testing_set)
+confusionMatrix(predictions, testing_set$Survived)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   0   1
+##          0 154  16
+##          1   9  82
+##                                          
+##                Accuracy : 0.9042         
+##                  95% CI : (0.8619, 0.937)
+##     No Information Rate : 0.6245         
+##     P-Value [Acc &amp;gt; NIR] : &amp;lt;2e-16         
+##                                          
+##                   Kappa : 0.7928         
+##                                          
+##  Mcnemar&amp;#39;s Test P-Value : 0.2301         
+##                                          
+##             Sensitivity : 0.9448         
+##             Specificity : 0.8367         
+##          Pos Pred Value : 0.9059         
+##          Neg Pred Value : 0.9011         
+##              Prevalence : 0.6245         
+##          Detection Rate : 0.5900         
+##    Detection Prevalence : 0.6513         
+##       Balanced Accuracy : 0.8908         
+##                                          
+##        &amp;#39;Positive&amp;#39; Class : 0              
+## &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From the model &lt;strong&gt;62%&lt;/strong&gt; of the largest class did not survive(&lt;strong&gt;No Information Rate&lt;/strong&gt;),&lt;strong&gt;Sensitivity&lt;/strong&gt; of &lt;strong&gt;93%&lt;/strong&gt; which is not bad and &lt;strong&gt;Specificity&lt;/strong&gt; of &lt;strong&gt;77%&lt;/strong&gt;,&lt;strong&gt;Pos Pred Value&lt;/strong&gt; of &lt;strong&gt;87%&lt;/strong&gt; which means 88% of the obsevation predicted that truly the population died in the titan,&lt;strong&gt;Neg Pred Value&lt;/strong&gt; of &lt;strong&gt;86%&lt;/strong&gt; this is rate of those who did not die as per the model and an &lt;strong&gt;Accuracy&lt;/strong&gt; of &lt;strong&gt;87&lt;/strong&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;roc-curve.-2&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;3.4.1 Roc Curve.&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nnet.preds.values &amp;lt;- predict(nnet.model, testing_set[,-1],
+                            type = &amp;quot;prob&amp;quot;)
+nnet.predictions.values &amp;lt;- nnet.preds.values[,2]
+predictions &amp;lt;- prediction(nnet.predictions.values,
+                          testing_set$Survived)
+par(mfrow=c(1,2))
+plot.roc.curve(predictions, title.text=&amp;quot;Neural Network ROC Curve&amp;quot;)
+plot.pr.curve(predictions, title.text=&amp;quot;Neural Network Precision/Recall Curve&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-79-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;From above &lt;strong&gt;Area Under Curve (AUC)&lt;/strong&gt; of &lt;strong&gt;0.9&lt;/strong&gt; truly the model will most of time predict randomly chosen positive class instance well than negative.&lt;/p&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 </description>
   </item>
