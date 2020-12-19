@@ -1,0 +1,657 @@
+---
+title:  Airbnb Edinburgh Exploratory Data Analysis.
+author: Musa R. Nyakerabachi
+date: '2020-12-18'
+categories:
+  - R
+tags:
+  - Data Analysis
+topics:
+  - Exploratory Data analysis.
+description:
+  - ''
+draft:
+  - no
+output:
+  - html_document
+---
+
+
+
+<hr />
+<p>In this blog post i’ll be analysing Airbnb dataset from Edinburg city distributed by <a href="http://insideairbnb.com/get-the-data.html">Inside Airbnb</a> and that is hosted in <a href="https://github.com/rstudio-education/dsbox">dsbox</a>
+package. The datset covers 13 areas as we shall see below.let’s start by describing the data.</p>
+<div id="data-description" class="section level2">
+<h2>Data Description :</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Column Name</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>id</strong></td>
+<td align="center">ID number of the listing</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>price</strong></td>
+<td align="center">Price, in GBP, for one night stay</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>neighbourhood</strong></td>
+<td align="center">Number of people listing accommodates</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>bathrooms</strong></td>
+<td align="center">Number of bathrooms</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>bedrooms</strong></td>
+<td align="center">Number of bedrooms</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>beds</strong></td>
+<td align="center">Number of beds (which can be different than the number of bedrooms)</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>review_scores_rating</strong></td>
+<td align="center">Average rating of property</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>number_of_reviews</strong></td>
+<td align="center">Number of reviews</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>listing_url</strong></td>
+<td align="center">Listing URL</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>accommodates</strong></td>
+<td align="center">Number of people listing accommodates</td>
+</tr>
+</tbody>
+</table>
+<p>First I’ll begin by loading all the packages that I’ll use in this my EDA post. If you dont have them install you’ll use <code>install.packages("package name")</code> operation to have them installed or you uncomment the installation operation in the package section below.Sometimes installing a package that is not in cran i.e install from github may not throw an error during building process, in that case you will need to add an optional argument to ensure the installation in accepted i.e you attach <code>INSATLL-opts = c("--no-multiarch)</code> to your package installation from github.</p>
+<p>Having said that let’s dive in.</p>
+<pre class="r"><code>#install required packages
+###uncoment to install packages if you don&#39;t have them installed.
+#devtools::install_github(&quot;rstudio-education/dsbox&quot;)
+#install.packages(&quot;gmodels&quot;)
+#install.packages(&quot;skimr&quot;)
+#install.packages(&quot;tidyverse&quot;)
+#loading packages
+library(dsbox)
+library(gmodels)
+library(tidyverse)</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.4     v dplyr   1.0.2
+## v tidyr   1.1.1     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.5.0</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(skimr)</code></pre>
+<p>Next I’ll load the edinburg dataset into my working directory and skim through it to see how the dataset is structured using <code>skimr</code> package.</p>
+<pre class="r"><code>#load data
+
+ data(edibnb)
+skim(edibnb)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">edibnb</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">13245</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">10</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">8</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">neighbourhood</td>
+<td align="right">2294</td>
+<td align="right">0.83</td>
+<td align="right">5</td>
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">13</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">listing_url</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">34</td>
+<td align="right">37</td>
+<td align="right">0</td>
+<td align="right">13245</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">20077241.54</td>
+<td align="right">9844763.62</td>
+<td align="right">15420</td>
+<td align="right">13279107</td>
+<td align="right">20171841</td>
+<td align="right">27397925</td>
+<td align="right">36066014</td>
+<td align="left">▅▆▇▇▇</td>
+</tr>
+<tr class="even">
+<td align="left">price</td>
+<td align="right">199</td>
+<td align="right">0.98</td>
+<td align="right">97.21</td>
+<td align="right">86.03</td>
+<td align="right">0</td>
+<td align="right">49</td>
+<td align="right">75</td>
+<td align="right">110</td>
+<td align="right">999</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">accommodates</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3.54</td>
+<td align="right">2.09</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">19</td>
+<td align="left">▇▂▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">bathrooms</td>
+<td align="right">12</td>
+<td align="right">1.00</td>
+<td align="right">1.23</td>
+<td align="right">0.55</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="left">▇▂▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">bedrooms</td>
+<td align="right">4</td>
+<td align="right">1.00</td>
+<td align="right">1.58</td>
+<td align="right">0.93</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">13</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">beds</td>
+<td align="right">15</td>
+<td align="right">1.00</td>
+<td align="right">2.03</td>
+<td align="right">1.58</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">30</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">review_scores_rating</td>
+<td align="right">2177</td>
+<td align="right">0.84</td>
+<td align="right">95.02</td>
+<td align="right">6.77</td>
+<td align="right">20</td>
+<td align="right">93</td>
+<td align="right">97</td>
+<td align="right">99</td>
+<td align="right">100</td>
+<td align="left">▁▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td align="left">number_of_reviews</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">37.73</td>
+<td align="right">63.91</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">12</td>
+<td align="right">45</td>
+<td align="right">773</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+<p>From above the data set has 13245 number of rows and it also has 10 columns. The daset has two character columns and 8 numeric columns evident from above <code>skim</code> function. The dataset has also missing values in some columns with only <code>id</code>, <code>listing_url</code>, <code>accommodates</code>, <code>number_of_reviews</code> columns not having missing values. The <code>neighbourhood</code> column has 13 unique entries i.e 13 different locations with most people paying averagely 97 dollars also the standard deviation, quantiles and distribution of numeric columns have been captured.</p>
+<p>Next let’s see the 13 distinct entries in the <code>neighbourhood</code> column using <code>distinct</code> function from <code>dplyr</code> package bundled in <code>tidyverse</code>.</p>
+<pre class="r"><code>#distinct elements
+distinct(edibnb, edibnb$neighbourhood)</code></pre>
+<pre><code>## # A tibble: 14 x 1
+##    `edibnb$neighbourhood`
+##    &lt;chr&gt;                 
+##  1 New Town              
+##  2 Southside             
+##  3 &lt;NA&gt;                  
+##  4 Leith                 
+##  5 Old Town              
+##  6 West End              
+##  7 Haymarket             
+##  8 Morningside           
+##  9 Newington             
+## 10 Marchmont             
+## 11 Cannonmills           
+## 12 Tollcross             
+## 13 Bruntsfield           
+## 14 Stockbridge</code></pre>
+<p>From above an <code>NA</code> value has appeared which will alarm my data handling criteria with precaution attached.</p>
+<p>Next let me see how the 13 areas are distributed using <code>crossTable</code> function from <code>gmodels</code> package.</p>
+<pre class="r"><code>CrossTable(edibnb$neighbourhood)#neighbourhood areas distribution</code></pre>
+<pre><code>## 
+##  
+##    Cell Contents
+## |-------------------------|
+## |                       N |
+## |         N / Table Total |
+## |-------------------------|
+## 
+##  
+## Total Observations in Table:  10951 
+## 
+##  
+##             | Bruntsfield | Cannonmills |   Haymarket |       Leith |   Marchmont | 
+##             |-------------|-------------|-------------|-------------|-------------|
+##             |         290 |         485 |        1026 |        3134 |         730 | 
+##             |       0.026 |       0.044 |       0.094 |       0.286 |       0.067 | 
+##             |-------------|-------------|-------------|-------------|-------------|
+## 
+## 
+##             | Morningside |    New Town |   Newington |    Old Town |   Southside | 
+##             |-------------|-------------|-------------|-------------|-------------|
+##             |         346 |        1058 |         439 |        1283 |         481 | 
+##             |       0.032 |       0.097 |       0.040 |       0.117 |       0.044 | 
+##             |-------------|-------------|-------------|-------------|-------------|
+## 
+## 
+##             | Stockbridge |   Tollcross |    West End | 
+##             |-------------|-------------|-------------|
+##             |         587 |         270 |         822 | 
+##             |       0.054 |       0.025 |       0.075 | 
+##             |-------------|-------------|-------------|
+## 
+## 
+## 
+## </code></pre>
+<p>The `<code>crossTable</code> function has only captures 10951 observation discarding the <code>NA</code> values. <code>Leith</code> had highest number of accommodation while <code>Bruntsfield</code> having least number of people.</p>
+<p>Let me inspect the average price people in 13 areas paid and infer the expensive area to accommodate people and also the cheapest.To handle <code>NA</code> value I’ll use <code>na.rm = T</code> while calculating the mean price.I’ll use <code>arrange</code> function from <code>dplyr</code> package and arrange them from expensive to cheapest using <code>desc</code> argument in the <code>arrange</code> function.</p>
+<pre class="r"><code>edibnb %&gt;% group_by(neighbourhood) %&gt;% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %&gt;% 
+  arrange(desc(mean))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 14 x 3
+##    neighbourhood  mean     n
+##    &lt;chr&gt;         &lt;dbl&gt; &lt;int&gt;
+##  1 New Town      136.   1058
+##  2 Old Town      128.   1283
+##  3 West End      116.    822
+##  4 Marchmont     111.    730
+##  5 Southside     107.    481
+##  6 Cannonmills   104.    485
+##  7 Stockbridge   104.    587
+##  8 Bruntsfield    99.4   290
+##  9 Newington      98.4   439
+## 10 Tollcross      90.8   270
+## 11 Haymarket      84.8  1026
+## 12 Leith          83.8  3134
+## 13 Morningside    82.9   346
+## 14 &lt;NA&gt;           73.5  2294</code></pre>
+<p><code>New Town</code> is considered expensive area to look for accommodation while <code>Morningside</code> seems to be more friendly to people loking for cheap houses.Also from above the <code>n()</code> argumet gives the total observation of each locality same as in <code>crossTable</code> function above.</p>
+<p>Next let me see how the beds are distributed in different houses and give the traveller better information in considering the amount of money he has to spend.I’ll first use <code>crossTable</code> function from <code>gmodels</code> package to look at how the beds are distributed.</p>
+<pre class="r"><code>CrossTable(edibnb$beds)</code></pre>
+<pre><code>## 
+##  
+##    Cell Contents
+## |-------------------------|
+## |                       N |
+## |         N / Table Total |
+## |-------------------------|
+## 
+##  
+## Total Observations in Table:  13230 
+## 
+##  
+##           |         0 |         1 |         2 |         3 |         4 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |        42 |      6164 |      3710 |      1801 |       832 | 
+##           |     0.003 |     0.466 |     0.280 |     0.136 |     0.063 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |         5 |         6 |         7 |         8 |         9 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |       329 |       159 |        47 |        52 |        20 | 
+##           |     0.025 |     0.012 |     0.004 |     0.004 |     0.002 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |        10 |        11 |        12 |        13 |        14 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |        15 |         7 |        11 |         2 |         7 | 
+##           |     0.001 |     0.001 |     0.001 |     0.000 |     0.001 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |        15 |        16 |        17 |        20 |        21 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |         5 |        17 |         2 |         3 |         1 | 
+##           |     0.000 |     0.001 |     0.000 |     0.000 |     0.000 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |        22 |        24 |        25 |        30 | 
+##           |-----------|-----------|-----------|-----------|
+##           |         1 |         1 |         1 |         1 | 
+##           |     0.000 |     0.000 |     0.000 |     0.000 | 
+##           |-----------|-----------|-----------|-----------|
+## 
+## 
+## 
+## </code></pre>
+<p>From above code snippet there is house with no bed, while most houses had one bed and the is a house with 30 beds with only one person accommodation.</p>
+<p>Next let’s see the house which was expensive taking bed factor taken into consideration.I’ll use the same <code>dplyr</code> package.</p>
+<pre class="r"><code>edibnb %&gt;% group_by(beds) %&gt;% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %&gt;% 
+  arrange(desc(mean))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 25 x 3
+##     beds  mean     n
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+##  1    20  880      3
+##  2    14  386.     7
+##  3    12  384.    11
+##  4    10  379.    15
+##  5    16  371     17
+##  6    15  304.     5
+##  7     8  256.    52
+##  8    13  240      2
+##  9     9  234     20
+## 10     7  230.    47
+## # ... with 15 more rows</code></pre>
+<p>From above a 20 bed house was considered expensive, a person paying roughly 880 dollars and only 3 people listed for the house.Having seen the most expensive house considering number of beds next I’ll look at the house that was cheap considering number of beds a house had, in this case I’ll drop <code>desc</code> in <code>arrange</code> function to arrange the number of beds in ascending order.</p>
+<pre class="r"><code>edibnb %&gt;% group_by(beds) %&gt;% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %&gt;% 
+  arrange(mean)</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 25 x 3
+##     beds  mean     n
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+##  1     1  65.0  6164
+##  2     2  97.5  3710
+##  3     0 110.     42
+##  4    NA 121.     15
+##  5     3 128.   1801
+##  6    24 135       1
+##  7     4 167.    832
+##  8    17 200       2
+##  9     6 202.    159
+## 10    11 212.      7
+## # ... with 15 more rows</code></pre>
+<p>From above a 1 bed house was considered cheap only costing roughly 65 dollars and it is the one most of the people opted for in Edinburg town.</p>
+<p>Next I’ll look at the number of people a house can accommodate.</p>
+<pre class="r"><code>CrossTable(edibnb$accommodates)</code></pre>
+<pre><code>## 
+##  
+##    Cell Contents
+## |-------------------------|
+## |                       N |
+## |         N / Table Total |
+## |-------------------------|
+## 
+##  
+## Total Observations in Table:  13245 
+## 
+##  
+##           |         1 |         2 |         3 |         4 |         5 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |       754 |      5390 |       754 |      3451 |       640 | 
+##           |     0.057 |     0.407 |     0.057 |     0.261 |     0.048 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |         6 |         7 |         8 |         9 |        10 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |      1386 |       181 |       373 |        59 |       133 | 
+##           |     0.105 |     0.014 |     0.028 |     0.004 |     0.010 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |        11 |        12 |        13 |        14 |        15 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |        20 |        39 |         7 |        14 |         7 | 
+##           |     0.002 |     0.003 |     0.001 |     0.001 |     0.001 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |        16 |        19 | 
+##           |-----------|-----------|
+##           |        36 |         1 | 
+##           |     0.003 |     0.000 | 
+##           |-----------|-----------|
+## 
+## 
+## 
+## </code></pre>
+<p>It’s like most houses in Edinburg can only accomodate 2 people while there is also a house that could accommodate 19 people.</p>
+<p>Let me look at the price each house accommodation costed using below snippet of code.</p>
+<pre class="r"><code>edibnb %&gt;% group_by(accommodates) %&gt;% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %&gt;% 
+  arrange(mean)</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 17 x 3
+##    accommodates  mean     n
+##           &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+##  1            1  52.7   754
+##  2            2  64.0  5390
+##  3            3  82.2   754
+##  4            4 107.   3451
+##  5            5 121.    640
+##  6            6 145.   1386
+##  7            7 180.    181
+##  8            8 213.    373
+##  9            9 236.     59
+## 10           15 253       7
+## 11           10 254.    133
+## 12           11 297.     20
+## 13           12 344.     39
+## 14           13 346.      7
+## 15           14 353.     14
+## 16           16 383.     36
+## 17           19 NaN       1</code></pre>
+<p>From above the house that accomodates 1 person is cheap while the one accomodates 19 people considered expensive.</p>
+<p>Next I’ll look at the number of bedrooms most of the houses had.</p>
+<pre class="r"><code>CrossTable(edibnb$bedrooms)</code></pre>
+<pre><code>## 
+##  
+##    Cell Contents
+## |-------------------------|
+## |                       N |
+## |         N / Table Total |
+## |-------------------------|
+## 
+##  
+## Total Observations in Table:  13241 
+## 
+##  
+##           |         0 |         1 |         2 |         3 |         4 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |       266 |      7552 |      3675 |      1196 |       379 | 
+##           |     0.020 |     0.570 |     0.278 |     0.090 |     0.029 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |         5 |         6 |         7 |         8 |         9 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |       127 |        29 |         8 |         4 |         2 | 
+##           |     0.010 |     0.002 |     0.001 |     0.000 |     0.000 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |        10 |        13 | 
+##           |-----------|-----------|
+##           |         1 |         2 | 
+##           |     0.000 |     0.000 | 
+##           |-----------|-----------|
+## 
+## 
+## 
+## </code></pre>
+<p>Most of the houses are 1 bedroom house whose their number is 7552 , while least being a 10 bedroom house wich is only 1.</p>
+<pre class="r"><code>edibnb %&gt;% group_by(bedrooms) %&gt;% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %&gt;% 
+  arrange(mean)</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 13 x 3
+##    bedrooms  mean     n
+##       &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+##  1        1  68.5  7552
+##  2        0  78.7   266
+##  3       13  85       2
+##  4       NA  99.5     4
+##  5        2 115.   3675
+##  6        3 163.   1196
+##  7        4 228.    379
+##  8       10 300       1
+##  9        5 300.    127
+## 10        7 333.      8
+## 11        6 379.     29
+## 12        8 423       4
+## 13        9 474       2</code></pre>
+<p>It’s like most of houses are 1 bedroom house which cost only 69 dollars while an expensive one costed 474 dollars a 9 bedroom house.</p>
+</div>
+<div id="data-visualization." class="section level2">
+<h2>Data Visualization.</h2>
+<p>Next I’ll visualize the dataset using <code>ggplot</code> function from <code>tidyverse</code>.I’ll visualise the <code>nieghbourhood</code> column against <code>beds</code> using a bar chat and see the relationship graphically.</p>
+<pre class="r"><code>ggplot(data = edibnb, aes(x = neighbourhood, y = beds, fill = neighbourhood)) + 
+  geom_bar(stat = &quot;identity&quot;)</code></pre>
+<pre><code>## Warning: Removed 15 rows containing missing values (position_stack).</code></pre>
+<p><img src="/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>From above grapgh <code>Leith</code> has the highest number of beds and <code>Tollcross</code> having least.Next I’ll visualise visualise <code>neighbourhood</code> against <code>bathrooms</code> using a bar chat and deducerelationship from below snippet of code.</p>
+<pre class="r"><code>ggplot(data = edibnb, aes(x = neighbourhood, y = bathrooms, fill = neighbourhood)) + 
+  geom_bar(stat = &quot;identity&quot;)</code></pre>
+<pre><code>## Warning: Removed 12 rows containing missing values (position_stack).</code></pre>
+<p><img src="/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>From above graph <code>Leith</code> has highest number of beds with <code>Tollcross</code> having least, next I’ll compare <code>neighbourhood</code> against <code>price</code> to see where houses are expensive.</p>
+<pre class="r"><code>ggplot(data = edibnb, aes(x = neighbourhood, y = price, fill = neighbourhood)) + 
+  geom_bar(stat = &quot;identity&quot;)</code></pre>
+<pre><code>## Warning: Removed 199 rows containing missing values (position_stack).</code></pre>
+<p><img src="/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>From above houses in <code>Leith</code> are expensive with least being<code>Tollcross</code>.Next I’ll compare the <code>neighbourhood</code> against price wrapping <code>beds</code> to see the relationship.</p>
+<pre class="r"><code>ggplot(data = edibnb, aes(x = neighbourhood, y = price, fill = neighbourhood)) + 
+  geom_bar(stat = &quot;identity&quot;) +
+  facet_wrap( ~ beds)</code></pre>
+<pre><code>## Warning: Removed 199 rows containing missing values (position_stack).</code></pre>
+<p><img src="/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>It’s evident that people prefer to spend money in renting houses with beds arnging 1 to 4 approximately while the rest having least people renting for a day.
+Next I’ll visualize those houses in the <code>neighbourhood</code> against <code>price</code> taking into consideration on <code>accommodation</code> factor.</p>
+<pre class="r"><code>ggplot(data = edibnb, aes(x = neighbourhood, y = price, fill = neighbourhood)) + 
+  geom_bar(stat = &quot;identity&quot;) +
+  facet_wrap( ~ accommodates)</code></pre>
+<pre><code>## Warning: Removed 199 rows containing missing values (position_stack).</code></pre>
+<p><img src="/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>It’s like most houses accommodates roughly 2-6 people with other accomomdating very few people.Lastly I’ll see how the price is distributed generally among the whole of Edinburg town.</p>
+<pre class="r"><code>ggplot(data = edibnb, aes(x = price)) + 
+  geom_histogram(binwidth = 50) </code></pre>
+<pre><code>## Warning: Removed 199 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>It’s like the price is skewed to the like I’ll have to intoduce logarithmic function to ensure there is no skewness as shown below.</p>
+<pre class="r"><code>ggplot(data = edibnb, aes(x = price)) + 
+  geom_histogram() + scale_x_log10()</code></pre>
+<pre><code>## Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 201 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>Now the price have been transformed and averagely the house in edinburg costs 100 dollars.</p>
+</div>
+<div id="references." class="section level2">
+<h2>References.</h2>
+<p>1.Chapter 10: Interactive tutorials <a href="https:://datasciencebox.org/interactive-tutorials.html">Link</a></p>
+<p>2.Data Science in the tidyverse by Amelia McNamara <a href="https://github.com/cwickham/data-science-in-tidyverse">Link</a></p>
+</div>

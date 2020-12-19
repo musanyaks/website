@@ -1,0 +1,210 @@
+---
+title:  Airbnb Edinburgh Exploratory Data Analysis.
+author: Musa R. Nyakerabachi
+date: '2020-12-18'
+categories:
+  - R
+tags:
+  - Data Analysis
+topics:
+  - Exploratory Data analysis.
+description:
+  - ''
+draft:
+  - no
+output:
+  - html_document
+---
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In this blog post i'll be analysing Airbnb dataset from Edinburg city  distributed by [Inside Airbnb](http://insideairbnb.com/get-the-data.html) and  that is hosted in [dsbox](https://github.com/rstudio-education/dsbox)
+package. The datset covers 13 areas as we shall see below.let's start by describing the data.  
+
+##  Data Description :
+|Column Name    |Description |  
+|:--------------|:-------------:|
+|**id**| ID number of the listing |
+|**price**|Price, in GBP, for one night stay|
+|**neighbourhood**|Number of people listing accommodates|
+|**bathrooms**|Number of bathrooms|
+|**bedrooms**|Number of bedrooms|
+|**beds**|Number of beds (which can be different than the number of bedrooms)|
+|**review_scores_rating**|Average rating of property|
+|**number_of_reviews**|Number of reviews|
+|**listing_url**|Listing URL|
+|**accommodates**|Number of people listing accommodates|
+
+First I'll begin by loading all the packages that I'll use in this my EDA post. If you dont have them install you'll use ``install.packages("package name")`` operation to have them installed or you uncomment the installation operation in the package section below.Sometimes installing a package that is not in cran i.e install from github may not throw an error during building process, in that case you will need to add an optional argument to ensure the installation in accepted i.e you attach ``INSATLL-opts = c("--no-multiarch)`` to your package installation from github.
+
+
+Having said that let's dive in.
+```{r}
+#install required packages
+###uncoment to install packages if you don't have them installed.
+#devtools::install_github("rstudio-education/dsbox")
+#install.packages("gmodels")
+#install.packages("skimr")
+#install.packages("tidyverse")
+#loading packages
+library(dsbox)
+library(gmodels)
+library(tidyverse)
+library(skimr)
+```
+Next I'll load the edinburg dataset into my working directory and skim through it to see how the dataset is structured using ``skimr`` package.
+
+
+```{r}
+#load data
+
+ data(edibnb)
+skim(edibnb)
+```
+
+From above the data set has 13245 number of rows and it also has 10 columns. The daset has two character columns and 8 numeric columns evident from above ``skim`` function. The dataset has also missing values in some columns with only ``id``, ``listing_url``, ``accommodates``, ``number_of_reviews`` columns not having missing values. The ``neighbourhood`` column has 13 unique entries i.e 13 different locations with most people paying averagely 97 dollars also the standard deviation, quantiles and distribution of numeric columns have been captured.
+
+Next let's see the 13 distinct entries in the ``neighbourhood`` column using ``distinct`` function from ``dplyr`` package bundled in ``tidyverse``.
+```{r}
+#distinct elements
+distinct(edibnb, edibnb$neighbourhood)
+```
+From above an ``NA`` value has appeared which will alarm my data handling criteria with precaution attached.
+
+Next let me see how the 13 areas are distributed using ``crossTable`` function from ``gmodels`` package.
+
+```{r}
+CrossTable(edibnb$neighbourhood)#neighbourhood areas distribution
+```
+
+The ```crossTable`` function has only captures 10951 observation discarding the ``NA`` values. ``Leith`` had highest number of accommodation while ``Bruntsfield`` having least number of people.
+
+Let me inspect the average price people in 13 areas paid and infer the expensive area to accommodate people and also the cheapest.To handle ``NA`` value I'll use ``na.rm = T`` while calculating the mean price.I'll use ``arrange`` function from ``dplyr`` package and arrange them from expensive to cheapest using ``desc`` argument in the ``arrange`` function.
+```{r}
+edibnb %>% group_by(neighbourhood) %>% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %>% 
+  arrange(desc(mean))
+```
+``New Town`` is considered expensive area to look for accommodation while ``Morningside`` seems to be more friendly to people loking for cheap houses.Also from above the ``n()`` argumet gives the total observation of each locality  same as in ``crossTable`` function above.
+
+Next let me see how the beds are distributed in different houses and give the traveller better information in considering the amount of money he has to spend.I'll first use ``crossTable`` function from ``gmodels`` package to look at how the beds are distributed.
+```{r}
+CrossTable(edibnb$beds)
+```
+From above code snippet there is house with no bed, while most houses had one bed and the is a house with 30 beds with only one person accommodation.
+
+Next let's see the house which was expensive taking bed factor taken into consideration.I'll use the same ``dplyr`` package.
+```{r}
+edibnb %>% group_by(beds) %>% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %>% 
+  arrange(desc(mean))
+```
+From above a 20 bed house was considered expensive, a person paying roughly 880 dollars and only 3 people listed for the house.Having seen the most expensive house considering number of beds next I'll look at the house that was cheap considering number of beds a house had, in this case I'll drop ``desc`` in ``arrange`` function to arrange the number of beds in ascending order.
+
+```{r}
+edibnb %>% group_by(beds) %>% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %>% 
+  arrange(mean)
+```
+
+From above a 1 bed house was considered cheap only costing roughly 65 dollars and it is the one most of the people opted for in Edinburg town.
+
+Next I'll look at the number of people a house can accommodate.
+
+```{r}
+CrossTable(edibnb$accommodates)
+```
+It's like most houses in Edinburg can only accomodate 2 people while there is also a house that could accommodate 19 people.
+
+Let me look at the price each house accommodation costed using below snippet of code.
+
+```{r}
+edibnb %>% group_by(accommodates) %>% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %>% 
+  arrange(mean)
+```
+From above the house that accomodates 1 person is cheap while the one accomodates 19 people considered expensive.
+
+Next I'll look at the number of bedrooms most of the houses had.
+```{r}
+CrossTable(edibnb$bedrooms)
+```
+Most of the houses are 1 bedroom house whose their number is  7552 , while least being a 10 bedroom house wich is only 1.
+
+```{r}
+edibnb %>% group_by(bedrooms) %>% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %>% 
+  arrange(mean)
+```
+It's like most of houses are 1 bedroom house which  cost only 69 dollars while an expensive one costed 474 dollars a 9 bedroom house.
+
+## Data Visualization.
+Next I'll visualize the dataset using ``ggplot`` function from ``tidyverse``.I'll visualise the ``nieghbourhood`` column against ``beds`` using a bar chat and see the relationship graphically.
+
+```{r}
+
+ggplot(data = edibnb, aes(x = neighbourhood, y = beds, fill = neighbourhood)) + 
+  geom_bar(stat = "identity")
+```
+
+
+From above grapgh ``Leith`` has the highest number of beds and ``Tollcross`` having least.Next I'll visualise visualise ``neighbourhood`` against ``bathrooms`` using a bar chat and deducerelationship from below snippet of code.
+```{r}
+ggplot(data = edibnb, aes(x = neighbourhood, y = bathrooms, fill = neighbourhood)) + 
+  geom_bar(stat = "identity")
+```
+
+
+From above graph ``Leith`` has highest number of beds with ``Tollcross`` having least, next I'll compare ``neighbourhood`` against ``price`` to see where houses are expensive.
+
+```{r}
+ggplot(data = edibnb, aes(x = neighbourhood, y = price, fill = neighbourhood)) + 
+  geom_bar(stat = "identity")
+```
+
+
+From above houses in ``Leith`` are expensive with least being``Tollcross``.Next I'll compare the ``neighbourhood`` against price wrapping ``beds`` to see the relationship.
+```{r}
+ggplot(data = edibnb, aes(x = neighbourhood, y = price, fill = neighbourhood)) + 
+  geom_bar(stat = "identity") +
+  facet_wrap( ~ beds)
+```
+
+
+It's evident that people prefer to spend money in renting houses with beds arnging 1 to 4 approximately while the rest having least people renting for a day.
+Next I'll visualize those houses in the ``neighbourhood`` against ``price`` taking into consideration on ``accommodation`` factor.
+```{r}
+ggplot(data = edibnb, aes(x = neighbourhood, y = price, fill = neighbourhood)) + 
+  geom_bar(stat = "identity") +
+  facet_wrap( ~ accommodates)
+```
+
+
+It's like most houses accommodates roughly 2-6 people with other accomomdating very few people.Lastly I'll see how the price is distributed generally among the whole of Edinburg town.
+```{r}
+ggplot(data = edibnb, aes(x = price)) + 
+  geom_histogram(binwidth = 50) 
+```
+
+
+It's like the price is skewed to the like I'll have to intoduce logarithmic function to ensure there is no skewness as shown below.
+```{r}
+ggplot(data = edibnb, aes(x = price)) + 
+  geom_histogram() + scale_x_log10()
+```
+
+
+Now the price have been transformed and averagely the house in edinburg costs 100 dollars.
+
+## References.
+1.Chapter 10: Interactive tutorials [Link](https:://datasciencebox.org/interactive-tutorials.html)
+
+2.Data Science in the tidyverse by Amelia McNamara [Link]( https://github.com/cwickham/data-science-in-tidyverse)
+
+
+
+
