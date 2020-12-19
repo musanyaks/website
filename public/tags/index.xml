@@ -6,11 +6,22 @@
   <generator>Hugo -- gohugo.io</generator>
 <language>en-us</language>
 <copyright>Musa R. Nyakerabachi&amp;copy; 2020. All rights reserved.</copyright>
-<lastBuildDate>Tue, 28 Jul 2020 00:00:00 +0000</lastBuildDate>
+<lastBuildDate>Fri, 18 Dec 2020 00:00:00 +0000</lastBuildDate>
 
 <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
 
 
+<item>
+  <title>Data Analysis</title>
+  <link>/tags/data-analysis/</link>
+  <pubDate>Fri, 18 Dec 2020 00:00:00 +0000</pubDate>
+  
+<guid>/tags/data-analysis/</guid>
+<content:encoded><![CDATA[
+  ]]>
+</content:encoded>
+  </item>
+  
 <item>
   <title>Data Science</title>
   <link>/tags/data-science/</link>

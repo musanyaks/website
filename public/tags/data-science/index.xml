@@ -12,11 +12,11 @@
 
 
 <item>
-  <title>Titanic Project.</title>
-  <link>/2020/07/28/titanic-project./</link>
+  <title>Machine Learning from Disaster</title>
+  <link>/2020/07/28/machine-learning-from-disaster/</link>
   <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
   
-<guid>/2020/07/28/titanic-project./</guid>
+<guid>/2020/07/28/machine-learning-from-disaster/</guid>
 <content:encoded><![CDATA[
   
 <script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
@@ -30,8 +30,8 @@
 <script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
 
 
-<div id="titanic-machine-learning-from-disaster-project" class="section level1">
-<h1>Titanic: Machine Learning from Disaster Project</h1>
+<div id="machine-learning-from-disaster." class="section level1">
+<h1>Machine Learning from Disaster.</h1>
 <div id="part-1exploratory-data-analysis." class="section level2">
 <h2>Part 1:Exploratory Data Analysis.</h2>
 </div>
@@ -563,7 +563,7 @@ training_set &lt;- titan_clean[split_index,]</code></pre>
 </div>
 <div id="part-3machine-learning" class="section level2">
 <h2>Part 3:Machine Learning</h2>
-<p>In this section I’ll be using the saved models that I saved after training if you need code on how I came up with the model I have hosted the in my GitHub account use link for the code source.</p>
+<p>In this section I’ll be using the saved models that I saved after training if you need code on how I came up with the model I have hosted the in my GitHub account in this <a href="https://github.com/musanyaks/Titanic-Machine-Learning">LINK</a> for the source code.</p>
 <p>For the documentation and explanation of the models please refer my project for more details on the algorithms and explanation of terms in this link.</p>
 <p>I’ll load all the packages that I’ll use in my project as below.</p>
 <pre class="r"><code>#packages loading
@@ -628,7 +628,7 @@ Most of the terms are directly proportion to survival rate.</p>
 ## Degrees of Freedom: 1047 Total (i.e. Null);  1026 Residual
 ## Null Deviance:       1390 
 ## Residual Deviance: 734.2     AIC: 778.2</code></pre>
-<p>From the model <strong>62%</strong> of the largest class did not survive(<strong>No Information Rate</strong>),<strong>Sensitivity</strong> of <strong>93%</strong> which is not bad and <strong>Specificity</strong> of <strong>79%</strong>,<strong>Pos Pred Value</strong> of <strong>88%</strong> which means 88% of the obsevation predicted that truly the population died in the titan,<strong>Neg Pred Value</strong> of <strong>88%</strong> this is rate of those who did not die as per the model.</p>
+<p>From the model <strong>62%</strong> of the largest class did not survive(<strong>No Information Rate</strong>),<strong>Sensitivity</strong> of <strong>95%</strong> which is not bad and <strong>Specificity</strong> of <strong>79%</strong>,<strong>Pos Pred Value</strong> of <strong>88%</strong> which means 88% of the obsevation predicted that truly the population died in the titan,<strong>Neg Pred Value</strong> of <strong>88%</strong> this is rate of those who did not die as per the model.</p>
 <pre class="r"><code>set.seed(127)
 predictions &lt;- predict(trained.log.model, newdata = testing_set)
 confusionMatrix(predictions, testing_set$Survived)</code></pre>
@@ -636,26 +636,26 @@ confusionMatrix(predictions, testing_set$Survived)</code></pre>
 ## 
 ##           Reference
 ## Prediction   0   1
-##          0 154  14
-##          1   9  84
+##          0 150  18
+##          1  13  80
 ##                                           
-##                Accuracy : 0.9119          
-##                  95% CI : (0.8707, 0.9433)
+##                Accuracy : 0.8812          
+##                  95% CI : (0.8357, 0.9179)
 ##     No Information Rate : 0.6245          
 ##     P-Value [Acc &gt; NIR] : &lt;2e-16          
 ##                                           
-##                   Kappa : 0.8102          
+##                   Kappa : 0.7441          
 ##                                           
-##  Mcnemar&#39;s Test P-Value : 0.4042          
+##  Mcnemar&#39;s Test P-Value : 0.4725          
 ##                                           
-##             Sensitivity : 0.9448          
-##             Specificity : 0.8571          
-##          Pos Pred Value : 0.9167          
-##          Neg Pred Value : 0.9032          
+##             Sensitivity : 0.9202          
+##             Specificity : 0.8163          
+##          Pos Pred Value : 0.8929          
+##          Neg Pred Value : 0.8602          
 ##              Prevalence : 0.6245          
-##          Detection Rate : 0.5900          
+##          Detection Rate : 0.5747          
 ##    Detection Prevalence : 0.6437          
-##       Balanced Accuracy : 0.9010          
+##       Balanced Accuracy : 0.8683          
 ##                                           
 ##        &#39;Positive&#39; Class : 0               
 ## </code></pre>
@@ -697,28 +697,28 @@ confusionMatrix(predictions, testing_set$Survived)</code></pre>
 ## 
 ##           Reference
 ## Prediction   0   1
-##          0 151  12
-##          1  12  86
-##                                           
-##                Accuracy : 0.908           
-##                  95% CI : (0.8663, 0.9402)
-##     No Information Rate : 0.6245          
-##     P-Value [Acc &gt; NIR] : &lt;2e-16          
-##                                           
-##                   Kappa : 0.8039          
-##                                           
-##  Mcnemar&#39;s Test P-Value : 1               
-##                                           
-##             Sensitivity : 0.9264          
-##             Specificity : 0.8776          
-##          Pos Pred Value : 0.9264          
-##          Neg Pred Value : 0.8776          
-##              Prevalence : 0.6245          
-##          Detection Rate : 0.5785          
-##    Detection Prevalence : 0.6245          
-##       Balanced Accuracy : 0.9020          
-##                                           
-##        &#39;Positive&#39; Class : 0               
+##          0 150  17
+##          1  13  81
+##                                         
+##                Accuracy : 0.8851        
+##                  95% CI : (0.84, 0.9211)
+##     No Information Rate : 0.6245        
+##     P-Value [Acc &gt; NIR] : &lt;2e-16        
+##                                         
+##                   Kappa : 0.7529        
+##                                         
+##  Mcnemar&#39;s Test P-Value : 0.5839        
+##                                         
+##             Sensitivity : 0.9202        
+##             Specificity : 0.8265        
+##          Pos Pred Value : 0.8982        
+##          Neg Pred Value : 0.8617        
+##              Prevalence : 0.6245        
+##          Detection Rate : 0.5747        
+##    Detection Prevalence : 0.6398        
+##       Balanced Accuracy : 0.8734        
+##                                         
+##        &#39;Positive&#39; Class : 0             
 ## </code></pre>
 </div>
 <div id="roc-curve." class="section level2">
@@ -800,28 +800,28 @@ confusionMatrix(predictions, testing_set$Survived)</code></pre>
 ## 
 ##           Reference
 ## Prediction   0   1
-##          0 154  16
-##          1   9  82
-##                                          
-##                Accuracy : 0.9042         
-##                  95% CI : (0.8619, 0.937)
-##     No Information Rate : 0.6245         
-##     P-Value [Acc &gt; NIR] : &lt;2e-16         
-##                                          
-##                   Kappa : 0.7928         
-##                                          
-##  Mcnemar&#39;s Test P-Value : 0.2301         
-##                                          
-##             Sensitivity : 0.9448         
-##             Specificity : 0.8367         
-##          Pos Pred Value : 0.9059         
-##          Neg Pred Value : 0.9011         
-##              Prevalence : 0.6245         
-##          Detection Rate : 0.5900         
-##    Detection Prevalence : 0.6513         
-##       Balanced Accuracy : 0.8908         
-##                                          
-##        &#39;Positive&#39; Class : 0              
+##          0 150  19
+##          1  13  79
+##                                           
+##                Accuracy : 0.8774          
+##                  95% CI : (0.8313, 0.9146)
+##     No Information Rate : 0.6245          
+##     P-Value [Acc &gt; NIR] : &lt;2e-16          
+##                                           
+##                   Kappa : 0.7353          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.3768          
+##                                           
+##             Sensitivity : 0.9202          
+##             Specificity : 0.8061          
+##          Pos Pred Value : 0.8876          
+##          Neg Pred Value : 0.8587          
+##              Prevalence : 0.6245          
+##          Detection Rate : 0.5747          
+##    Detection Prevalence : 0.6475          
+##       Balanced Accuracy : 0.8632          
+##                                           
+##        &#39;Positive&#39; Class : 0               
 ## </code></pre>
 </div>
 <div id="roc-curve-1" class="section level2">
@@ -867,26 +867,26 @@ confusionMatrix(predictions, testing_set$Survived)</code></pre>
 ## 
 ##           Reference
 ## Prediction   0   1
-##          0 153  16
-##          1  10  82
+##          0 150  22
+##          1  13  76
 ##                                           
-##                Accuracy : 0.9004          
-##                  95% CI : (0.8575, 0.9339)
+##                Accuracy : 0.8659          
+##                  95% CI : (0.8185, 0.9048)
 ##     No Information Rate : 0.6245          
 ##     P-Value [Acc &gt; NIR] : &lt;2e-16          
 ##                                           
-##                   Kappa : 0.785           
+##                   Kappa : 0.7087          
 ##                                           
-##  Mcnemar&#39;s Test P-Value : 0.3268          
+##  Mcnemar&#39;s Test P-Value : 0.1763          
 ##                                           
-##             Sensitivity : 0.9387          
-##             Specificity : 0.8367          
-##          Pos Pred Value : 0.9053          
-##          Neg Pred Value : 0.8913          
+##             Sensitivity : 0.9202          
+##             Specificity : 0.7755          
+##          Pos Pred Value : 0.8721          
+##          Neg Pred Value : 0.8539          
 ##              Prevalence : 0.6245          
-##          Detection Rate : 0.5862          
-##    Detection Prevalence : 0.6475          
-##       Balanced Accuracy : 0.8877          
+##          Detection Rate : 0.5747          
+##    Detection Prevalence : 0.6590          
+##       Balanced Accuracy : 0.8479          
 ##                                           
 ##        &#39;Positive&#39; Class : 0               
 ## </code></pre>
@@ -941,28 +941,28 @@ confusionMatrix(predictions, testing_set$Survived)</code></pre>
 ## 
 ##           Reference
 ## Prediction   0   1
-##          0 154  16
-##          1   9  82
-##                                          
-##                Accuracy : 0.9042         
-##                  95% CI : (0.8619, 0.937)
-##     No Information Rate : 0.6245         
-##     P-Value [Acc &gt; NIR] : &lt;2e-16         
-##                                          
-##                   Kappa : 0.7928         
-##                                          
-##  Mcnemar&#39;s Test P-Value : 0.2301         
-##                                          
-##             Sensitivity : 0.9448         
-##             Specificity : 0.8367         
-##          Pos Pred Value : 0.9059         
-##          Neg Pred Value : 0.9011         
-##              Prevalence : 0.6245         
-##          Detection Rate : 0.5900         
-##    Detection Prevalence : 0.6513         
-##       Balanced Accuracy : 0.8908         
-##                                          
-##        &#39;Positive&#39; Class : 0              
+##          0 151  18
+##          1  12  80
+##                                         
+##                Accuracy : 0.8851        
+##                  95% CI : (0.84, 0.9211)
+##     No Information Rate : 0.6245        
+##     P-Value [Acc &gt; NIR] : &lt;2e-16        
+##                                         
+##                   Kappa : 0.7519        
+##                                         
+##  Mcnemar&#39;s Test P-Value : 0.3613        
+##                                         
+##             Sensitivity : 0.9264        
+##             Specificity : 0.8163        
+##          Pos Pred Value : 0.8935        
+##          Neg Pred Value : 0.8696        
+##              Prevalence : 0.6245        
+##          Detection Rate : 0.5785        
+##    Detection Prevalence : 0.6475        
+##       Balanced Accuracy : 0.8714        
+##                                         
+##        &#39;Positive&#39; Class : 0             
 ## </code></pre>
 <p>From the model <strong>62%</strong> of the largest class did not survive(<strong>No Information Rate</strong>),<strong>Sensitivity</strong> of <strong>93%</strong> which is not bad and <strong>Specificity</strong> of <strong>77%</strong>,<strong>Pos Pred Value</strong> of <strong>87%</strong> which means 88% of the obsevation predicted that truly the population died in the titan,<strong>Neg Pred Value</strong> of <strong>86%</strong> this is rate of those who did not die as per the model and an <strong>Accuracy</strong> of <strong>87</strong>.</p>
 </div>
@@ -977,7 +977,7 @@ par(mfrow=c(1,2))
 plot.roc.curve(predictions, title.text=&quot;Neural Network ROC Curve&quot;)
 plot.pr.curve(predictions, title.text=&quot;Neural Network Precision/Recall Curve&quot;)</code></pre>
 <p><img src="/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
-<p>From above <strong>Area Under Curve (AUC)</strong> of <strong>0.9</strong> truly the model will most of time predict randomly chosen positive class instance well than negative.</p>
+<p>From above <strong>Area Under Curve (AUC)</strong> of <strong>0.91</strong> truly the model will most of time predict randomly chosen positive class instance well than negative.</p>
 </div>
 </div>
 ]]>
