@@ -6,17 +6,1173 @@
   <generator>Hugo -- gohugo.io</generator>
 <language>en-us</language>
 <copyright>Musa R. Nyakerabachi&amp;copy; 2020. All rights reserved.</copyright>
-<lastBuildDate>Tue, 28 Jul 2020 00:00:00 +0000</lastBuildDate>
+<lastBuildDate>Wed, 19 Jan 2022 00:00:00 +0000</lastBuildDate>
 
 <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
 
 
 <item>
-  <title>Titanic Project.</title>
-  <link>/2020/07/28/titanic-project./</link>
+  <title>Investigating Covid 19 Virus trends.</title>
+  <link>/2022/01/19/investigating-covid-19-virus-trends./</link>
+  <pubDate>Wed, 19 Jan 2022 00:00:00 +0000</pubDate>
+  
+<guid>/2022/01/19/investigating-covid-19-virus-trends./</guid>
+  <description>
+
+
+&lt;div id=&#34;objectives.&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Objectives.&lt;/h2&gt;
+&lt;p&gt;This project is about building my skills of the data analysis workflow by evaluating the COVID_19 situation.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-exploration&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data exploration&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#loading data set
+options(warn = -1)
+#install.packages(&amp;quot;tidyverse&amp;quot;)
+#install.packages(&amp;quot;readr&amp;quot;)
+library(readr)
+library(tidyverse)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## v ggplot2 3.3.2     v dplyr   1.0.2
+## v tibble  3.0.4     v stringr 1.4.0
+## v tidyr   1.1.1     v forcats 0.5.0
+## v purrr   0.3.4&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df&amp;lt;-read.csv(&amp;quot;covid19.csv&amp;quot;)
+
+head(df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##         Date Continent_Name Two_Letter_Country_Code Country_Region
+## 1 2020-01-20           Asia                      KR    South Korea
+## 2 2020-01-22  North America                      US  United States
+## 3 2020-01-22  North America                      US  United States
+## 4 2020-01-23  North America                      US  United States
+## 5 2020-01-23  North America                      US  United States
+## 6 2020-01-24           Asia                      KR    South Korea
+##   Province_State positive hospitalized recovered death total_tested active
+## 1     All States        1            0         0     0            4      0
+## 2     All States        1            0         0     0            1      0
+## 3     Washington        1            0         0     0            1      0
+## 4     All States        1            0         0     0            1      0
+## 5     Washington        1            0         0     0            1      0
+## 6     All States        2            0         0     0           27      0
+##   hospitalizedCurr daily_tested daily_positive
+## 1                0            0              0
+## 2                0            0              0
+## 3                0            0              0
+## 4                0            0              0
+## 5                0            0              0
+## 6                0            5              0&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#number of rows and columns
+dim(df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 10903    14&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#viewing column names and storinh them in a variable
+col_names&amp;lt;- colnames(df)
+
+#install.packages(&amp;quot;skimr&amp;quot;) for skimming through the data set
+
+#skimming through the data
+library(skimr)
+skim(df)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:unnamed-chunk-2&#34;&gt;Table 1: &lt;/span&gt;Data summary&lt;/caption&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Name&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;df&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Number of rows&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;10903&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Number of columns&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;14&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;_______________________&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Column type frequency:&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;character&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;numeric&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;________________________&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Group variables&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;None&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Variable type: character&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;skim_variable&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;n_missing&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;complete_rate&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;min&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;max&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;empty&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;n_unique&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;whitespace&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Date&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;10&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;10&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;133&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Continent_Name&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;13&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Two_Letter_Country_Code&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;109&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Country_Region&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;22&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;109&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Province_State&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;28&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;81&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Variable type: numeric&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;skim_variable&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;n_missing&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;complete_rate&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;mean&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;sd&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p0&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p25&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p50&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p75&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p100&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;hist&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;positive&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;17768.02&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;93143.46&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;44.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1026&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7440.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1783570&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▁▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;hospitalized&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;766.40&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5626.33&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89590&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▁▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;recovered&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2409.22&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;11254.21&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;500.5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;171883&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▁▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;death&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;947.59&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5507.24&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;136.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;98536&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▁▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;total_tested&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;195475.72&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;819022.18&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2147.5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;30358&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;125285.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16936891&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▁▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;active&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4472.19&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;22277.48&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;660.5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;280931&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▁▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;hospitalizedCurr&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;454.07&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2253.05&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;28.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;33004&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▁▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;daily_tested&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6841.40&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;27198.46&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-330230&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;71.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1048&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4688.5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;492276&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▁▁▇▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;daily_positive&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;497.88&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2354.83&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-4735&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;29&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;264.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;63047&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▁▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;col_names&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;Date&amp;quot;                    &amp;quot;Continent_Name&amp;quot;         
+##  [3] &amp;quot;Two_Letter_Country_Code&amp;quot; &amp;quot;Country_Region&amp;quot;         
+##  [5] &amp;quot;Province_State&amp;quot;          &amp;quot;positive&amp;quot;               
+##  [7] &amp;quot;hospitalized&amp;quot;            &amp;quot;recovered&amp;quot;              
+##  [9] &amp;quot;death&amp;quot;                   &amp;quot;total_tested&amp;quot;           
+## [11] &amp;quot;active&amp;quot;                  &amp;quot;hospitalizedCurr&amp;quot;       
+## [13] &amp;quot;daily_tested&amp;quot;            &amp;quot;daily_positive&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#viewing  and summarising data
+glimpse(df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Rows: 10,903
+## Columns: 14
+## $ Date                    &amp;lt;chr&amp;gt; &amp;quot;2020-01-20&amp;quot;, &amp;quot;2020-01-22&amp;quot;, &amp;quot;2020-01-22&amp;quot;, &amp;quot;...
+## $ Continent_Name          &amp;lt;chr&amp;gt; &amp;quot;Asia&amp;quot;, &amp;quot;North America&amp;quot;, &amp;quot;North America&amp;quot;, &amp;quot;...
+## $ Two_Letter_Country_Code &amp;lt;chr&amp;gt; &amp;quot;KR&amp;quot;, &amp;quot;US&amp;quot;, &amp;quot;US&amp;quot;, &amp;quot;US&amp;quot;, &amp;quot;US&amp;quot;, &amp;quot;KR&amp;quot;, &amp;quot;US&amp;quot;, &amp;quot;...
+## $ Country_Region          &amp;lt;chr&amp;gt; &amp;quot;South Korea&amp;quot;, &amp;quot;United States&amp;quot;, &amp;quot;United Sta...
+## $ Province_State          &amp;lt;chr&amp;gt; &amp;quot;All States&amp;quot;, &amp;quot;All States&amp;quot;, &amp;quot;Washington&amp;quot;, &amp;quot;...
+## $ positive                &amp;lt;int&amp;gt; 1, 1, 1, 1, 1, 2, 1, 1, 4, 0, 3, 0, 0, 0, 0...
+## $ hospitalized            &amp;lt;int&amp;gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ recovered               &amp;lt;int&amp;gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ death                   &amp;lt;int&amp;gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ total_tested            &amp;lt;int&amp;gt; 4, 1, 1, 1, 1, 27, 1, 1, 0, 0, 0, 0, 0, 0, ...
+## $ active                  &amp;lt;int&amp;gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ hospitalizedCurr        &amp;lt;int&amp;gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ daily_tested            &amp;lt;int&amp;gt; 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ daily_positive          &amp;lt;int&amp;gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From above analysis I have used &lt;code&gt;tidyverse&lt;/code&gt; and &lt;code&gt;skimr&lt;/code&gt; package to give all overview of the data set. The data set has 14 colums and 10903 rows. It has 5 columns with character and 9 columns with numeric. From above, the data has no missing values.The &lt;code&gt;glimpse&lt;/code&gt; function also show an overview of the all columns but &lt;code&gt;skim&lt;/code&gt; function from &lt;code&gt;skimr&lt;/code&gt; package give more details than what &lt;code&gt;glimpse&lt;/code&gt; function which is in the umbrella of a group of packages hold by &lt;code&gt;tidyverse&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#filter the ``all states`` province state and remove the Province_state column
+covid_allstates &amp;lt;- df %&amp;gt;% filter(Province_State == &amp;quot;All States&amp;quot;) %&amp;gt;% select(-Province_State)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From above snippet of code we have removed one column and it consist only All state row.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;isolating-the-columns-we-need&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Isolating the Columns We Need&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Creating a dataset for the daily columns from &lt;code&gt;covid_df_all_states&lt;/code&gt; dataframe&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Let’s recall the description of the dataset’s columns.&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;code&gt;Date&lt;/code&gt;: Date&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Continent_Name&lt;/code&gt;: Continent names&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Two_Letter_Country_Code&lt;/code&gt;: Country codes&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Country_Region&lt;/code&gt;: Country names&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Province_State&lt;/code&gt;: States/province names; value is &lt;code&gt;All States&lt;/code&gt; when state/provincial level data is not available&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;positive&lt;/code&gt;: Cumulative number of positive cases reported.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;active&lt;/code&gt;: Number of actively cases on that &lt;strong&gt;day&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hospitalized&lt;/code&gt;: Cumulative number of hospitalized cases reported.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hospitalizedCurr&lt;/code&gt;: Number of actively hospitalized cases on that &lt;strong&gt;day&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;recovered&lt;/code&gt;: Cumulative number of recovered cases reported.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;death&lt;/code&gt;: Cumulative number of deaths reported.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;total_tested&lt;/code&gt;: Cumulative number of tests conducted.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;daily_tested&lt;/code&gt;: Number of tests conducted on the &lt;strong&gt;day&lt;/strong&gt;; if daily data is unavailable, daily tested is averaged across number of days in between.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;daily_positive&lt;/code&gt;: Number of positive cases reported on the &lt;strong&gt;day&lt;/strong&gt;; if daily data is unavailable, daily positive is averaged across number of days in.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Selecting the columns with cumulative numbers
+# Selecting the columns with cumulative numbers
+covid_df_all_states_daily &amp;lt;- df %&amp;gt;% 
+  select(Date, Country_Region, active, hospitalizedCurr, daily_tested, daily_positive)
+head(covid_df_all_states_daily)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##         Date Country_Region active hospitalizedCurr daily_tested daily_positive
+## 1 2020-01-20    South Korea      0                0            0              0
+## 2 2020-01-22  United States      0                0            0              0
+## 3 2020-01-22  United States      0                0            0              0
+## 4 2020-01-23  United States      0                0            0              0
+## 5 2020-01-23  United States      0                0            0              0
+## 6 2020-01-24    South Korea      0                0            5              0&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;extracting-the-top-ten-countries-in-the-number-of-tested-cases&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Extracting the Top Ten countries in the number of tested cases&lt;/h1&gt;
+&lt;div id=&#34;summarizing-the-data-based-on-the-country_region-column.&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Summarizing the data based on the &lt;code&gt;Country_Region&lt;/code&gt; column.&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;covid_df_all_states_daily_sum &amp;lt;- covid_df_all_states_daily %&amp;gt;% 
+  group_by(Country_Region) %&amp;gt;% 
+  summarise(tested = sum(daily_tested), 
+            positive = sum(daily_positive),
+            active = sum(active),
+            hospitalized = sum(hospitalizedCurr)) %&amp;gt;% 
+  arrange(desc(tested)) #this is equivalent to `arrange(-tested)`&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `summarise()` ungrouping output (override with `.groups` argument)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;covid_df_all_states_daily_sum&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 109 x 5
+##    Country_Region   tested positive   active hospitalized
+##    &amp;lt;chr&amp;gt;             &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;        &amp;lt;int&amp;gt;
+##  1 United States  34218115  3660635 27687993      2899151
+##  2 Russia         10542266   406368  6924890            0
+##  3 Italy           4091291   251710  6202214      1699003
+##  4 India           3692851    60959        0            0
+##  5 Canada          3314703   181769  1477358            0
+##  6 Australia       2658762    14400   269172        14020
+##  7 Turkey          2031192   163941  2980960            0
+##  8 United Kingdom  1473672   166909        0            0
+##  9 Peru             976790    59497        0            0
+## 10 Poland           928256    23987   538203            0
+## # ... with 99 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#Date, Country_Region, active, hospitalizedCurr, daily_tested, daily_positive&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;taking-the-top-10&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Taking the top 10&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;covid_top_10 &amp;lt;- head(covid_df_all_states_daily_sum, 10)
+covid_top_10&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 10 x 5
+##    Country_Region   tested positive   active hospitalized
+##    &amp;lt;chr&amp;gt;             &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;        &amp;lt;int&amp;gt;
+##  1 United States  34218115  3660635 27687993      2899151
+##  2 Russia         10542266   406368  6924890            0
+##  3 Italy           4091291   251710  6202214      1699003
+##  4 India           3692851    60959        0            0
+##  5 Canada          3314703   181769  1477358            0
+##  6 Australia       2658762    14400   269172        14020
+##  7 Turkey          2031192   163941  2980960            0
+##  8 United Kingdom  1473672   166909        0            0
+##  9 Peru             976790    59497        0            0
+## 10 Poland           928256    23987   538203            0&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;identifying-the-highest-positive-against-tested-cases&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Identifying the Highest Positive Against Tested Cases&lt;/h1&gt;
+&lt;div id=&#34;getting-vectors&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Getting vectors&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;countries &amp;lt;- covid_top_10$Country_Region
+tested_cases &amp;lt;- covid_top_10$tested
+positive_cases &amp;lt;- covid_top_10$positive
+active_cases &amp;lt;- covid_top_10$active
+hospitalized_cases &amp;lt;- covid_top_10$hospitalized&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;naming-vectors&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Naming vectors&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;names(positive_cases) &amp;lt;- countries
+names(tested_cases) &amp;lt;- countries
+names(active_cases) &amp;lt;- countries
+names(hospitalized_cases) &amp;lt;- countries&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;identifying&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Identifying&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;positive_cases&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  United States         Russia          Italy          India         Canada 
+##        3660635         406368         251710          60959         181769 
+##      Australia         Turkey United Kingdom           Peru         Poland 
+##          14400         163941         166909          59497          23987&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sum(positive_cases)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 4990175&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(positive_cases)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 499017.5&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;positive_cases/sum(positive_cases)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  United States         Russia          Italy          India         Canada 
+##    0.733568462    0.081433617    0.050441117    0.012215804    0.036425376 
+##      Australia         Turkey United Kingdom           Peru         Poland 
+##    0.002885670    0.032852756    0.033447524    0.011922828    0.004806845&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;positive_cases/tested_cases&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  United States         Russia          Italy          India         Canada 
+##    0.106979446    0.038546552    0.061523368    0.016507300    0.054837191 
+##      Australia         Turkey United Kingdom           Peru         Poland 
+##    0.005416055    0.080711720    0.113260617    0.060910738    0.025840932&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;positive_tested_top_3 &amp;lt;- c(&amp;quot;United Kingdom&amp;quot; = 0.11, &amp;quot;United States&amp;quot; = 0.10, &amp;quot;Turkey&amp;quot; = 0.08)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;keeping-relevant-information&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Keeping relevant information&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Creating vectors
+united_kingdom &amp;lt;- c(0.11, 1473672, 166909, 0, 0)
+united_states &amp;lt;- c(0.10, 17282363, 1877179, 0, 0)
+turkey &amp;lt;- c(0.08, 2031192, 163941, 2980960, 0)
+# Creating the matrix covid_mat
+covid_mat &amp;lt;- rbind(united_kingdom, united_states, turkey)
+# Naming columns
+colnames(covid_mat) &amp;lt;- c(&amp;quot;Ratio&amp;quot;, &amp;quot;tested&amp;quot;, &amp;quot;positive&amp;quot;, &amp;quot;active&amp;quot;, &amp;quot;hospitalized&amp;quot;)
+#d Displaying the matrix
+covid_mat&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##                Ratio   tested positive  active hospitalized
+## united_kingdom  0.11  1473672   166909       0            0
+## united_states   0.10 17282363  1877179       0            0
+## turkey          0.08  2031192   163941 2980960            0&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;putting-all-together&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Putting all together&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;question &amp;lt;- &amp;quot;Which countries have had the highest number of positive cases against the number of tests?&amp;quot;
+answer &amp;lt;- c(&amp;quot;Positive tested cases&amp;quot; = positive_tested_top_3)
+datasets &amp;lt;- list(
+  original = df,
+  allstates = covid_allstates,
+  daily = covid_df_all_states_daily,
+  top_10 = covid_top_10
+)
+matrices &amp;lt;- list(covid_mat)
+vectors &amp;lt;- list(col_names, countries)
+data_structure_list &amp;lt;- list(&amp;quot;dataframe&amp;quot; = datasets, &amp;quot;matrix&amp;quot; = matrices, &amp;quot;vector&amp;quot; = vectors)
+covid_analysis_list &amp;lt;- list(question, answer, data_structure_list)
+covid_analysis_list[[2]]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Positive tested cases.United Kingdom  Positive tested cases.United States 
+##                                 0.11                                 0.10 
+##         Positive tested cases.Turkey 
+##                                 0.08&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+  </item>
+  
+<item>
+  <title>Airbnb Edinburgh Exploratory Data Analysis.</title>
+  <link>/2020/12/18/airbnb-edinburgh-exploratory-data-analysis./</link>
+  <pubDate>Fri, 18 Dec 2020 00:00:00 +0000</pubDate>
+  
+<guid>/2020/12/18/airbnb-edinburgh-exploratory-data-analysis./</guid>
+  <description>
+
+
+&lt;hr /&gt;
+&lt;p&gt;In this blog post i’ll be analysing Airbnb dataset from Edinburg city distributed by &lt;a href=&#34;http://insideairbnb.com/get-the-data.html&#34;&gt;Inside Airbnb&lt;/a&gt; and that is hosted in &lt;a href=&#34;https://github.com/rstudio-education/dsbox&#34;&gt;dsbox&lt;/a&gt;
+package. The datset covers 13 areas as we shall see below.let’s start by describing the data.&lt;/p&gt;
+&lt;div id=&#34;data-description&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data Description :&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;Column Name&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;id&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;ID number of the listing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;price&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Price, in GBP, for one night stay&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;neighbourhood&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Number of people listing accommodates&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;bathrooms&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Number of bathrooms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;bedrooms&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Number of bedrooms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;beds&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Number of beds (which can be different than the number of bedrooms)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;review_scores_rating&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Average rating of property&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;number_of_reviews&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Number of reviews&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;listing_url&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Listing URL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;accommodates&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Number of people listing accommodates&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;First I’ll begin by loading all the packages that I’ll use in this my EDA post. If you dont have them install you’ll use &lt;code&gt;install.packages(&#34;package name&#34;)&lt;/code&gt; operation to have them installed or you uncomment the installation operation in the package section below.Sometimes installing a package that is not in cran i.e install from github may not throw an error during building process, in that case you will need to add an optional argument to ensure the installation in accepted i.e you attach &lt;code&gt;INSATLL-opts = c(&#34;--no-multiarch)&lt;/code&gt; to your package installation from github.&lt;/p&gt;
+&lt;p&gt;Having said that let’s dive in.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#install required packages
+###uncoment to install packages if you don&amp;#39;t have them installed.
+#devtools::install_github(&amp;quot;rstudio-education/dsbox&amp;quot;)
+#install.packages(&amp;quot;gmodels&amp;quot;)
+#install.packages(&amp;quot;skimr&amp;quot;)
+#install.packages(&amp;quot;tidyverse&amp;quot;)
+#loading packages
+library(dsbox)
+library(gmodels)
+library(tidyverse)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.4     v dplyr   1.0.2
+## v tidyr   1.1.1     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.5.0&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(skimr)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Next I’ll load the edinburg dataset into my working directory and skim through it to see how the dataset is structured using &lt;code&gt;skimr&lt;/code&gt; package.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#load data
+
+ data(edibnb)
+skim(edibnb)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:unnamed-chunk-2&#34;&gt;Table 1: &lt;/span&gt;Data summary&lt;/caption&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Name&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;edibnb&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Number of rows&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;13245&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Number of columns&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;_______________________&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Column type frequency:&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;character&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;numeric&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;________________________&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Group variables&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;None&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Variable type: character&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;skim_variable&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;n_missing&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;complete_rate&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;min&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;max&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;empty&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;n_unique&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;whitespace&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;neighbourhood&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2294&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.83&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;11&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;13&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;listing_url&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;34&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;37&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;13245&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Variable type: numeric&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;skim_variable&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;n_missing&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;complete_rate&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;mean&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;sd&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p0&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p25&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p50&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p75&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p100&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;hist&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;id&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;20077241.54&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;9844763.62&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;15420&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;13279107&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;20171841&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;27397925&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;36066014&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▅▆▇▇▇&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;price&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;199&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.98&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;97.21&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;86.03&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;49&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;75&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;110&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;999&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▁▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;accommodates&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.54&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.09&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;19&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▂▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;bathrooms&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.23&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.55&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;9&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▂▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;bedrooms&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.58&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.93&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;13&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▁▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;beds&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;15&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.03&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.58&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;30&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▁▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;review_scores_rating&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2177&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.84&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;95.02&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6.77&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;20&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;93&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;97&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;99&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▁▁▁▁▇&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;number_of_reviews&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;37.73&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;63.91&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;45&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;773&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;▇▁▁▁▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;From above the data set has 13245 number of rows and it also has 10 columns. The daset has two character columns and 8 numeric columns evident from above &lt;code&gt;skim&lt;/code&gt; function. The dataset has also missing values in some columns with only &lt;code&gt;id&lt;/code&gt;, &lt;code&gt;listing_url&lt;/code&gt;, &lt;code&gt;accommodates&lt;/code&gt;, &lt;code&gt;number_of_reviews&lt;/code&gt; columns not having missing values. The &lt;code&gt;neighbourhood&lt;/code&gt; column has 13 unique entries i.e 13 different locations with most people paying averagely 97 dollars also the standard deviation, quantiles and distribution of numeric columns have been captured.&lt;/p&gt;
+&lt;p&gt;Next let’s see the 13 distinct entries in the &lt;code&gt;neighbourhood&lt;/code&gt; column using &lt;code&gt;distinct&lt;/code&gt; function from &lt;code&gt;dplyr&lt;/code&gt; package bundled in &lt;code&gt;tidyverse&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#distinct elements
+distinct(edibnb, edibnb$neighbourhood)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 14 x 1
+##    `edibnb$neighbourhood`
+##    &amp;lt;chr&amp;gt;                 
+##  1 New Town              
+##  2 Southside             
+##  3 &amp;lt;NA&amp;gt;                  
+##  4 Leith                 
+##  5 Old Town              
+##  6 West End              
+##  7 Haymarket             
+##  8 Morningside           
+##  9 Newington             
+## 10 Marchmont             
+## 11 Cannonmills           
+## 12 Tollcross             
+## 13 Bruntsfield           
+## 14 Stockbridge&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From above an &lt;code&gt;NA&lt;/code&gt; value has appeared which will alarm my data handling criteria with precaution attached.&lt;/p&gt;
+&lt;p&gt;Next let me see how the 13 areas are distributed using &lt;code&gt;crossTable&lt;/code&gt; function from &lt;code&gt;gmodels&lt;/code&gt; package.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;CrossTable(edibnb$neighbourhood)#neighbourhood areas distribution&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  
+##    Cell Contents
+## |-------------------------|
+## |                       N |
+## |         N / Table Total |
+## |-------------------------|
+## 
+##  
+## Total Observations in Table:  10951 
+## 
+##  
+##             | Bruntsfield | Cannonmills |   Haymarket |       Leith |   Marchmont | 
+##             |-------------|-------------|-------------|-------------|-------------|
+##             |         290 |         485 |        1026 |        3134 |         730 | 
+##             |       0.026 |       0.044 |       0.094 |       0.286 |       0.067 | 
+##             |-------------|-------------|-------------|-------------|-------------|
+## 
+## 
+##             | Morningside |    New Town |   Newington |    Old Town |   Southside | 
+##             |-------------|-------------|-------------|-------------|-------------|
+##             |         346 |        1058 |         439 |        1283 |         481 | 
+##             |       0.032 |       0.097 |       0.040 |       0.117 |       0.044 | 
+##             |-------------|-------------|-------------|-------------|-------------|
+## 
+## 
+##             | Stockbridge |   Tollcross |    West End | 
+##             |-------------|-------------|-------------|
+##             |         587 |         270 |         822 | 
+##             |       0.054 |       0.025 |       0.075 | 
+##             |-------------|-------------|-------------|
+## 
+## 
+## 
+## &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The `&lt;code&gt;crossTable&lt;/code&gt; function has only captures 10951 observation discarding the &lt;code&gt;NA&lt;/code&gt; values. &lt;code&gt;Leith&lt;/code&gt; had highest number of accommodation while &lt;code&gt;Bruntsfield&lt;/code&gt; having least number of people.&lt;/p&gt;
+&lt;p&gt;Let me inspect the average price people in 13 areas paid and infer the expensive area to accommodate people and also the cheapest.To handle &lt;code&gt;NA&lt;/code&gt; value I’ll use &lt;code&gt;na.rm = T&lt;/code&gt; while calculating the mean price.I’ll use &lt;code&gt;arrange&lt;/code&gt; function from &lt;code&gt;dplyr&lt;/code&gt; package and arrange them from expensive to cheapest using &lt;code&gt;desc&lt;/code&gt; argument in the &lt;code&gt;arrange&lt;/code&gt; function.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;edibnb %&amp;gt;% group_by(neighbourhood) %&amp;gt;% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %&amp;gt;% 
+  arrange(desc(mean))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `summarise()` ungrouping output (override with `.groups` argument)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 14 x 3
+##    neighbourhood  mean     n
+##    &amp;lt;chr&amp;gt;         &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt;
+##  1 New Town      136.   1058
+##  2 Old Town      128.   1283
+##  3 West End      116.    822
+##  4 Marchmont     111.    730
+##  5 Southside     107.    481
+##  6 Cannonmills   104.    485
+##  7 Stockbridge   104.    587
+##  8 Bruntsfield    99.4   290
+##  9 Newington      98.4   439
+## 10 Tollcross      90.8   270
+## 11 Haymarket      84.8  1026
+## 12 Leith          83.8  3134
+## 13 Morningside    82.9   346
+## 14 &amp;lt;NA&amp;gt;           73.5  2294&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;New Town&lt;/code&gt; is considered expensive area to look for accommodation while &lt;code&gt;Morningside&lt;/code&gt; seems to be more friendly to people loking for cheap houses.Also from above the &lt;code&gt;n()&lt;/code&gt; argumet gives the total observation of each locality same as in &lt;code&gt;crossTable&lt;/code&gt; function above.&lt;/p&gt;
+&lt;p&gt;Next let me see how the beds are distributed in different houses and give the traveller better information in considering the amount of money he has to spend.I’ll first use &lt;code&gt;crossTable&lt;/code&gt; function from &lt;code&gt;gmodels&lt;/code&gt; package to look at how the beds are distributed.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;CrossTable(edibnb$beds)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  
+##    Cell Contents
+## |-------------------------|
+## |                       N |
+## |         N / Table Total |
+## |-------------------------|
+## 
+##  
+## Total Observations in Table:  13230 
+## 
+##  
+##           |         0 |         1 |         2 |         3 |         4 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |        42 |      6164 |      3710 |      1801 |       832 | 
+##           |     0.003 |     0.466 |     0.280 |     0.136 |     0.063 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |         5 |         6 |         7 |         8 |         9 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |       329 |       159 |        47 |        52 |        20 | 
+##           |     0.025 |     0.012 |     0.004 |     0.004 |     0.002 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |        10 |        11 |        12 |        13 |        14 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |        15 |         7 |        11 |         2 |         7 | 
+##           |     0.001 |     0.001 |     0.001 |     0.000 |     0.001 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |        15 |        16 |        17 |        20 |        21 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |         5 |        17 |         2 |         3 |         1 | 
+##           |     0.000 |     0.001 |     0.000 |     0.000 |     0.000 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |        22 |        24 |        25 |        30 | 
+##           |-----------|-----------|-----------|-----------|
+##           |         1 |         1 |         1 |         1 | 
+##           |     0.000 |     0.000 |     0.000 |     0.000 | 
+##           |-----------|-----------|-----------|-----------|
+## 
+## 
+## 
+## &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From above code snippet there is house with no bed, while most houses had one bed and the is a house with 30 beds with only one person accommodation.&lt;/p&gt;
+&lt;p&gt;Next let’s see the house which was expensive taking bed factor taken into consideration.I’ll use the same &lt;code&gt;dplyr&lt;/code&gt; package.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;edibnb %&amp;gt;% group_by(beds) %&amp;gt;% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %&amp;gt;% 
+  arrange(desc(mean))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `summarise()` ungrouping output (override with `.groups` argument)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 25 x 3
+##     beds  mean     n
+##    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt;
+##  1    20  880      3
+##  2    14  386.     7
+##  3    12  384.    11
+##  4    10  379.    15
+##  5    16  371     17
+##  6    15  304.     5
+##  7     8  256.    52
+##  8    13  240      2
+##  9     9  234     20
+## 10     7  230.    47
+## # ... with 15 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From above a 20 bed house was considered expensive, a person paying roughly 880 dollars and only 3 people listed for the house.Having seen the most expensive house considering number of beds next I’ll look at the house that was cheap considering number of beds a house had, in this case I’ll drop &lt;code&gt;desc&lt;/code&gt; in &lt;code&gt;arrange&lt;/code&gt; function to arrange the number of beds in ascending order.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;edibnb %&amp;gt;% group_by(beds) %&amp;gt;% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %&amp;gt;% 
+  arrange(mean)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `summarise()` ungrouping output (override with `.groups` argument)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 25 x 3
+##     beds  mean     n
+##    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt;
+##  1     1  65.0  6164
+##  2     2  97.5  3710
+##  3     0 110.     42
+##  4    NA 121.     15
+##  5     3 128.   1801
+##  6    24 135       1
+##  7     4 167.    832
+##  8    17 200       2
+##  9     6 202.    159
+## 10    11 212.      7
+## # ... with 15 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From above a 1 bed house was considered cheap only costing roughly 65 dollars and it is the one most of the people opted for in Edinburg town.&lt;/p&gt;
+&lt;p&gt;Next I’ll look at the number of people a house can accommodate.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;CrossTable(edibnb$accommodates)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  
+##    Cell Contents
+## |-------------------------|
+## |                       N |
+## |         N / Table Total |
+## |-------------------------|
+## 
+##  
+## Total Observations in Table:  13245 
+## 
+##  
+##           |         1 |         2 |         3 |         4 |         5 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |       754 |      5390 |       754 |      3451 |       640 | 
+##           |     0.057 |     0.407 |     0.057 |     0.261 |     0.048 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |         6 |         7 |         8 |         9 |        10 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |      1386 |       181 |       373 |        59 |       133 | 
+##           |     0.105 |     0.014 |     0.028 |     0.004 |     0.010 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |        11 |        12 |        13 |        14 |        15 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |        20 |        39 |         7 |        14 |         7 | 
+##           |     0.002 |     0.003 |     0.001 |     0.001 |     0.001 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |        16 |        19 | 
+##           |-----------|-----------|
+##           |        36 |         1 | 
+##           |     0.003 |     0.000 | 
+##           |-----------|-----------|
+## 
+## 
+## 
+## &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It’s like most houses in Edinburg can only accomodate 2 people while there is also a house that could accommodate 19 people.&lt;/p&gt;
+&lt;p&gt;Let me look at the price each house accommodation costed using below snippet of code.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;edibnb %&amp;gt;% group_by(accommodates) %&amp;gt;% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %&amp;gt;% 
+  arrange(mean)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `summarise()` ungrouping output (override with `.groups` argument)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 17 x 3
+##    accommodates  mean     n
+##           &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt;
+##  1            1  52.7   754
+##  2            2  64.0  5390
+##  3            3  82.2   754
+##  4            4 107.   3451
+##  5            5 121.    640
+##  6            6 145.   1386
+##  7            7 180.    181
+##  8            8 213.    373
+##  9            9 236.     59
+## 10           15 253       7
+## 11           10 254.    133
+## 12           11 297.     20
+## 13           12 344.     39
+## 14           13 346.      7
+## 15           14 353.     14
+## 16           16 383.     36
+## 17           19 NaN       1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From above the house that accomodates 1 person is cheap while the one accomodates 19 people considered expensive.&lt;/p&gt;
+&lt;p&gt;Next I’ll look at the number of bedrooms most of the houses had.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;CrossTable(edibnb$bedrooms)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  
+##    Cell Contents
+## |-------------------------|
+## |                       N |
+## |         N / Table Total |
+## |-------------------------|
+## 
+##  
+## Total Observations in Table:  13241 
+## 
+##  
+##           |         0 |         1 |         2 |         3 |         4 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |       266 |      7552 |      3675 |      1196 |       379 | 
+##           |     0.020 |     0.570 |     0.278 |     0.090 |     0.029 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |         5 |         6 |         7 |         8 |         9 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+##           |       127 |        29 |         8 |         4 |         2 | 
+##           |     0.010 |     0.002 |     0.001 |     0.000 |     0.000 | 
+##           |-----------|-----------|-----------|-----------|-----------|
+## 
+## 
+##           |        10 |        13 | 
+##           |-----------|-----------|
+##           |         1 |         2 | 
+##           |     0.000 |     0.000 | 
+##           |-----------|-----------|
+## 
+## 
+## 
+## &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Most of the houses are 1 bedroom house whose their number is 7552 , while least being a 10 bedroom house wich is only 1.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;edibnb %&amp;gt;% group_by(bedrooms) %&amp;gt;% 
+  summarise(mean = mean(price, na.rm = T), n = n()) %&amp;gt;% 
+  arrange(mean)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `summarise()` ungrouping output (override with `.groups` argument)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 13 x 3
+##    bedrooms  mean     n
+##       &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt;
+##  1        1  68.5  7552
+##  2        0  78.7   266
+##  3       13  85       2
+##  4       NA  99.5     4
+##  5        2 115.   3675
+##  6        3 163.   1196
+##  7        4 228.    379
+##  8       10 300       1
+##  9        5 300.    127
+## 10        7 333.      8
+## 11        6 379.     29
+## 12        8 423       4
+## 13        9 474       2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It’s like most of houses are 1 bedroom house which cost only 69 dollars while an expensive one costed 474 dollars a 9 bedroom house.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-visualization.&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data Visualization.&lt;/h2&gt;
+&lt;p&gt;Next I’ll visualize the dataset using &lt;code&gt;ggplot&lt;/code&gt; function from &lt;code&gt;tidyverse&lt;/code&gt;.I’ll visualise the &lt;code&gt;nieghbourhood&lt;/code&gt; column against &lt;code&gt;beds&lt;/code&gt; using a bar chat and see the relationship graphically.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(data = edibnb, aes(x = neighbourhood, y = beds, fill = neighbourhood)) + 
+  geom_bar(stat = &amp;quot;identity&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: Removed 15 rows containing missing values (position_stack).&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;From above grapgh &lt;code&gt;Leith&lt;/code&gt; has the highest number of beds and &lt;code&gt;Tollcross&lt;/code&gt; having least.Next I’ll visualise visualise &lt;code&gt;neighbourhood&lt;/code&gt; against &lt;code&gt;bathrooms&lt;/code&gt; using a bar chat and deducerelationship from below snippet of code.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(data = edibnb, aes(x = neighbourhood, y = bathrooms, fill = neighbourhood)) + 
+  geom_bar(stat = &amp;quot;identity&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: Removed 12 rows containing missing values (position_stack).&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;From above graph &lt;code&gt;Leith&lt;/code&gt; has highest number of beds with &lt;code&gt;Tollcross&lt;/code&gt; having least, next I’ll compare &lt;code&gt;neighbourhood&lt;/code&gt; against &lt;code&gt;price&lt;/code&gt; to see where houses are expensive.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(data = edibnb, aes(x = neighbourhood, y = price, fill = neighbourhood)) + 
+  geom_bar(stat = &amp;quot;identity&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: Removed 199 rows containing missing values (position_stack).&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;From above houses in &lt;code&gt;Leith&lt;/code&gt; are expensive with least being&lt;code&gt;Tollcross&lt;/code&gt;.Next I’ll compare the &lt;code&gt;neighbourhood&lt;/code&gt; against price wrapping &lt;code&gt;beds&lt;/code&gt; to see the relationship.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(data = edibnb, aes(x = neighbourhood, y = price, fill = neighbourhood)) + 
+  geom_bar(stat = &amp;quot;identity&amp;quot;) +
+  facet_wrap( ~ beds)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: Removed 199 rows containing missing values (position_stack).&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;It’s evident that people prefer to spend money in renting houses with beds arnging 1 to 4 approximately while the rest having least people renting for a day.
+Next I’ll visualize those houses in the &lt;code&gt;neighbourhood&lt;/code&gt; against &lt;code&gt;price&lt;/code&gt; taking into consideration on &lt;code&gt;accommodation&lt;/code&gt; factor.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(data = edibnb, aes(x = neighbourhood, y = price, fill = neighbourhood)) + 
+  geom_bar(stat = &amp;quot;identity&amp;quot;) +
+  facet_wrap( ~ accommodates)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: Removed 199 rows containing missing values (position_stack).&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;It’s like most houses accommodates roughly 2-6 people with other accomomdating very few people.Lastly I’ll see how the price is distributed generally among the whole of Edinburg town.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(data = edibnb, aes(x = price)) + 
+  geom_histogram(binwidth = 50) &lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: Removed 199 rows containing non-finite values (stat_bin).&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;It’s like the price is skewed to the like I’ll have to intoduce logarithmic function to ensure there is no skewness as shown below.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(data = edibnb, aes(x = price)) + 
+  geom_histogram() + scale_x_log10()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: Transformation introduced infinite values in continuous x-axis&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: Removed 201 rows containing non-finite values (stat_bin).&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-12-18-Edinburgh-Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Now the price have been transformed and averagely the house in edinburg costs 100 dollars.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references.&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;References.&lt;/h2&gt;
+&lt;p&gt;1.Chapter 10: Interactive tutorials &lt;a href=&#34;https://datasciencebox.org/interactive-tutorials.html&#34;&gt;Link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2.Data Science in the tidyverse by Amelia McNamara &lt;a href=&#34;https://github.com/cwickham/data-science-in-tidyverse&#34;&gt;Link&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+  </item>
+  
+<item>
+  <title>Machine Learning from Disaster</title>
+  <link>/2020/07/28/machine-learning-from-disaster/</link>
   <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
   
-<guid>/2020/07/28/titanic-project./</guid>
+<guid>/2020/07/28/machine-learning-from-disaster/</guid>
   <description>
 &lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;/rmarkdown-libs/jquery/jquery.min.js&#34;&gt;&lt;/script&gt;
@@ -29,8 +1185,8 @@
 &lt;script src=&#34;/rmarkdown-libs/crosstalk/js/crosstalk.min.js&#34;&gt;&lt;/script&gt;
 
 
-&lt;div id=&#34;titanic-machine-learning-from-disaster-project&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Titanic: Machine Learning from Disaster Project&lt;/h1&gt;
+&lt;div id=&#34;machine-learning-from-disaster.&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Machine Learning from Disaster.&lt;/h1&gt;
 &lt;div id=&#34;part-1exploratory-data-analysis.&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Part 1:Exploratory Data Analysis.&lt;/h2&gt;
 &lt;/div&gt;
@@ -282,7 +1438,7 @@ df_new &amp;lt;- data.frame(PassengerId = df_test$PassengerId, Survived = df_tes
 &lt;pre&gt;&lt;code&gt;## ## 
 ## ## Amelia II: Multiple Imputation
 ## ## (Version 1.7.6, built: 2019-11-24)
-## ## Copyright (C) 2005-2020 James Honaker, Gary King and Matthew Blackwell
+## ## Copyright (C) 2005-2022 James Honaker, Gary King and Matthew Blackwell
 ## ## Refer to http://gking.harvard.edu/amelia/ for more information
 ## ##&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;missmap(df_concat, main = &amp;quot;Missing Map&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
@@ -562,7 +1718,7 @@ training_set &amp;lt;- titan_clean[split_index,]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;part-3machine-learning&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Part 3:Machine Learning&lt;/h2&gt;
-&lt;p&gt;In this section I’ll be using the saved models that I saved after training if you need code on how I came up with the model I have hosted the in my GitHub account use link for the code source.&lt;/p&gt;
+&lt;p&gt;In this section I’ll be using the saved models that I saved after training if you need code on how I came up with the model I have hosted the in my GitHub account in this &lt;a href=&#34;https://github.com/musanyaks/Titanic-Machine-Learning&#34;&gt;LINK&lt;/a&gt; for the source code.&lt;/p&gt;
 &lt;p&gt;For the documentation and explanation of the models please refer my project for more details on the algorithms and explanation of terms in this link.&lt;/p&gt;
 &lt;p&gt;I’ll load all the packages that I’ll use in my project as below.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#packages loading
@@ -627,7 +1783,7 @@ Most of the terms are directly proportion to survival rate.&lt;/p&gt;
 ## Degrees of Freedom: 1047 Total (i.e. Null);  1026 Residual
 ## Null Deviance:       1390 
 ## Residual Deviance: 734.2     AIC: 778.2&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;From the model &lt;strong&gt;62%&lt;/strong&gt; of the largest class did not survive(&lt;strong&gt;No Information Rate&lt;/strong&gt;),&lt;strong&gt;Sensitivity&lt;/strong&gt; of &lt;strong&gt;93%&lt;/strong&gt; which is not bad and &lt;strong&gt;Specificity&lt;/strong&gt; of &lt;strong&gt;79%&lt;/strong&gt;,&lt;strong&gt;Pos Pred Value&lt;/strong&gt; of &lt;strong&gt;88%&lt;/strong&gt; which means 88% of the obsevation predicted that truly the population died in the titan,&lt;strong&gt;Neg Pred Value&lt;/strong&gt; of &lt;strong&gt;88%&lt;/strong&gt; this is rate of those who did not die as per the model.&lt;/p&gt;
+&lt;p&gt;From the model &lt;strong&gt;62%&lt;/strong&gt; of the largest class did not survive(&lt;strong&gt;No Information Rate&lt;/strong&gt;),&lt;strong&gt;Sensitivity&lt;/strong&gt; of &lt;strong&gt;95%&lt;/strong&gt; which is not bad and &lt;strong&gt;Specificity&lt;/strong&gt; of &lt;strong&gt;79%&lt;/strong&gt;,&lt;strong&gt;Pos Pred Value&lt;/strong&gt; of &lt;strong&gt;88%&lt;/strong&gt; which means 88% of the obsevation predicted that truly the population died in the titan,&lt;strong&gt;Neg Pred Value&lt;/strong&gt; of &lt;strong&gt;88%&lt;/strong&gt; this is rate of those who did not die as per the model.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(127)
 predictions &amp;lt;- predict(trained.log.model, newdata = testing_set)
 confusionMatrix(predictions, testing_set$Survived)&lt;/code&gt;&lt;/pre&gt;
@@ -635,28 +1791,28 @@ confusionMatrix(predictions, testing_set$Survived)&lt;/code&gt;&lt;/pre&gt;
 ## 
 ##           Reference
 ## Prediction   0   1
-##          0 154  14
-##          1   9  84
-##                                           
-##                Accuracy : 0.9119          
-##                  95% CI : (0.8707, 0.9433)
-##     No Information Rate : 0.6245          
-##     P-Value [Acc &amp;gt; NIR] : &amp;lt;2e-16          
-##                                           
-##                   Kappa : 0.8102          
-##                                           
-##  Mcnemar&amp;#39;s Test P-Value : 0.4042          
-##                                           
-##             Sensitivity : 0.9448          
-##             Specificity : 0.8571          
-##          Pos Pred Value : 0.9167          
-##          Neg Pred Value : 0.9032          
-##              Prevalence : 0.6245          
-##          Detection Rate : 0.5900          
-##    Detection Prevalence : 0.6437          
-##       Balanced Accuracy : 0.9010          
-##                                           
-##        &amp;#39;Positive&amp;#39; Class : 0               
+##          0 152  22
+##          1  11  76
+##                                          
+##                Accuracy : 0.8736         
+##                  95% CI : (0.827, 0.9113)
+##     No Information Rate : 0.6245         
+##     P-Value [Acc &amp;gt; NIR] : &amp;lt; 2e-16        
+##                                          
+##                   Kappa : 0.7242         
+##                                          
+##  Mcnemar&amp;#39;s Test P-Value : 0.08172        
+##                                          
+##             Sensitivity : 0.9325         
+##             Specificity : 0.7755         
+##          Pos Pred Value : 0.8736         
+##          Neg Pred Value : 0.8736         
+##              Prevalence : 0.6245         
+##          Detection Rate : 0.5824         
+##    Detection Prevalence : 0.6667         
+##       Balanced Accuracy : 0.8540         
+##                                          
+##        &amp;#39;Positive&amp;#39; Class : 0              
 ## &lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;roc-curve&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;3.0.1 ROC Curve&lt;/h2&gt;
@@ -696,26 +1852,26 @@ confusionMatrix(predictions, testing_set$Survived)&lt;/code&gt;&lt;/pre&gt;
 ## 
 ##           Reference
 ## Prediction   0   1
-##          0 151  12
-##          1  12  86
+##          0 152  20
+##          1  11  78
 ##                                           
-##                Accuracy : 0.908           
-##                  95% CI : (0.8663, 0.9402)
+##                Accuracy : 0.8812          
+##                  95% CI : (0.8357, 0.9179)
 ##     No Information Rate : 0.6245          
 ##     P-Value [Acc &amp;gt; NIR] : &amp;lt;2e-16          
 ##                                           
-##                   Kappa : 0.8039          
+##                   Kappa : 0.742           
 ##                                           
-##  Mcnemar&amp;#39;s Test P-Value : 1               
+##  Mcnemar&amp;#39;s Test P-Value : 0.1508          
 ##                                           
-##             Sensitivity : 0.9264          
-##             Specificity : 0.8776          
-##          Pos Pred Value : 0.9264          
-##          Neg Pred Value : 0.8776          
+##             Sensitivity : 0.9325          
+##             Specificity : 0.7959          
+##          Pos Pred Value : 0.8837          
+##          Neg Pred Value : 0.8764          
 ##              Prevalence : 0.6245          
-##          Detection Rate : 0.5785          
-##    Detection Prevalence : 0.6245          
-##       Balanced Accuracy : 0.9020          
+##          Detection Rate : 0.5824          
+##    Detection Prevalence : 0.6590          
+##       Balanced Accuracy : 0.8642          
 ##                                           
 ##        &amp;#39;Positive&amp;#39; Class : 0               
 ## &lt;/code&gt;&lt;/pre&gt;
@@ -799,26 +1955,26 @@ confusionMatrix(predictions, testing_set$Survived)&lt;/code&gt;&lt;/pre&gt;
 ## 
 ##           Reference
 ## Prediction   0   1
-##          0 154  16
-##          1   9  82
+##          0 154  24
+##          1   9  74
 ##                                          
-##                Accuracy : 0.9042         
-##                  95% CI : (0.8619, 0.937)
+##                Accuracy : 0.8736         
+##                  95% CI : (0.827, 0.9113)
 ##     No Information Rate : 0.6245         
-##     P-Value [Acc &amp;gt; NIR] : &amp;lt;2e-16         
+##     P-Value [Acc &amp;gt; NIR] : &amp;lt; 2e-16        
 ##                                          
-##                   Kappa : 0.7928         
+##                   Kappa : 0.7219         
 ##                                          
-##  Mcnemar&amp;#39;s Test P-Value : 0.2301         
+##  Mcnemar&amp;#39;s Test P-Value : 0.01481        
 ##                                          
 ##             Sensitivity : 0.9448         
-##             Specificity : 0.8367         
-##          Pos Pred Value : 0.9059         
-##          Neg Pred Value : 0.9011         
+##             Specificity : 0.7551         
+##          Pos Pred Value : 0.8652         
+##          Neg Pred Value : 0.8916         
 ##              Prevalence : 0.6245         
 ##          Detection Rate : 0.5900         
-##    Detection Prevalence : 0.6513         
-##       Balanced Accuracy : 0.8908         
+##    Detection Prevalence : 0.6820         
+##       Balanced Accuracy : 0.8499         
 ##                                          
 ##        &amp;#39;Positive&amp;#39; Class : 0              
 ## &lt;/code&gt;&lt;/pre&gt;
@@ -866,26 +2022,26 @@ confusionMatrix(predictions, testing_set$Survived)&lt;/code&gt;&lt;/pre&gt;
 ## 
 ##           Reference
 ## Prediction   0   1
-##          0 153  16
-##          1  10  82
+##          0 154  25
+##          1   9  73
 ##                                           
-##                Accuracy : 0.9004          
-##                  95% CI : (0.8575, 0.9339)
+##                Accuracy : 0.8697          
+##                  95% CI : (0.8227, 0.9081)
 ##     No Information Rate : 0.6245          
 ##     P-Value [Acc &amp;gt; NIR] : &amp;lt;2e-16          
 ##                                           
-##                   Kappa : 0.785           
+##                   Kappa : 0.7129          
 ##                                           
-##  Mcnemar&amp;#39;s Test P-Value : 0.3268          
+##  Mcnemar&amp;#39;s Test P-Value : 0.0101          
 ##                                           
-##             Sensitivity : 0.9387          
-##             Specificity : 0.8367          
-##          Pos Pred Value : 0.9053          
-##          Neg Pred Value : 0.8913          
+##             Sensitivity : 0.9448          
+##             Specificity : 0.7449          
+##          Pos Pred Value : 0.8603          
+##          Neg Pred Value : 0.8902          
 ##              Prevalence : 0.6245          
-##          Detection Rate : 0.5862          
-##    Detection Prevalence : 0.6475          
-##       Balanced Accuracy : 0.8877          
+##          Detection Rate : 0.5900          
+##    Detection Prevalence : 0.6858          
+##       Balanced Accuracy : 0.8448          
 ##                                           
 ##        &amp;#39;Positive&amp;#39; Class : 0               
 ## &lt;/code&gt;&lt;/pre&gt;
@@ -940,26 +2096,26 @@ confusionMatrix(predictions, testing_set$Survived)&lt;/code&gt;&lt;/pre&gt;
 ## 
 ##           Reference
 ## Prediction   0   1
-##          0 154  16
-##          1   9  82
+##          0 153  23
+##          1  10  75
 ##                                          
-##                Accuracy : 0.9042         
-##                  95% CI : (0.8619, 0.937)
+##                Accuracy : 0.8736         
+##                  95% CI : (0.827, 0.9113)
 ##     No Information Rate : 0.6245         
-##     P-Value [Acc &amp;gt; NIR] : &amp;lt;2e-16         
+##     P-Value [Acc &amp;gt; NIR] : &amp;lt; 2e-16        
 ##                                          
-##                   Kappa : 0.7928         
+##                   Kappa : 0.7231         
 ##                                          
-##  Mcnemar&amp;#39;s Test P-Value : 0.2301         
+##  Mcnemar&amp;#39;s Test P-Value : 0.03671        
 ##                                          
-##             Sensitivity : 0.9448         
-##             Specificity : 0.8367         
-##          Pos Pred Value : 0.9059         
-##          Neg Pred Value : 0.9011         
+##             Sensitivity : 0.9387         
+##             Specificity : 0.7653         
+##          Pos Pred Value : 0.8693         
+##          Neg Pred Value : 0.8824         
 ##              Prevalence : 0.6245         
-##          Detection Rate : 0.5900         
-##    Detection Prevalence : 0.6513         
-##       Balanced Accuracy : 0.8908         
+##          Detection Rate : 0.5862         
+##    Detection Prevalence : 0.6743         
+##       Balanced Accuracy : 0.8520         
 ##                                          
 ##        &amp;#39;Positive&amp;#39; Class : 0              
 ## &lt;/code&gt;&lt;/pre&gt;
@@ -976,18 +2132,18 @@ par(mfrow=c(1,2))
 plot.roc.curve(predictions, title.text=&amp;quot;Neural Network ROC Curve&amp;quot;)
 plot.pr.curve(predictions, title.text=&amp;quot;Neural Network Precision/Recall Curve&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/2020-07-28-titanic-project-using-r_files/figure-html/unnamed-chunk-79-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;From above &lt;strong&gt;Area Under Curve (AUC)&lt;/strong&gt; of &lt;strong&gt;0.9&lt;/strong&gt; truly the model will most of time predict randomly chosen positive class instance well than negative.&lt;/p&gt;
+&lt;p&gt;From above &lt;strong&gt;Area Under Curve (AUC)&lt;/strong&gt; of &lt;strong&gt;0.91&lt;/strong&gt; truly the model will most of time predict randomly chosen positive class instance well than negative.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
   </item>
   
 <item>
-  <title>Titanic Machine Learning from Disaster Project.</title>
-  <link>/2020/07/27/titanic-machine-learning-from-disaster-project./</link>
+  <title>Machine Learning from Disaster.</title>
+  <link>/2020/07/27/machine-learning-from-disaster./</link>
   <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
   
-<guid>/2020/07/27/titanic-machine-learning-from-disaster-project./</guid>
+<guid>/2020/07/27/machine-learning-from-disaster./</guid>
   <description>&lt;h2 id=&#34;1-business-understanding&#34;&gt;1. BUSINESS UNDERSTANDING.&lt;/h2&gt;
 &lt;p&gt;Source:&lt;a href=&#34;https://www.kaggle.com/c/titanic/&#34;&gt;Machine Learning Titanic Competition&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Data: &lt;a href=&#34;https://www.kaggle.com/c/titanic/data&#34;&gt;Titanic Data Set from Kaggle&lt;/a&gt;&lt;/p&gt;
