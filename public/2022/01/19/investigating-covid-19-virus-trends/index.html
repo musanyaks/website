@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.74.3" />
+
+  <title>Investigating Covid 19 Virus trends. &middot; Musa R. Nyakerabachi</title>
+
+    
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+
+  
+  
+ 
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="/">Musa<br>Nyakerabachi</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="/contact/"><i class='fa fa-phone fa-fw'></i>Contact</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="/tags/"><i class='fa fa-tags fa-fw'></i>Tags</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="/categories/"><i class='fa fa-folder fa-fw'></i>Categories</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/musarioba" rel="me" target="_blank"><i class="fab fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://linkedin.com/in/musa-nyakerabachi-839901146/" rel="me" target="_blank"><i class="fab fa-linkedin"></i></i>LinkedIn</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/musanyaks" rel="me" target="_blank"><i class="fab fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>Musa R. Nyakerabachi&copy; 2020. All rights reserved.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>Investigating Covid 19 Virus trends.</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>19 Jan 2022</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="/topics/exploratory-data-analysis.">Exploratory Data analysis.</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="/tags/data-analysis">Data Analysis</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  
+
+
+<div id="objectives." class="section level2">
+<h2>Objectives.</h2>
+<p>This project is about building my skills of the data analysis workflow by evaluating the COVID_19 situation.</p>
+</div>
+<div id="data-exploration" class="section level1">
+<h1>Data exploration</h1>
+<pre class="r"><code>#loading data set
+options(warn = -1)
+#install.packages(&quot;tidyverse&quot;)
+#install.packages(&quot;readr&quot;)
+library(readr)
+library(tidyverse)</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.2     v dplyr   1.0.2
+## v tibble  3.0.4     v stringr 1.4.0
+## v tidyr   1.1.1     v forcats 0.5.0
+## v purrr   0.3.4</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>df&lt;-read.csv(&quot;covid19.csv&quot;)
+
+head(df)</code></pre>
+<pre><code>##         Date Continent_Name Two_Letter_Country_Code Country_Region
+## 1 2020-01-20           Asia                      KR    South Korea
+## 2 2020-01-22  North America                      US  United States
+## 3 2020-01-22  North America                      US  United States
+## 4 2020-01-23  North America                      US  United States
+## 5 2020-01-23  North America                      US  United States
+## 6 2020-01-24           Asia                      KR    South Korea
+##   Province_State positive hospitalized recovered death total_tested active
+## 1     All States        1            0         0     0            4      0
+## 2     All States        1            0         0     0            1      0
+## 3     Washington        1            0         0     0            1      0
+## 4     All States        1            0         0     0            1      0
+## 5     Washington        1            0         0     0            1      0
+## 6     All States        2            0         0     0           27      0
+##   hospitalizedCurr daily_tested daily_positive
+## 1                0            0              0
+## 2                0            0              0
+## 3                0            0              0
+## 4                0            0              0
+## 5                0            0              0
+## 6                0            5              0</code></pre>
+<pre class="r"><code>#number of rows and columns
+dim(df)</code></pre>
+<pre><code>## [1] 10903    14</code></pre>
+<pre class="r"><code>#viewing column names and storinh them in a variable
+col_names&lt;- colnames(df)
+
+#install.packages(&quot;skimr&quot;) for skimming through the data set
+
+#skimming through the data
+library(skimr)
+skim(df)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">df</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">10903</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">14</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">5</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">9</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Date</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">133</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Continent_Name</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Two_Letter_Country_Code</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">109</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Country_Region</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">22</td>
+<td align="right">0</td>
+<td align="right">109</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Province_State</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">28</td>
+<td align="right">0</td>
+<td align="right">81</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">positive</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">17768.02</td>
+<td align="right">93143.46</td>
+<td align="right">0</td>
+<td align="right">44.0</td>
+<td align="right">1026</td>
+<td align="right">7440.0</td>
+<td align="right">1783570</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">hospitalized</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">766.40</td>
+<td align="right">5626.33</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">89590</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">recovered</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2409.22</td>
+<td align="right">11254.21</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">0</td>
+<td align="right">500.5</td>
+<td align="right">171883</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">death</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">947.59</td>
+<td align="right">5507.24</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">6</td>
+<td align="right">136.0</td>
+<td align="right">98536</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">total_tested</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">195475.72</td>
+<td align="right">819022.18</td>
+<td align="right">0</td>
+<td align="right">2147.5</td>
+<td align="right">30358</td>
+<td align="right">125285.0</td>
+<td align="right">16936891</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">active</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4472.19</td>
+<td align="right">22277.48</td>
+<td align="right">-2</td>
+<td align="right">0.0</td>
+<td align="right">0</td>
+<td align="right">660.5</td>
+<td align="right">280931</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">hospitalizedCurr</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">454.07</td>
+<td align="right">2253.05</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">0</td>
+<td align="right">28.0</td>
+<td align="right">33004</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">daily_tested</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">6841.40</td>
+<td align="right">27198.46</td>
+<td align="right">-330230</td>
+<td align="right">71.0</td>
+<td align="right">1048</td>
+<td align="right">4688.5</td>
+<td align="right">492276</td>
+<td align="left">▁▁▇▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">daily_positive</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">497.88</td>
+<td align="right">2354.83</td>
+<td align="right">-4735</td>
+<td align="right">1.0</td>
+<td align="right">29</td>
+<td align="right">264.0</td>
+<td align="right">63047</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>col_names</code></pre>
+<pre><code>##  [1] &quot;Date&quot;                    &quot;Continent_Name&quot;         
+##  [3] &quot;Two_Letter_Country_Code&quot; &quot;Country_Region&quot;         
+##  [5] &quot;Province_State&quot;          &quot;positive&quot;               
+##  [7] &quot;hospitalized&quot;            &quot;recovered&quot;              
+##  [9] &quot;death&quot;                   &quot;total_tested&quot;           
+## [11] &quot;active&quot;                  &quot;hospitalizedCurr&quot;       
+## [13] &quot;daily_tested&quot;            &quot;daily_positive&quot;</code></pre>
+<pre class="r"><code>#viewing  and summarising data
+glimpse(df)</code></pre>
+<pre><code>## Rows: 10,903
+## Columns: 14
+## $ Date                    &lt;chr&gt; &quot;2020-01-20&quot;, &quot;2020-01-22&quot;, &quot;2020-01-22&quot;, &quot;...
+## $ Continent_Name          &lt;chr&gt; &quot;Asia&quot;, &quot;North America&quot;, &quot;North America&quot;, &quot;...
+## $ Two_Letter_Country_Code &lt;chr&gt; &quot;KR&quot;, &quot;US&quot;, &quot;US&quot;, &quot;US&quot;, &quot;US&quot;, &quot;KR&quot;, &quot;US&quot;, &quot;...
+## $ Country_Region          &lt;chr&gt; &quot;South Korea&quot;, &quot;United States&quot;, &quot;United Sta...
+## $ Province_State          &lt;chr&gt; &quot;All States&quot;, &quot;All States&quot;, &quot;Washington&quot;, &quot;...
+## $ positive                &lt;int&gt; 1, 1, 1, 1, 1, 2, 1, 1, 4, 0, 3, 0, 0, 0, 0...
+## $ hospitalized            &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ recovered               &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ death                   &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ total_tested            &lt;int&gt; 4, 1, 1, 1, 1, 27, 1, 1, 0, 0, 0, 0, 0, 0, ...
+## $ active                  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ hospitalizedCurr        &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ daily_tested            &lt;int&gt; 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ daily_positive          &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...</code></pre>
+<p>From above analysis I have used <code>tidyverse</code> and <code>skimr</code> package to give all overview of the data set. The data set has 14 colums and 10903 rows. It has 5 columns with character and 9 columns with numeric. From above, the data has no missing values.The <code>glimpse</code> function also show an overview of the all columns but <code>skim</code> function from <code>skimr</code> package give more details than what <code>glimpse</code> function which is in the umbrella of a group of packages hold by <code>tidyverse</code>.</p>
+<pre class="r"><code>#filter the ``all states`` province state and remove the Province_state column
+covid_allstates &lt;- df %&gt;% filter(Province_State == &quot;All States&quot;) %&gt;% select(-Province_State)</code></pre>
+<p>From above snippet of code we have removed one column and it consist only All state row.</p>
+</div>
+<div id="isolating-the-columns-we-need" class="section level1">
+<h1>Isolating the Columns We Need</h1>
+<ul>
+<li>Creating a dataset for the daily columns from <code>covid_df_all_states</code> dataframe</li>
+</ul>
+<p>Let’s recall the description of the dataset’s columns.</p>
+<ol style="list-style-type: decimal">
+<li><code>Date</code>: Date</li>
+<li><code>Continent_Name</code>: Continent names</li>
+<li><code>Two_Letter_Country_Code</code>: Country codes</li>
+<li><code>Country_Region</code>: Country names</li>
+<li><code>Province_State</code>: States/province names; value is <code>All States</code> when state/provincial level data is not available</li>
+<li><code>positive</code>: Cumulative number of positive cases reported.</li>
+<li><code>active</code>: Number of actively cases on that <strong>day</strong>.</li>
+<li><code>hospitalized</code>: Cumulative number of hospitalized cases reported.</li>
+<li><code>hospitalizedCurr</code>: Number of actively hospitalized cases on that <strong>day</strong>.</li>
+<li><code>recovered</code>: Cumulative number of recovered cases reported.</li>
+<li><code>death</code>: Cumulative number of deaths reported.</li>
+<li><code>total_tested</code>: Cumulative number of tests conducted.</li>
+<li><code>daily_tested</code>: Number of tests conducted on the <strong>day</strong>; if daily data is unavailable, daily tested is averaged across number of days in between.</li>
+<li><code>daily_positive</code>: Number of positive cases reported on the <strong>day</strong>; if daily data is unavailable, daily positive is averaged across number of days in.</li>
+</ol>
+<pre class="r"><code># Selecting the columns with cumulative numbers
+# Selecting the columns with cumulative numbers
+covid_df_all_states_daily &lt;- df %&gt;% 
+  select(Date, Country_Region, active, hospitalizedCurr, daily_tested, daily_positive)
+head(covid_df_all_states_daily)</code></pre>
+<pre><code>##         Date Country_Region active hospitalizedCurr daily_tested daily_positive
+## 1 2020-01-20    South Korea      0                0            0              0
+## 2 2020-01-22  United States      0                0            0              0
+## 3 2020-01-22  United States      0                0            0              0
+## 4 2020-01-23  United States      0                0            0              0
+## 5 2020-01-23  United States      0                0            0              0
+## 6 2020-01-24    South Korea      0                0            5              0</code></pre>
+</div>
+<div id="extracting-the-top-ten-countries-in-the-number-of-tested-cases" class="section level1">
+<h1>Extracting the Top Ten countries in the number of tested cases</h1>
+<div id="summarizing-the-data-based-on-the-country_region-column." class="section level2">
+<h2>Summarizing the data based on the <code>Country_Region</code> column.</h2>
+<pre class="r"><code>covid_df_all_states_daily_sum &lt;- covid_df_all_states_daily %&gt;% 
+  group_by(Country_Region) %&gt;% 
+  summarise(tested = sum(daily_tested), 
+            positive = sum(daily_positive),
+            active = sum(active),
+            hospitalized = sum(hospitalizedCurr)) %&gt;% 
+  arrange(desc(tested)) #this is equivalent to `arrange(-tested)`</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code>covid_df_all_states_daily_sum</code></pre>
+<pre><code>## # A tibble: 109 x 5
+##    Country_Region   tested positive   active hospitalized
+##    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;    &lt;int&gt;        &lt;int&gt;
+##  1 United States  34218115  3660635 27687993      2899151
+##  2 Russia         10542266   406368  6924890            0
+##  3 Italy           4091291   251710  6202214      1699003
+##  4 India           3692851    60959        0            0
+##  5 Canada          3314703   181769  1477358            0
+##  6 Australia       2658762    14400   269172        14020
+##  7 Turkey          2031192   163941  2980960            0
+##  8 United Kingdom  1473672   166909        0            0
+##  9 Peru             976790    59497        0            0
+## 10 Poland           928256    23987   538203            0
+## # ... with 99 more rows</code></pre>
+<pre class="r"><code>#Date, Country_Region, active, hospitalizedCurr, daily_tested, daily_positive</code></pre>
+</div>
+<div id="taking-the-top-10" class="section level2">
+<h2>Taking the top 10</h2>
+<pre class="r"><code>covid_top_10 &lt;- head(covid_df_all_states_daily_sum, 10)
+covid_top_10</code></pre>
+<pre><code>## # A tibble: 10 x 5
+##    Country_Region   tested positive   active hospitalized
+##    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;    &lt;int&gt;        &lt;int&gt;
+##  1 United States  34218115  3660635 27687993      2899151
+##  2 Russia         10542266   406368  6924890            0
+##  3 Italy           4091291   251710  6202214      1699003
+##  4 India           3692851    60959        0            0
+##  5 Canada          3314703   181769  1477358            0
+##  6 Australia       2658762    14400   269172        14020
+##  7 Turkey          2031192   163941  2980960            0
+##  8 United Kingdom  1473672   166909        0            0
+##  9 Peru             976790    59497        0            0
+## 10 Poland           928256    23987   538203            0</code></pre>
+</div>
+</div>
+<div id="identifying-the-highest-positive-against-tested-cases" class="section level1">
+<h1>Identifying the Highest Positive Against Tested Cases</h1>
+<div id="getting-vectors" class="section level2">
+<h2>Getting vectors</h2>
+<pre class="r"><code>countries &lt;- covid_top_10$Country_Region
+tested_cases &lt;- covid_top_10$tested
+positive_cases &lt;- covid_top_10$positive
+active_cases &lt;- covid_top_10$active
+hospitalized_cases &lt;- covid_top_10$hospitalized</code></pre>
+</div>
+<div id="naming-vectors" class="section level2">
+<h2>Naming vectors</h2>
+<pre class="r"><code>names(positive_cases) &lt;- countries
+names(tested_cases) &lt;- countries
+names(active_cases) &lt;- countries
+names(hospitalized_cases) &lt;- countries</code></pre>
+</div>
+<div id="identifying" class="section level2">
+<h2>Identifying</h2>
+<pre class="r"><code>positive_cases</code></pre>
+<pre><code>##  United States         Russia          Italy          India         Canada 
+##        3660635         406368         251710          60959         181769 
+##      Australia         Turkey United Kingdom           Peru         Poland 
+##          14400         163941         166909          59497          23987</code></pre>
+<pre class="r"><code>sum(positive_cases)</code></pre>
+<pre><code>## [1] 4990175</code></pre>
+<pre class="r"><code>mean(positive_cases)</code></pre>
+<pre><code>## [1] 499017.5</code></pre>
+<pre class="r"><code>positive_cases/sum(positive_cases)</code></pre>
+<pre><code>##  United States         Russia          Italy          India         Canada 
+##    0.733568462    0.081433617    0.050441117    0.012215804    0.036425376 
+##      Australia         Turkey United Kingdom           Peru         Poland 
+##    0.002885670    0.032852756    0.033447524    0.011922828    0.004806845</code></pre>
+<pre class="r"><code>positive_cases/tested_cases</code></pre>
+<pre><code>##  United States         Russia          Italy          India         Canada 
+##    0.106979446    0.038546552    0.061523368    0.016507300    0.054837191 
+##      Australia         Turkey United Kingdom           Peru         Poland 
+##    0.005416055    0.080711720    0.113260617    0.060910738    0.025840932</code></pre>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<pre class="r"><code>positive_tested_top_3 &lt;- c(&quot;United Kingdom&quot; = 0.11, &quot;United States&quot; = 0.10, &quot;Turkey&quot; = 0.08)</code></pre>
+</div>
+</div>
+<div id="keeping-relevant-information" class="section level1">
+<h1>Keeping relevant information</h1>
+<pre class="r"><code># Creating vectors
+united_kingdom &lt;- c(0.11, 1473672, 166909, 0, 0)
+united_states &lt;- c(0.10, 17282363, 1877179, 0, 0)
+turkey &lt;- c(0.08, 2031192, 163941, 2980960, 0)
+# Creating the matrix covid_mat
+covid_mat &lt;- rbind(united_kingdom, united_states, turkey)
+# Naming columns
+colnames(covid_mat) &lt;- c(&quot;Ratio&quot;, &quot;tested&quot;, &quot;positive&quot;, &quot;active&quot;, &quot;hospitalized&quot;)
+#d Displaying the matrix
+covid_mat</code></pre>
+<pre><code>##                Ratio   tested positive  active hospitalized
+## united_kingdom  0.11  1473672   166909       0            0
+## united_states   0.10 17282363  1877179       0            0
+## turkey          0.08  2031192   163941 2980960            0</code></pre>
+</div>
+<div id="putting-all-together" class="section level1">
+<h1>Putting all together</h1>
+<pre class="r"><code>question &lt;- &quot;Which countries have had the highest number of positive cases against the number of tests?&quot;
+answer &lt;- c(&quot;Positive tested cases&quot; = positive_tested_top_3)
+datasets &lt;- list(
+  original = df,
+  allstates = covid_allstates,
+  daily = covid_df_all_states_daily,
+  top_10 = covid_top_10
+)
+matrices &lt;- list(covid_mat)
+vectors &lt;- list(col_names, countries)
+data_structure_list &lt;- list(&quot;dataframe&quot; = datasets, &quot;matrix&quot; = matrices, &quot;vector&quot; = vectors)
+covid_analysis_list &lt;- list(question, answer, data_structure_list)
+covid_analysis_list[[2]]</code></pre>
+<pre><code>## Positive tested cases.United Kingdom  Positive tested cases.United States 
+##                                 0.11                                 0.10 
+##         Positive tested cases.Turkey 
+##                                 0.08</code></pre>
+</div>
+
+  
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="/2020/12/18/airbnb-edinburgh-exploratory-data-analysis./"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="/2020/12/18/airbnb-edinburgh-exploratory-data-analysis./">Airbnb Edinburgh Exploratory Data Analysis.</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = '254machinelearning';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="/js/ui.js"></script>
+<script src="/js/menus.js"></script>
+
+
+<script>
+  
+  if (window.location.hostname != "localhost") {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-174066040-1', 'auto');
+    ga('send', 'pageview');
+  }
+</script>
+
+
+
+
+
+<script src="/js/math-code.js"></script>
+  <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+</body>
+</html>
+
+
+
