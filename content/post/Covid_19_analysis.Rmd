@@ -1,9 +1,21 @@
 ---
-title: "Data Structures in R"
-author: "Musa R. Nyakerabachi"
-date: "1/16/2022"
-output: html_document
+title:  Investigating Covid-19 Virus trends.
+author: Musa R. Nyakerabachi
+date: '2022-01-19'
+categories:
+  - R
+tags:
+  - Data Analysis
+topics:
+  - Exploratory Data analysis.
+description:
+  - ''
+draft:
+  - no
+output:
+  - html_document
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
